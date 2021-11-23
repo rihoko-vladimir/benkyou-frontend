@@ -1,6 +1,6 @@
 import HomePageContent from "./Content/homepageContent";
 import NavigationDrawer from "../../NavigationDrawerComponent/navigationDrawer";
-
+import "./style.css";
 const HomePage = ()=>{
     return <div className={"homePage"}>
         <NavigationDrawer/>
