@@ -1,18 +1,23 @@
-import {Route, Routes} from "react-router";
+import {Navigate, Route, Routes} from "react-router-dom";
 import HomePage from "../Pages/HomePage/homePage";
+import ErrorPage from "../Pages/ErrorPage/errorPage";
 
 const RoutingComponent = () => {
-    return (<div>
-            <Routes>
-                <Route path={"/"} element={
-                    <Routes>
-                        <Route path={""} element={<HomePage/>}/>
-                    </Routes>}/>
-                <Route path={`/error`} element={
-                    <Routes>
-                    </Routes>}/>
-            </Routes>
-        </div>
+    return (
+        <Routes>
+            <Route path={"/error"}>
+                <Route path={"404"} element={<ErrorPage/>}/>
+            </Route>
+            <Route path={"/"}>
+                <Route path={"home"} element={<HomePage/>}/>
+                <Route path={"my-sets"} element={<HomePage/>}/>
+                <Route path={"all-sets"} element={<HomePage/>}/>
+                <Route path={"about"} element={<HomePage/>}/>
+                <Route index element={<Navigate to={"home"}/>}/>
+                <Route path={"*"} element={<Navigate to={"/error/404"}/>}/>
+            </Route>
+        </Routes>
+
     )
 };
 export default RoutingComponent;
