@@ -10,6 +10,7 @@ import {
     ListItemIcon,
     ListItemText,
     ListSubheader,
+    StyledEngineProvider,
     Toolbar,
     Typography
 } from "@mui/material";
@@ -30,28 +31,29 @@ const useDrawerStyles = makeStyles({
         width: drawerWidth,
     },
     paper: {
-        background: hexToRgb("#eef6f6"),
+        backgroundColor: "#eef6f6",
         width: drawerWidth,
-        borderRadius: "16px"
+        borderTopRightRadius: "16px",
+        borderBottomRightRadius: "16px",
     },
     itemContainer: {
         margin: '8px',
     },
-    root: {
-        background: "transparent"
+    accountHeader: {
+        backgroundColor: "transparent"
     },
-    accountMenu:{
+    accountMenu: {
         backgroundColor: "rgba(0,0,0,0.07)",
     }
 
 });
 
-const NavigationDrawer = (props) => {
+const NavigationDrawer = () => {
     const classes = useDrawerStyles();
     const location = useLocation();
     const navigate = useNavigate();
     const [isAccountOpen, setAccountOpen] = useState(false);
-    const accountHandle = ()=>{
+    const accountHandle = () => {
         setAccountOpen(!isAccountOpen);
     }
     console.log(location.pathname);
@@ -87,62 +89,64 @@ const NavigationDrawer = (props) => {
         navigate(path);
     };
     return (
-        <Drawer variant={"permanent"} anchor={"left"} className={classes.drawerClass}
-                classes={{
-                    paper: classes.paper,
-                    root: classes.root
-                }}>
-            <Toolbar>
-                <Typography noWrap component="h5">
-                    勉強！
-                </Typography>
-            </Toolbar>
-            <List>
-                {applicationItems.map((element) =>
-                    <ListItemButton selected={element.isSelected} key={element.name} classes={{
-                        container: classes.itemContainer
-                    }} onClick={() => handleMenuClick(element.path)}>
-                        <ListItemIcon>{element.icon}</ListItemIcon>
-                        <ListItemText>{element.name}</ListItemText>
+        <StyledEngineProvider injectFirst>
+            <Drawer variant={"permanent"} anchor={"left"} className={classes.drawerClass}
+                    classes={{
+                        paper: classes.paper,
+                    }}>
+                <Toolbar>
+                    <Typography noWrap component="h5">
+                        勉強！
+                    </Typography>
+                </Toolbar>
+                <List>
+                    {applicationItems.map((element) =>
+                        <ListItemButton selected={element.isSelected} key={element.name} classes={{
+                            container: classes.itemContainer
+                        }} onClick={() => handleMenuClick(element.path)}>
+                            <ListItemIcon>{element.icon}</ListItemIcon>
+                            <ListItemText>{element.name}</ListItemText>
+                        </ListItemButton>
+                    )}
+                </List>
+                <Divider sx={
+                    {
+                        borderBottomColor: hexToRgb("#70797B"),
+                        marginLeft: '20px',
+                        marginRight: '20px',
+                    }
+                }/>
+                <List>
+                    <ListSubheader className={classes.accountHeader}>Account</ListSubheader>
+                    <ListItemButton onClick={accountHandle} selected={isAccountOpen}>
+                        <ListItemAvatar>
+                            <Avatar src={avatar}/>
+                        </ListItemAvatar>
+                        <ListItemText>Vladimir Kozlovsky</ListItemText>
+                        {isAccountOpen ? <ExpandLess/> : <ExpandMore/>}
                     </ListItemButton>
-                )}
-            </List>
-            <Divider sx={
-                {
-                    borderBottomColor: hexToRgb("#70797B"),
-                    marginLeft: '20px',
-                    marginRight: '20px',
-                }
-            }/>
-            <List>
-                <ListSubheader className={classes.root}>Account</ListSubheader>
-                <ListItemButton onClick={accountHandle}>
-                    <ListItemAvatar>
-                        <Avatar src={avatar}/>
-                    </ListItemAvatar>
-                    <ListItemText>Vladimir Kozlovsky</ListItemText>
-                    {isAccountOpen ? <ExpandLess/> : <ExpandMore/>}
-                </ListItemButton>
-                <Collapse in={isAccountOpen} timeout={"auto"} classes={{
-                    root:classes.accountMenu,
-                }}>
-                    <List>
-                        <ListItemButton>
-                            <ListItemIcon>
-                                <Settings/>
-                            </ListItemIcon>
-                            <ListItemText primary={"Account preferences"}/>
-                        </ListItemButton>
-                        <ListItemButton>
-                            <ListItemIcon>
-                                <ExitToApp/>
-                            </ListItemIcon>
-                            <ListItemText primary={"Log out"}/>
-                        </ListItemButton>
-                    </List>
-                </Collapse>
-            </List>
-        </Drawer>);
+                    <Collapse in={isAccountOpen} timeout={"auto"} classes={{
+                        root: classes.accountMenu,
+                    }}>
+                        <List>
+                            <ListItemButton>
+                                <ListItemIcon>
+                                    <Settings/>
+                                </ListItemIcon>
+                                <ListItemText primary={"Account preferences"}/>
+                            </ListItemButton>
+                            <ListItemButton>
+                                <ListItemIcon>
+                                    <ExitToApp/>
+                                </ListItemIcon>
+                                <ListItemText primary={"Log out"}/>
+                            </ListItemButton>
+                        </List>
+                    </Collapse>
+                </List>
+            </Drawer>
+        </StyledEngineProvider>
+    );
 };
 
 export default NavigationDrawer;
