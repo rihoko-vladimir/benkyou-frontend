@@ -1,13 +1,13 @@
-import HomePageContent from "./Content/homepageContent";
+import MySetsPageContent from "./Content/mySetsPageContent";
 import useStyles from "../style";
 import NavigationDrawer from "../../NavigationDrawerComponent/navigationDrawer";
 
-const HomePage = () => {
+const MySetsPage = () => {
     const classes = useStyles();
     return <div className={classes.homePage}>
         <NavigationDrawer/>
-        <HomePageContent/>
+        <MySetsPageContent/>
     </div>
 }
 
-export default HomePage;
+export default MySetsPage;
