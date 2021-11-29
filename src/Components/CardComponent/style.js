@@ -6,12 +6,16 @@ const useStyle = makeStyles({
         width: "360px",
         height: "480px",
         borderRadius: "12px",
-        borderColor: "#70797B",
+        borderColor: "#81898a",
         borderWidth: "1px",
         borderStyle: "solid",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+        transition: "all 0.3s cubic-bezier(.25,.8,.25,1)",
+        "&:hover":{
+            boxShadow: "0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)",
+        }
     },
     kanjiBackground: {
         position: "absolute",
@@ -24,7 +28,7 @@ const useStyle = makeStyles({
         fontSize: "82px",
         overflowX:"hidden",
         overflowY:"hidden",
-        filter:"opacity(0.25) blur(16px)"
+        filter:"opacity(0.4) blur(24px)"
     },
     cardTitle: {
         padding: "16px",

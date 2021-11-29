@@ -1,147 +1,15 @@
+import {Typography} from "@mui/material";
+import useStyle from "./style";
+
 const HomePageContent = () => {
-    return <div><p style={
-        {padding: "16px"}
-    }>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, aspernatur consectetur eligendi
-        explicabo libero maiores nam nemo nisi numquam sed tenetur velit. Aliquam at magnam nisi obcaecati porro
-        provident tempora?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam aspernatur cumque distinctio
-        doloremque exercitationem harum magnam nam natus, nulla officia perferendis possimus quibusdam reiciendis
-        repudiandae rerum suscipit totam velLorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Animi at blanditiis corporis cum deserunt dolorum, et ex ipsum magnam maiores modi nam
-        nisi, quas quidem repellat, saepe suscipit? Nisi, voluptas!loremLorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Aliquid, aspernatur consectetur eligendi
-        explicabo libero maiores nam nemo nisi numquam sed tenetur velit. Aliquam at magnam nisi obcaecati porro
-        provident tempora?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam aspernatur cumque distinctio
-        doloremque exercitationem harum magnam nam natus, nulla officia perferendis possimus quibusdam reiciendis
-        repudiandae rerum suscipit totam velLorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Animi at blanditiis corporis cum deserunt dolorum, et ex ipsum magnam maiores modi nam
-        nisi, quas quidem repellat, saepe suscipit? Nisi, voluptas!loremLorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Aliquid, aspernatur consectetur eligendi
-        explicabo libero maiores nam nemo nisi numquam sed tenetur velit. Aliquam at magnam nisi obcaecati porro
-        provident tempora?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam aspernatur cumque distinctio
-        doloremque exercitationem harum magnam nam natus, nulla officia perferendis possimus quibusdam reiciendis
-        repudiandae rerum suscipit totam velLorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Animi at blanditiis corporis cum deserunt dolorum, et ex ipsum magnam maiores modi nam
-        nisi, quas quidem repellat, saepe suscipit? Nisi, voluptas!loremLorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Aliquid, aspernatur consectetur eligendi
-        explicabo libero maiores nam nemo nisi numquam sed tenetur velit. Aliquam at magnam nisi obcaecati porro
-        provident tempora?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam aspernatur cumque distinctio
-        doloremque exercitationem harum magnam nam natus, nulla officia perferendis possimus quibusdam reiciendis
-        repudiandae rerum suscipit totam velLorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Animi at blanditiis corporis cum deserunt dolorum, et ex ipsum magnam maiores modi nam
-        nisi, quas quidem repellat, saepe suscipit? Nisi, voluptas!loremLorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Aliquid, aspernatur consectetur eligendi
-        explicabo libero maiores nam nemo nisi numquam sed tenetur velit. Aliquam at magnam nisi obcaecati porro
-        provident tempora?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam aspernatur cumque distinctio
-        doloremque exercitationem harum magnam nam natus, nulla officia perferendis possimus quibusdam reiciendis
-        repudiandae rerum suscipit totam velLorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Animi at blanditiis corporis cum deserunt dolorum, et ex ipsum magnam maiores modi nam
-        nisi, quas quidem repellat, saepe suscipit? Nisi, voluptas!loremLorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Aliquid, aspernatur consectetur eligendi
-        explicabo libero maiores nam nemo nisi numquam sed tenetur velit. Aliquam at magnam nisi obcaecati porro
-        provident tempora?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam aspernatur cumque distinctio
-        doloremque exercitationem harum magnam nam natus, nulla officia perferendis possimus quibusdam reiciendis
-        repudiandae rerum suscipit totam velLorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Animi at blanditiis corporis cum deserunt dolorum, et ex ipsum magnam maiores modi nam
-        nisi, quas quidem repellat, saepe suscipit? Nisi, voluptas!loremLorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Aliquid, aspernatur consectetur eligendi
-        explicabo libero maiores nam nemo nisi numquam sed tenetur velit. Aliquam at magnam nisi obcaecati porro
-        provident tempora?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam aspernatur cumque distinctio
-        doloremque exercitationem harum magnam nam natus, nulla officia perferendis possimus quibusdam reiciendis
-        repudiandae rerum suscipit totam velLorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Animi at blanditiis corporis cum deserunt dolorum, et ex ipsum magnam maiores modi nam
-        nisi, quas quidem repellat, saepe suscipit? Nisi, voluptas!loremLorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Aliquid, aspernatur consectetur eligendi
-        explicabo libero maiores nam nemo nisi numquam sed tenetur velit. Aliquam at magnam nisi obcaecati porro
-        provident tempora?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam aspernatur cumque distinctio
-        doloremque exercitationem harum magnam nam natus, nulla officia perferendis possimus quibusdam reiciendis
-        repudiandae rerum suscipit totam velLorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Animi at blanditiis corporis cum deserunt dolorum, et ex ipsum magnam maiores modi nam
-        nisi, quas quidem repellat, saepe suscipit? Nisi, voluptas!loremLorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Aliquid, aspernatur consectetur eligendi
-        explicabo libero maiores nam nemo nisi numquam sed tenetur velit. Aliquam at magnam nisi obcaecati porro
-        provident tempora?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam aspernatur cumque distinctio
-        doloremque exercitationem harum magnam nam natus, nulla officia perferendis possimus quibusdam reiciendis
-        repudiandae rerum suscipit totam velLorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Animi at blanditiis corporis cum deserunt dolorum, et ex ipsum magnam maiores modi nam
-        nisi, quas quidem repellat, saepe suscipit? Nisi, voluptas!loremLorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Aliquid, aspernatur consectetur eligendi
-        explicabo libero maiores nam nemo nisi numquam sed tenetur velit. Aliquam at magnam nisi obcaecati porro
-        provident tempora?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam aspernatur cumque distinctio
-        doloremque exercitationem harum magnam nam natus, nulla officia perferendis possimus quibusdam reiciendis
-        repudiandae rerum suscipit totam velLorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Animi at blanditiis corporis cum deserunt dolorum, et ex ipsum magnam maiores modi nam
-        nisi, quas quidem repellat, saepe suscipit? Nisi, voluptas!loremLorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Aliquid, aspernatur consectetur eligendi
-        explicabo libero maiores nam nemo nisi numquam sed tenetur velit. Aliquam at magnam nisi obcaecati porro
-        provident tempora?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam aspernatur cumque distinctio
-        doloremque exercitationem harum magnam nam natus, nulla officia perferendis possimus quibusdam reiciendis
-        repudiandae rerum suscipit totam velLorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Animi at blanditiis corporis cum deserunt dolorum, et ex ipsum magnam maiores modi nam
-        nisi, quas quidem repellat, saepe suscipit? Nisi, voluptas!loremLorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Aliquid, aspernatur consectetur eligendi
-        explicabo libero maiores nam nemo nisi numquam sed tenetur velit. Aliquam at magnam nisi obcaecati porro
-        provident tempora?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam aspernatur cumque distinctio
-        doloremque exercitationem harum magnam nam natus, nulla officia perferendis possimus quibusdam reiciendis
-        repudiandae rerum suscipit totam velLorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Animi at blanditiis corporis cum deserunt dolorum, et ex ipsum magnam maiores modi nam
-        nisi, quas quidem repellat, saepe suscipit? Nisi, voluptas!loremLorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Aliquid, aspernatur consectetur eligendi
-        explicabo libero maiores nam nemo nisi numquam sed tenetur velit. Aliquam at magnam nisi obcaecati porro
-        provident tempora?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam aspernatur cumque distinctio
-        doloremque exercitationem harum magnam nam natus, nulla officia perferendis possimus quibusdam reiciendis
-        repudiandae rerum suscipit totam velLorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Animi at blanditiis corporis cum deserunt dolorum, et ex ipsum magnam maiores modi nam
-        nisi, quas quidem repellat, saepe suscipit? Nisi, voluptas!loremLorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Aliquid, aspernatur consectetur eligendi
-        explicabo libero maiores nam nemo nisi numquam sed tenetur velit. Aliquam at magnam nisi obcaecati porro
-        provident tempora?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam aspernatur cumque distinctio
-        doloremque exercitationem harum magnam nam natus, nulla officia perferendis possimus quibusdam reiciendis
-        repudiandae rerum suscipit totam velLorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Animi at blanditiis corporis cum deserunt dolorum, et ex ipsum magnam maiores modi nam
-        nisi, quas quidem repellat, saepe suscipit? Nisi, voluptas!loremLorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Aliquid, aspernatur consectetur eligendi
-        explicabo libero maiores nam nemo nisi numquam sed tenetur velit. Aliquam at magnam nisi obcaecati porro
-        provident tempora?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam aspernatur cumque distinctio
-        doloremque exercitationem harum magnam nam natus, nulla officia perferendis possimus quibusdam reiciendis
-        repudiandae rerum suscipit totam velLorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Animi at blanditiis corporis cum deserunt dolorum, et ex ipsum magnam maiores modi nam
-        nisi, quas quidem repellat, saepe suscipit? Nisi, voluptas!loremLorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Aliquid, aspernatur consectetur eligendi
-        explicabo libero maiores nam nemo nisi numquam sed tenetur velit. Aliquam at magnam nisi obcaecati porro
-        provident tempora?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam aspernatur cumque distinctio
-        doloremque exercitationem harum magnam nam natus, nulla officia perferendis possimus quibusdam reiciendis
-        repudiandae rerum suscipit totam velLorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Animi at blanditiis corporis cum deserunt dolorum, et ex ipsum magnam maiores modi nam
-        nisi, quas quidem repellat, saepe suscipit? Nisi, voluptas!loremLorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Aliquid, aspernatur consectetur eligendi
-        explicabo libero maiores nam nemo nisi numquam sed tenetur velit. Aliquam at magnam nisi obcaecati porro
-        provident tempora?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam aspernatur cumque distinctio
-        doloremque exercitationem harum magnam nam natus, nulla officia perferendis possimus quibusdam reiciendis
-        repudiandae rerum suscipit totam velLorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Animi at blanditiis corporis cum deserunt dolorum, et ex ipsum magnam maiores modi nam
-        nisi, quas quidem repellat, saepe suscipit? Nisi, voluptas!loremLorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Aliquid, aspernatur consectetur eligendi
-        explicabo libero maiores nam nemo nisi numquam sed tenetur velit. Aliquam at magnam nisi obcaecati porro
-        provident tempora?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam aspernatur cumque distinctio
-        doloremque exercitationem harum magnam nam natus, nulla officia perferendis possimus quibusdam reiciendis
-        repudiandae rerum suscipit totam velLorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Animi at blanditiis corporis cum deserunt dolorum, et ex ipsum magnam maiores modi nam
-        nisi, quas quidem repellat, saepe suscipit? Nisi, voluptas!loremLorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Aliquid, aspernatur consectetur eligendi
-        explicabo libero maiores nam nemo nisi numquam sed tenetur velit. Aliquam at magnam nisi obcaecati porro
-        provident tempora?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam aspernatur cumque distinctio
-        doloremque exercitationem harum magnam nam natus, nulla officia perferendis possimus quibusdam reiciendis
-        repudiandae rerum suscipit totam velLorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Animi at blanditiis corporis cum deserunt dolorum, et ex ipsum magnam maiores modi nam
-        nisi, quas quidem repellat, saepe suscipit? Nisi, voluptas!loremLorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Aliquid, aspernatur consectetur eligendi
-        explicabo libero maiores nam nemo nisi numquam sed tenetur velit. Aliquam at magnam nisi obcaecati porro
-        provident tempora?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam aspernatur cumque distinctio
-        doloremque exercitationem harum magnam nam natus, nulla officia perferendis possimus quibusdam reiciendis
-        repudiandae rerum suscipit totam velLorem ipsum dolor sit amet, consectetur
-        adipisicing elit. Animi at blanditiis corporis cum deserunt dolorum, et ex ipsum magnam maiores modi nam
-        nisi, quas quidem repellat, saepe suscipit? Nisi, voluptas!lorem</p>
-    </div>;
+    const classes = useStyle();
+    return (
+        <div className={classes.homePageContainer}>
+            <Typography variant={"h4"}>Welcome to the 勉強！</Typography>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aliquam architecto at dicta distinctio
+                eaque eveniet, incidunt, ipsum magnam nemo nisi nobis odio officia placeat porro ratione reiciendis
+                repellat veritatis!lorem </p>
+        </div>);
 }
 
 export default HomePageContent;
