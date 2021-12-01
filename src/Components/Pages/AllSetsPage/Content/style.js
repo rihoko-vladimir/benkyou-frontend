@@ -8,17 +8,19 @@ const useStyle = makeStyles({
         width: "100%",
     },
     searchBarClass: {
-        paddingTop: "40px",
-        paddingBottom: "40px",
-        flex: "5",
+        flex: "15"
     },
     buttonClass: {
-        flex: "1",
+        flex: "1"
     },
     inputContainer: {
         display: "flex",
         flexDirection: "row",
-        columnGap:"12px"
+        justifyContent: "space-between",
+        alignItems: "stretch",
+        paddingTop: "40px",
+        paddingBottom: "40px",
+        columnGap: "16px",
     }
 
 });
