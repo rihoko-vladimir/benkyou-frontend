@@ -5,7 +5,7 @@ const useStyle = makeStyles({
         display: "flex",
         flexDirection: "row",
         flexWrap: "wrap",
-        justifyContent: "center",
+        justifyContent: "space-between",
         rowGap: "16px",
         columnGap: "28px",
     }

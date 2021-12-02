@@ -7,11 +7,8 @@ const useStyle = makeStyles({
         padding: "45px",
         width: "100%",
     },
-    searchBarClass: {
-        flex: "15"
-    },
-    buttonClass: {
-        flex: "1"
+    searchBarClass:{
+        flex: "1",
     },
     inputContainer: {
         display: "flex",

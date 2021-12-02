@@ -9,6 +9,7 @@ const Card = (props) => {
     const classes = useStyle();
     const buttons = [];
     const author = "";
+    const id = 0;
 
     const onOpenButtonPressed = ()=> setButtonPressed(!isOpenButtonPressed);
 

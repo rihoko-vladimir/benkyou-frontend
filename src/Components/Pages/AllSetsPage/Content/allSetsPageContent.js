@@ -47,16 +47,10 @@ const AllSetsPageContent = () => {
         filteredResults: info
     });
     const onTextInputChanged = (text) => {
-        setState(prevState => ({
+        setState({
             input: text,
-            filteredResults: prevState.filteredResults
-        }))
-    }
-    const onSearchClicked = () => {
-        setState(prevState => ({
-            input: prevState.input,
-            filteredResults: info.filter(element => element.title.includes(state.input))
-        }))
+            filteredResults: info.filter(element => element.title.includes(text))
+        })
     }
     return (
         <div className={classes.pageContainer}>
@@ -65,10 +59,6 @@ const AllSetsPageContent = () => {
                 <TextField variant={"outlined"} className={classes.searchBarClass}
                            onChange={(event) => onTextInputChanged(event.target.value)}
                            placeholder={"Search for new sets"}/>
-                <Button variant={"contained"} className={classes.buttonClass} onClick={() => onSearchClicked()}
-                        size={"large"}>
-                    Search
-                </Button>
             </div>
             <CardsStack info={state.filteredResults}/>
         </div>
