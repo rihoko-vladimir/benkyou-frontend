@@ -1,13 +1,21 @@
 import {makeStyles} from "@mui/styles";
 
 const useStyle = makeStyles({
-    container: {
+    cardsContainer: {
         display: "flex",
         flexDirection: "row",
         flexWrap: "wrap",
         justifyContent: "space-between",
         rowGap: "16px",
         columnGap: "28px",
+    },
+    mainContainer:{
+        display:"flex",
+        flexDirection:"column",
+        width:"100%",
+        justifyContent: "space-between",
+        alignItems:"center",
+        rowGap: "24px"
     }
 })
 

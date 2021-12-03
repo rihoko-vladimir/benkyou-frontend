@@ -1,8 +1,9 @@
 import KanjiInfo from "../../../KanjiInfoComponent/kanjiInfo";
 import Kanji from "../../../../Models/kanji"
+import CardsStack from "../../../CardsStackComponent/cardsStack";
 
 const AboutPageContent = () => {
-    return <KanjiInfo kanjiObject={new Kanji("本", ["ニチ", "ジツ", "ニ"], ["ひ", "ほ"])}/>
+    return "about";
 }
 
 export default AboutPageContent;
