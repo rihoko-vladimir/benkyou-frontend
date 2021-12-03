@@ -5,16 +5,22 @@ const KanjiInfo = (props) => {
     const classes = useStyle();
     return (
         <div className={classes.kanjiInfoContainer}>
-            <p className={classes.kanji}>
-                {props.kanjiObject.kanji}
-            </p>
+            <div className={classes.kanji}>
+                <p className={classes.noMargin}>
+                    {props.kanjiObject.kanji}
+                </p>
+            </div>
             <div className={classes.kanjiReadings}>
-                <p className={classes.reading}>
-                    {props.kanjiObject.kunyoumi.join(",")}
-                </p>
-                <p className={classes.reading}>
-                    {props.kanjiObject.onyoumi.join(",")}
-                </p>
+                <div className={classes.reading}>
+                    <p>
+                        {props.kanjiObject.kunyoumi.join(",")}
+                    </p>
+                </div>
+                <div className={classes.reading}>
+                    <p>
+                        {props.kanjiObject.onyoumi.join(",")}
+                    </p>
+                </div>
             </div>
         </div>);
 

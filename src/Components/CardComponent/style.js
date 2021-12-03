@@ -3,6 +3,7 @@ import {makeStyles} from "@mui/styles";
 const useStyle = makeStyles({
     card: {
         maxWidth: "360px",
+        maxHeight: "480px",
         padding: "16px",
         position:"relative",
         width: "360px",
@@ -59,6 +60,13 @@ const useStyle = makeStyles({
         rowGap: "16px",
         display:"flex",
         flexDirection:"column",
+    },
+    kanjiList:{
+        display: "flex",
+        flexDirection: "column",
+        width: "100%",
+        maxHeight: "300px",
+        overflowY: "scroll",
     }
 });
 export default useStyle;

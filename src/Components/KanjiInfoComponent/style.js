@@ -6,28 +6,41 @@ const useStyle = makeStyles({
         flexDirection: "row",
     },
     kanji: {
-        display: "inline-block",
+        boxSizing: "border-box",
+        display: "flex",
         fontSize: "32px",
-        textAlign: "center",
         padding: "12px",
         borderWidth: "1px",
         borderColor: "black",
         borderStyle: "solid",
+        alignItems: "center",
+        justifyContent: "center",
     },
     kanjiReadings: {
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-evenly",
     },
+    noMargin: {
+        margin: "0px",
+    },
     reading: {
-        height: "50%",
-        display: "inline-block",
+        boxSizing: "border-box",
+        display: "block",
         textAlign: "left",
+        verticalAlign: "middle",
         fontSize: "12px",
         paddingLeft: "12px",
         paddingRight: "12px",
         marginTop: "0px",
         marginBottom: "0px",
+        borderStyle: "solid",
+        borderColor: "black",
+        borderTopWidth: "1px",
+        borderBottomWidth: "1px",
+        borderRightWidth: "1px",
+        borderLeftWidth: "0px",
+        width:"250px"
     }
 })
 
