@@ -51,6 +51,7 @@ const AllSetsPageContent = () => {
             input: text,
             filteredResults: info.filter(element => element.title.includes(text))
         })
+        console.log(text)
     }
     return (
         <div className={classes.pageContainer}>
