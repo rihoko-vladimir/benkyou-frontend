@@ -68,6 +68,9 @@ const NavigationDrawer = () => {
     const handleMenuClick = (path) => {
         navigate(path);
     };
+
+    const navigateToAccountSettings = () => navigate("/account");
+
     return (
         <Drawer variant={"permanent"} anchor={"left"} className={classes.drawerClass}
                 classes={{
@@ -110,7 +113,7 @@ const NavigationDrawer = () => {
                     root: classes.accountMenu,
                 }}>
                     <List>
-                        <ListItemButton className={classes.accountItems}>
+                        <ListItemButton className={classes.accountItems} onClick={navigateToAccountSettings}>
                             <ListItemIcon>
                                 <SettingsOutlined/>
                             </ListItemIcon>

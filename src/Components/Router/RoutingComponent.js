@@ -6,6 +6,7 @@ import HomePageContent from "../Pages/HomePage/Content/homepageContent";
 import MySetsPageContent from "../Pages/MySetsPage/Content/mySetsPageContent";
 import AllSetsPageContent from "../Pages/AllSetsPage/Content/allSetsPageContent";
 import AboutPageContent from "../Pages/AboutPage/Content/aboutPageContent";
+import AccountPageContent from "../Pages/AccountPage/accountPageContent";
 
 const RoutingComponent = () => {
     const classes = useStyles();
@@ -21,6 +22,7 @@ const RoutingComponent = () => {
                     <Route path={"my-sets"} element={<MySetsPageContent/>}/>
                     <Route path={"all-sets"} element={<AllSetsPageContent/>}/>
                     <Route path={"about"} element={<AboutPageContent/>}/>
+                    <Route path={"account"} element={<AccountPageContent/>}/>
                     <Route index element={<Navigate to={"home"}/>}/>
                     <Route path={"*"} element={<Navigate to={"/error/404"}/>}/>
                 </Route>
