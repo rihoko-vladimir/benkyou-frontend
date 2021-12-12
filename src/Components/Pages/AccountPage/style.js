@@ -23,7 +23,7 @@ const useStyles = makeStyles({
         display: "flex",
         flexDirection: "row",
         marginTop: "48px",
-        columnGap:"16px",
+        columnGap: "16px",
     },
     avatarClass: {
         width: "128px",
@@ -41,13 +41,17 @@ const useStyles = makeStyles({
         flex: "1",
         borderRadius: "16px",
         padding: "32px",
-        display:"flex",
-        flexDirection:"column"
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
     },
-    mainAccountContent:{
-        display:"flex",
-        flexDirection:"column",
-        rowGap:"12px",
+    mainAccountContent: {
+        display: "flex",
+        flexDirection: "column",
+        rowGap: "12px",
+    },
+    editButton: {
+        alignSelf: "end",
     },
     topInfo: {
         alignItems: "center",
