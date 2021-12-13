@@ -22,19 +22,6 @@ const useStyle = makeStyles({
         },
         boxSizing:"border-box",
     },
-    kanjiBackground: {
-        position: "absolute",
-        top: 10,
-        left: 10,
-        bottom: 10,
-        right: 10,
-        zIndex: -1,
-        overflow: "auto",
-        fontSize: "82px",
-        overflowX:"hidden",
-        overflowY:"hidden",
-        filter:"opacity(0.4) blur(24px)"
-    },
     cardTitle: {
         display: "flex",
         flexDirection: "column",
