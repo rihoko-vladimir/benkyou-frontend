@@ -4,8 +4,11 @@ import {
     CHANGE_BIRTH_DATE,
     CHANGE_FIRST_NAME,
     CHANGE_LAST_NAME,
-    CHANGE_PICTURE, MODIFY_CARD, REMOVE_CARD
+    CHANGE_PICTURE,
+    MODIFY_CARD,
+    REMOVE_CARD
 } from "./types";
+import {combineReducers} from "redux";
 
 const dummyAccountState = {
     firstName: "Unknown Name",
@@ -30,6 +33,7 @@ const accountReducer = (state = dummyAccountState, action) => {
             return {...state, accountImageUrl: action.payload}
         default:
             console.log("something horrible happened at accountReducer")
+            return state;
     }
 }
 
@@ -43,5 +47,11 @@ const myCardsReducer = (state = dummyCardsState, action) => {
             return {myCards: [...state.myCards, action.payload]}
         default:
             console.log("something horrible happened at myCardsReducer")
+            return state;
     }
 }
+
+export default combineReducers({
+    account: accountReducer,
+    myCards: myCardsReducer,
+});
