@@ -4,6 +4,8 @@ const useStyles = makeStyles({
     homePage:{
         display: "flex",
         flexDirection: "row",
+        height:"100%",
+        width:"100%",
     }
 });
 

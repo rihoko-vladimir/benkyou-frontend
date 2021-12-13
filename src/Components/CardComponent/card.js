@@ -17,9 +17,6 @@ const Card = (props) => {
 
     return (
         <div className={classes.card}>
-            <div className={classes.kanjiBackground}>
-                {props.kanji}
-            </div>
             <div className={classes.cardTitle}>
                 <Typography variant={"subtitle1"}>
                     {props.cardName}
