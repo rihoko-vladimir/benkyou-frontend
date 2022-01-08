@@ -9,10 +9,11 @@ const AccountPageContent = (props) => {
     const date = new Date();
 
     const editPage = () => {
+        console.log("edit");
         setEditable(true);
     }
 
-    const saveChanges = ()=> {
+    const saveChanges = () => {
         console.log("save");
         setEditable(false);
     }
@@ -63,6 +64,7 @@ const AccountPageContent = (props) => {
                                     label="Birthday"
                                     type="date"
                                     defaultValue={date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()}
+                                    value={props.birthDay}
                                     sx={{width: 220}}
                                     InputLabelProps={{
                                         shrink: true,
@@ -80,7 +82,8 @@ const AccountPageContent = (props) => {
                             </div>
                         </div>
                     </div>
-                    <Button variant={isEditable?"contained":"outlined"} className={classes.editButton} onClick={!isEditable?() => editPage():()=>saveChanges()}>{isEditable?"Save":"Edit"}</Button>
+                    <Button variant={isEditable ? "contained" : "outlined"} className={classes.editButton}
+                            onClick={!isEditable ? () => editPage() : () => saveChanges()}>{isEditable ? "Save" : "Edit"}</Button>
                 </div>
             </div>
         </div>
@@ -93,6 +96,7 @@ AccountPageContent.propTypes = {
     name: PropTypes.string.isRequired,
     lastName: PropTypes.string.isRequired,
     aboutAccount: PropTypes.string.isRequired,
+    birthDay: PropTypes.string.isRequired,
 }
 
 export default AccountPageContent;

@@ -1,7 +1,14 @@
 import AccountPageContent from "../../AccountPage/accountPageContent";
-import testImage from "../../../NavigationDrawerComponent/photo_2021-11-26_10-46-42.jpg"
+import {useSelector} from "react-redux";
+
 const AboutPageContent = () => {
-    return <AccountPageContent alternativeName={"Vladimir Kozlovsky"} name={"Vladimir"} lastName={"Kozlovsky"} accountImage={testImage}/>;
+    const accountUserName = useSelector(state => state.account.firstName);
+    const accountLastName = useSelector(state => state.account.lastName);
+    const accountImage = useSelector(state => state.account.accountImageUrl);
+    const aboutAccount = useSelector(state => state.account.aboutAccount);
+    const accountBirthDay = useSelector(store=>store.account.birthDate);
+    return <AccountPageContent alternativeName={"Unknown name :("} name={accountUserName} lastName={accountLastName}
+                               accountImage={accountImage} aboutAccount={aboutAccount} birthDay={accountBirthDay}/>;
 }
 
 export default AboutPageContent;

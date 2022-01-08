@@ -11,11 +11,12 @@ import {
 import {combineReducers} from "redux";
 
 const dummyAccountState = {
-    firstName: "Unknown Name",
-    lastName: "Unknown Last Name",
-    birthDate: "13.12.2021",
+    firstName: "Vladimir",
+    lastName: "Kozlovsky",
+    birthDate: "13-12-2021",
     aboutAccount: "lorem ipsum i guess",
-    accountImageUrl: "https://google.com"
+    accountImageUrl: "https://lh3.googleusercontent.com/a-/AOh14GineJdMiu0253KCDxizNsvnYdwMFjTDXL3fjgC1vQ=s288-p-rw-no",
+    isLoggedIn: false,
 }
 const dummyCardsState = {myCards: []};
 
@@ -33,6 +34,7 @@ const accountReducer = (state = dummyAccountState, action) => {
             return {...state, accountImageUrl: action.payload}
         default:
             console.log("something horrible happened at accountReducer")
+            console.log(state);
             return state;
     }
 }
@@ -47,6 +49,7 @@ const myCardsReducer = (state = dummyCardsState, action) => {
             return {myCards: [...state.myCards, action.payload]}
         default:
             console.log("something horrible happened at myCardsReducer")
+            console.log(state);
             return state;
     }
 }

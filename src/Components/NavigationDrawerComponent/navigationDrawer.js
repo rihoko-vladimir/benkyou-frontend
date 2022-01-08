@@ -14,7 +14,6 @@ import {
     Typography
 } from "@mui/material";
 import {useLocation, useNavigate} from "react-router";
-import avatar from "./photo_2021-11-26_10-46-42.jpg";
 import {useState} from "react";
 import {
     AccountCircleOutlined,
@@ -28,12 +27,17 @@ import {
     StarOutlineOutlined
 } from "@mui/icons-material";
 import useDrawerStyles from "./style";
+import {useSelector} from "react-redux";
 
 const NavigationDrawer = () => {
     const classes = useDrawerStyles();
     const location = useLocation();
     const navigate = useNavigate();
     const [isAccountOpen, setAccountOpen] = useState(false);
+    const userFirstName = useSelector(state=>state.account.firstName);
+    const userLastName = useSelector(state=>state.account.lastName);
+    const accountImageUrl = useSelector(state=>state.account.accountImageUrl);
+    console.log(`${userFirstName} ${userLastName} ${accountImageUrl}`)
     const accountHandle = () => {
         setAccountOpen(!isAccountOpen);
     }
@@ -102,11 +106,11 @@ const NavigationDrawer = () => {
                 <ListSubheader className={classes.accountHeader}>Account</ListSubheader>
                 <ListItemButton onClick={accountHandle} selected={isAccountOpen}>
                     <ListItemAvatar>
-                        <Avatar src={avatar}>
+                        <Avatar src={accountImageUrl}>
                             <AccountCircleOutlined/>
                         </Avatar>
                     </ListItemAvatar>
-                    <ListItemText>Vladimir Kozlovsky</ListItemText>
+                    <ListItemText>{userFirstName} {userLastName}</ListItemText>
                     {isAccountOpen ? <ExpandLessOutlined/> : <ExpandMoreOutlined/>}
                 </ListItemButton>
                 <Collapse in={isAccountOpen} timeout={"auto"} classes={{
