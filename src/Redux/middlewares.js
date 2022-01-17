@@ -1,5 +1,6 @@
 export const loggingMiddleware = store=>next=>action=>{
-    console.log(`Now processing ${action.type}`);
-    console.log(`State ${store.getState()}`)
-    return next(action);
+    console.log("Original state", store.getState());
+    console.log("Now processing:", action)
+    next(action);
+    console.log("After action", store.getState())
 }

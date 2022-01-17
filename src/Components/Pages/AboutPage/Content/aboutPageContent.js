@@ -6,9 +6,12 @@ const AboutPageContent = () => {
     const accountLastName = useSelector(state => state.account.lastName);
     const accountImage = useSelector(state => state.account.accountImageUrl);
     const aboutAccount = useSelector(state => state.account.aboutAccount);
-    const accountBirthDay = useSelector(store=>store.account.birthDate);
-    return <AccountPageContent alternativeName={"Unknown name :("} name={accountUserName} lastName={accountLastName}
-                               accountImage={accountImage} aboutAccount={aboutAccount} birthDay={accountBirthDay}/>;
+    const accountBirthday = useSelector(state => state.account.birthday);
+    return <AccountPageContent alternativeName={"Unknown name :("} firstName={accountUserName}
+                               lastName={accountLastName}
+                               accountImage={accountImage}
+                               aboutAccount={aboutAccount}
+                               birthday={accountBirthday}/>;
 }
 
 export default AboutPageContent;

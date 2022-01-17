@@ -13,24 +13,31 @@ const CardsStack = (props) => {
     const pages = Math.round(info.length / cardsPerPage) + (((info.length % cardsPerPage) > 0) ? 1 : 0);
     const isPaginateAble = pages > 1;
     const onNavigationClicked = (event, value) => {
-        console.log("value" + value)
         const end = value * cardsPerPage > info.length ? info.length : value * cardsPerPage;
         const start = end - ((end % cardsPerPage > 0) ? end % cardsPerPage : cardsPerPage);
-        console.log("end" + end)
-        console.log("start" + start)
         setCurrentCards(info.slice(start, end));
         setCurrentPage(value);
     }
-    console.log(info)
     return (
-        <div className={classes.mainContainer}>
-            <div className={classes.cardsContainer}>
+        <div
+            className={classes.mainContainer}>
+            <div
+                className={classes.cardsContainer}>
                 {(isPaginateAble ? currentCards : info).map(element =>
-                    <Card cardName={element.title} cardDescription={element.description} kanji={element.kanji}/>
+                    <Card
+                        cardName={element.title}
+                        cardDescription={element.description}
+                        kanji={element.kanji}/>
                 )}
             </div>
-            {isPaginateAble ? <Pagination count={pages} size={"large"} color={"primary"} page={currentPage}
-                                          onChange={onNavigationClicked}/> : null}
+            {isPaginateAble
+                ? <Pagination
+                count={pages}
+                size={"large"}
+                color={"primary"}
+                page={currentPage}
+                onChange={onNavigationClicked}/>
+                : null}
         </div>
     )
 }
