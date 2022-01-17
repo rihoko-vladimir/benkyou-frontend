@@ -136,14 +136,23 @@ const MySetsPageContent = () => {
             kanji: ["日", "本", "語", "は", "と", "て", "も", "面", "白", "い", "だ", "ね", "は", "と", "て", "も", "面", "白", "い", "だ", "ね", "は", "と", "て", "も", "面", "白", "い", "だ", "ね", "は", "と", "て", "も", "面", "白", "い", "だ", "ね", "は", "と", "て", "も", "面", "白", "い", "だ", "ね", "は", "と", "て", "も", "面", "白", "い", "だ", "ね", "は", "と", "て", "も", "面", "白", "い", "だ", "ね", "は", "と", "て", "も", "面", "白", "い", "だ", "ね"]
         },];
     return (
-        <div className={classes.pageContainer}>
-            <div className={classes.headerContainer}>
-                <Typography variant={"h4"}>My Sets</Typography>
-                <Button variant={"contained"} size={"large"} endIcon={<AddOutlined/>}>
+        <div
+            className={classes.pageContainer}>
+            <div
+                className={classes.headerContainer}>
+                <Typography
+                    variant={"h4"}>
+                    My Sets
+                </Typography>
+                <Button
+                    variant={"contained"}
+                    size={"large"}
+                    endIcon={<AddOutlined/>}>
                     Add new set
                 </Button>
             </div>
-            <CardsStack info={info}/>
+            <CardsStack
+                info={info}/>
         </div>);
 }
 

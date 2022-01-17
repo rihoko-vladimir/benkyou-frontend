@@ -4,19 +4,25 @@ import useStyle from "./style";
 const KanjiInfo = (props) => {
     const classes = useStyle();
     return (
-        <div className={classes.kanjiInfoContainer}>
-            <div className={classes.kanji}>
-                <p className={classes.noMargin}>
+        <div
+            className={classes.kanjiInfoContainer}>
+            <div
+                className={classes.kanji}>
+                <p
+                    className={classes.noMargin}>
                     {props.kanjiObject.kanji}
                 </p>
             </div>
-            <div className={classes.kanjiReadings}>
-                <div className={classes.reading}>
+            <div
+                className={classes.kanjiReadings}>
+                <div
+                    className={classes.reading}>
                     <p>
                         {props.kanjiObject.kunyoumi.join(",")}
                     </p>
                 </div>
-                <div className={classes.reading}>
+                <div
+                    className={classes.reading}>
                     <p>
                         {props.kanjiObject.onyoumi.join(",")}
                     </p>

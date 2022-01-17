@@ -1,5 +1,5 @@
 import useStyle from "./style";
-import {Button, TextField, Typography} from "@mui/material";
+import {TextField, Typography} from "@mui/material";
 import CardsStack from "../../../CardsStackComponent/cardsStack";
 import {useState} from "react";
 
@@ -54,14 +54,22 @@ const AllSetsPageContent = () => {
         console.log(text)
     }
     return (
-        <div className={classes.pageContainer}>
-            <Typography variant={"h4"}>All Sets</Typography>
-            <div className={classes.inputContainer}>
-                <TextField variant={"outlined"} className={classes.searchBarClass}
-                           onChange={(event) => onTextInputChanged(event.target.value)}
-                           placeholder={"Search for new sets"}/>
+        <div
+            className={classes.pageContainer}>
+            <Typography
+                variant={"h4"}>
+                All Sets
+            </Typography>
+            <div
+                className={classes.inputContainer}>
+                <TextField
+                    variant={"outlined"} className={classes.searchBarClass}
+                    onChange={(event) =>
+                        onTextInputChanged(event.target.value)}
+                    placeholder={"Search for new sets"}/>
             </div>
-            <CardsStack info={state.filteredResults}/>
+            <CardsStack
+                info={state.filteredResults}/>
         </div>
     )
 }

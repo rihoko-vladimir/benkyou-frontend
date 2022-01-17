@@ -11,18 +11,20 @@ import {
 import {combineReducers} from "redux";
 
 const dummyAccountState = {
-    firstName: "Unknown Name",
-    lastName: "Unknown Last Name",
-    birthDate: "13.12.2021",
+    firstName: "Vladimir",
+    lastName: "Kozlovsky",
+    //YYYY-MM-DD
+    birthday: "2021-12-13",
     aboutAccount: "lorem ipsum i guess",
-    accountImageUrl: "https://google.com"
+    accountImageUrl: "https://lh3.googleusercontent.com/a-/AOh14GineJdMiu0253KCDxizNsvnYdwMFjTDXL3fjgC1vQ=s288-p-rw-no",
+    isLoggedIn: false,
 }
 const dummyCardsState = {myCards: []};
 
 const accountReducer = (state = dummyAccountState, action) => {
     switch (action.type) {
         case CHANGE_FIRST_NAME:
-            return {...state, name: action.payload}
+            return {...state, firstName: action.payload}
         case CHANGE_LAST_NAME:
             return {...state, lastName: action.payload}
         case CHANGE_BIRTH_DATE:
@@ -31,10 +33,8 @@ const accountReducer = (state = dummyAccountState, action) => {
             return {...state, aboutAccount: action.payload}
         case CHANGE_PICTURE:
             return {...state, accountImageUrl: action.payload}
-        default:
-            console.log("something horrible happened at accountReducer")
-            return state;
     }
+    return state;
 }
 
 const myCardsReducer = (state = dummyCardsState, action) => {
@@ -45,10 +45,8 @@ const myCardsReducer = (state = dummyCardsState, action) => {
             return {myCards: [...state.myCards.filter((card) => card.id !== action.payload)]}
         case MODIFY_CARD:
             return {myCards: [...state.myCards, action.payload]}
-        default:
-            console.log("something horrible happened at myCardsReducer")
-            return state;
     }
+    return state;
 }
 
 export default combineReducers({
