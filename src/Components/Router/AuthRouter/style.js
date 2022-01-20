@@ -11,7 +11,9 @@ const useStyle = makeStyles({
         animationName: "$brightness_anim",
         animationDuration: "3s",
         animationFillMode: "forwards",
+        animationDelay: "1s",
         zIndex: 0,
+        filter: "brightness(0.9)",
     },
     blur: {
         position: "absolute",
@@ -24,10 +26,10 @@ const useStyle = makeStyles({
     },
     "@keyframes brightness_anim": {
         from: {
-            filter: "brightness(1)",
+            filter: "brightness(0.9)",
         },
         to: {
-            filter: "brightness(0.6)",
+            filter: "brightness(0.4)",
         }
     },
     container: {
@@ -39,13 +41,26 @@ const useStyle = makeStyles({
         zIndex: 3,
     },
     card: {
-        width: "600px",
-        height: "600px",
+        boxSizing: "border-box",
+        width: "630px",
         display: "flex",
         flexDirection: "column",
         backgroundColor: "white",
         zIndex: 4,
         borderRadius: "12px",
+        padding: "32px",
+    },
+    fields: {
+        display: "flex",
+        flexDirection: "column",
+        rowGap: "12px",
+        marginTop: "32px",
+    },
+    buttons: {
+        display: "flex",
+        flexDirection: "column",
+        rowGap: "12px",
+        marginTop: "32px",
     }
 });
 
