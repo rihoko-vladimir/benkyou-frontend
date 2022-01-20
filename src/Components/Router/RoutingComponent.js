@@ -1,11 +1,18 @@
-import RootRouter from "./RootRouter/RootRouter";
+import LoggedRouter from "./RootRouter/RootRouter";
 import AuthRouter from "./AuthRouter/AuthRouter";
+import StartPage from "../Pages/StartPage/startPage";
 
 const RoutingComponent = () => {
-    if (window.location.host.split('.')[0] === "auth"){
-        return <AuthRouter/>
-    }else {
-        return <RootRouter/>
+    switch (window.location.host.split('.')[0]) {
+        case "auth": {
+            return <AuthRouter/>
+        }
+        case "study": {
+            return <LoggedRouter/>
+        }
+        default: {
+            return <StartPage/>
+        }
     }
 }
-    export default RoutingComponent;
+export default RoutingComponent;

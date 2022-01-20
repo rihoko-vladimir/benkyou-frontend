@@ -6,3 +6,5 @@ export const CHANGE_PICTURE = "account/pictureChange";
 export const ADD_NEW_CARD = "myCards/addNewCard";
 export const REMOVE_CARD = "myCards/removeCard";
 export const MODIFY_CARD = "myCards/modifyCard";
+export const LOG_IN = "account/login";
+export const LOG_OUT = "account/logout";

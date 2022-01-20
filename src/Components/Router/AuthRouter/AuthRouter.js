@@ -2,6 +2,7 @@ import useStyle from "./style";
 import {Button, TextField, Typography} from "@mui/material";
 
 const AuthRouter = () => {
+    //currently just a page, i'll split everything in future
     const classes = useStyle();
     return (
         <div className={classes.container}>
@@ -24,7 +25,7 @@ const AuthRouter = () => {
                         <Button size={"large"}>
                             Log in with Google
                         </Button>
-                        <Typography>
+                        <Typography variant={"subtitle1"}>
                             Don't have an account yet?
                         </Typography>
                         <Button variant={"text"} size={"large"}>
