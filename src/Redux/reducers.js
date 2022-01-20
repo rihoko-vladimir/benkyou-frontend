@@ -28,7 +28,7 @@ const accountReducer = (state = dummyAccountState, action) => {
         case CHANGE_LAST_NAME:
             return {...state, lastName: action.payload}
         case CHANGE_BIRTH_DATE:
-            return {...state, birthDate: action.payload}
+            return {...state, birthday: action.payload}
         case CHANGE_ABOUT_INFO:
             return {...state, aboutAccount: action.payload}
         case CHANGE_PICTURE:
