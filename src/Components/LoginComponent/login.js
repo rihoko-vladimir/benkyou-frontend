@@ -5,11 +5,10 @@ import {useNavigate} from "react-router";
 const LoginComponent = () => {
     const navigate = useNavigate();
     const classes = useStyle();
-    const register = () => {
-        setTimeout(() => navigate("/registration"), 250)
-    };
+    const register = () => navigate("/registration");
     return (
-        <div><Typography variant={"h4"}>Hey there!<Typography variant={"subtitle1"}>We need you to log in before
+        <div>
+            <Typography variant={"h4"}>Hey there!<Typography variant={"subtitle1"}>We need you to log in before
             using 勉強！</Typography></Typography>
             <div className={classes.fields}>
                 <TextField fullWidth variant={"outlined"} label={"Email"} placeholder={"youremail@mail.com"}/>
@@ -26,7 +25,7 @@ const LoginComponent = () => {
                 <Typography variant={"subtitle1"}>
                     Don't have an account yet?
                 </Typography>
-                <Button variant={"text"} size={"large"} onClick={() => register()}>
+                <Button variant={"text"} size={"large"} onClick={register}>
                     Sign up
                 </Button>
             </div>
