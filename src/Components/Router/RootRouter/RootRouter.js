@@ -39,8 +39,7 @@ const RootRouter = () => {
                         element={<HomePageContent/>}/>
                     <Route
                         path={"*"}
-                        element={<Navigate
-                            to={"/error/404"}/>}/>
+                        element={<Navigate to={"/error/404"}/>}/>
                 </Route>
             </Routes>
         </div>

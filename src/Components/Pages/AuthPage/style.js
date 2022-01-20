@@ -29,7 +29,7 @@ const useStyle = makeStyles({
             filter: "brightness(0.9)",
         },
         to: {
-            filter: "brightness(0.4)",
+            filter: "brightness(0.5)",
         }
     },
     container: {
@@ -50,18 +50,6 @@ const useStyle = makeStyles({
         borderRadius: "12px",
         padding: "32px",
     },
-    fields: {
-        display: "flex",
-        flexDirection: "column",
-        rowGap: "12px",
-        marginTop: "32px",
-    },
-    buttons: {
-        display: "flex",
-        flexDirection: "column",
-        rowGap: "12px",
-        marginTop: "32px",
-    }
 });
 
 export default useStyle;

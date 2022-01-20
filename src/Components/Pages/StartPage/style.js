@@ -9,7 +9,12 @@ const useStyle = makeStyles({
         height: "100%",
         pointerEvents: "none",
         zIndex: 0,
-        backgroundImage: "url(https://wallpaperaccess.com/full/19069.jpg)"
+        backgroundImage: "url(https://wallpaperaccess.com/full/19069.jpg)",
+        filter: "brightness(0.9)",
+        animationName: "$brightness_anim",
+        animationDuration: "2s",
+        animationFillMode: "forwards",
+        animationDelay: "1s",
     },
     blur: {
         position: "absolute",
@@ -19,6 +24,14 @@ const useStyle = makeStyles({
         height: "100%",
         backdropFilter: "blur(20px)",
         zIndex: 1,
+    },
+    "@keyframes brightness_anim": {
+        from: {
+            filter: "brightness(0.9)",
+        },
+        to: {
+            filter: "brightness(0.6)",
+        }
     },
     container: {
         width: "100%",

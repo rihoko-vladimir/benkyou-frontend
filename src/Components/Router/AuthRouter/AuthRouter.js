@@ -1,42 +1,19 @@
-import useStyle from "./style";
-import {Button, TextField, Typography} from "@mui/material";
+import AuthPage from "../../Pages/AuthPage/authPage";
+import LoginComponent from "../../LoginComponent/login";
+import {Route, Routes} from "react-router-dom";
+import {Typography} from "@mui/material";
+import Registration from "../../../RegistrationComponent/registration";
 
 const AuthRouter = () => {
-    //currently just a page, i'll split everything in future
-    const classes = useStyle();
-    return (
-        <div className={classes.container}>
-            <div className={classes.background}>
-                <div className={classes.blur}/>
-            </div>
-            <div className={classes.container}>
-                <div className={classes.card}>
-                    <Typography variant={"h4"}>Hey there!<Typography variant={"subtitle1"}>We need you to log in before
-                        using 勉強！</Typography></Typography>
-                    <div className={classes.fields}>
-                        <TextField fullWidth variant={"outlined"} label={"Email"} placeholder={"youremail@mail.com"}/>
-                        <TextField fullWidth variant={"outlined"} label={"Password"}
-                                   placeholder={"Your very secure password"}/>
-                    </div>
-                    <div className={classes.buttons}>
-                        <Button variant={"contained"} size={"large"}>
-                            Log in
-                        </Button>
-                        <Button size={"large"}>
-                            Log in with Google
-                        </Button>
-                        <Typography variant={"subtitle1"}>
-                            Don't have an account yet?
-                        </Typography>
-                        <Button variant={"text"} size={"large"}>
-                            Sign up
-                        </Button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    )
-
+    //currently just a page, i'll split everything in a future
+    //TODO add registration
+    return <AuthPage render={
+        <Routes>
+            <Route path={"registration"} element={<Registration/>}/>
+            <Route index element={<LoginComponent/>}/>
+            <Route path={"*"} element={<Typography variant={"h4"}>Unknown route</Typography>}/>
+        </Routes>
+    }/>
 }
 
 export default AuthRouter;
