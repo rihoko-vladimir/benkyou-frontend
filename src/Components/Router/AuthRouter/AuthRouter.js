@@ -2,7 +2,7 @@ import AuthPage from "../../Pages/AuthPage/authPage";
 import LoginComponent from "../../LoginComponent/login";
 import {Route, Routes} from "react-router-dom";
 import {Typography} from "@mui/material";
-import Registration from "../../../RegistrationComponent/registration";
+import Registration from "../../RegistrationComponent/registration";
 
 const AuthRouter = () => {
     //currently just a page, i'll split everything in a future
