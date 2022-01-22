@@ -33,7 +33,7 @@ const applicationItems = [
     {
         name: "Home",
         icon: <HomeOutlined/>,
-        path: "/home"
+        path: "/"
     },
     {
         name: "My Sets",
@@ -62,7 +62,7 @@ const NavigationDrawerContent = (props) => {
     }
     applicationItems.map(element => {
         Object.assign(element, {
-            isSelected: location.pathname.includes(element.path)
+            isSelected: location.pathname === element.path
         })
         return element;
     })

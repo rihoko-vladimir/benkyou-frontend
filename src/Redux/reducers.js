@@ -5,6 +5,8 @@ import {
     CHANGE_FIRST_NAME,
     CHANGE_LAST_NAME,
     CHANGE_PICTURE,
+    LOG_IN,
+    LOG_OUT,
     MODIFY_CARD,
     REMOVE_CARD
 } from "./types";
@@ -28,11 +30,15 @@ const accountReducer = (state = dummyAccountState, action) => {
         case CHANGE_LAST_NAME:
             return {...state, lastName: action.payload}
         case CHANGE_BIRTH_DATE:
-            return {...state, birthDate: action.payload}
+            return {...state, birthday: action.payload}
         case CHANGE_ABOUT_INFO:
             return {...state, aboutAccount: action.payload}
         case CHANGE_PICTURE:
             return {...state, accountImageUrl: action.payload}
+        case LOG_IN:
+            return {...state, isLoggedIn: true}
+        case LOG_OUT:
+            return {...state, isLoggedIn: false}
     }
     return state;
 }
