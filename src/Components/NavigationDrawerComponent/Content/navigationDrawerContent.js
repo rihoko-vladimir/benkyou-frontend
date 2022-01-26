@@ -28,6 +28,8 @@ import {
 } from "@mui/icons-material";
 import useDrawerStyles from "../style";
 import PropTypes from "prop-types";
+import {useDispatch} from "react-redux";
+import {logoutTest} from "../../../Redux/actions";
 
 const applicationItems = [
     {
@@ -56,6 +58,7 @@ const NavigationDrawerContent = (props) => {
     const classes = useDrawerStyles();
     const location = useLocation();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [isAccountOpen, setAccountOpen] = useState(false);
     const accountHandle = () => {
         setAccountOpen(!isAccountOpen);
@@ -69,6 +72,12 @@ const NavigationDrawerContent = (props) => {
     const handleMenuClick = (path) => {
         navigate(path);
     };
+
+    const onLogoutClicked = () => {
+        //TODO fix that later!
+        dispatch(logoutTest());
+        window.location.replace(`${window.location.protocol}//${window.location.hostname.split(".")[1]}:${window.location.port}`);
+    }
 
     const navigateToAccountSettings =
         () => navigate("/account");
@@ -90,30 +99,30 @@ const NavigationDrawerContent = (props) => {
             <List>
                 {applicationItems.map(
                     (element) =>
-                    <ListItemButton
-                        selected={element.isSelected}
-                        key={element.name}
-                        classes={{
-                        container: classes.itemContainer
-                    }}
-                        onClick={() => handleMenuClick(element.path)}>
-                        <ListItemIcon>
-                            {element.icon}
-                        </ListItemIcon>
-                        <ListItemText>
-                            {element.name}
-                        </ListItemText>
-                    </ListItemButton>
+                        <ListItemButton
+                            selected={element.isSelected}
+                            key={element.name}
+                            classes={{
+                                container: classes.itemContainer
+                            }}
+                            onClick={() => handleMenuClick(element.path)}>
+                            <ListItemIcon>
+                                {element.icon}
+                            </ListItemIcon>
+                            <ListItemText>
+                                {element.name}
+                            </ListItemText>
+                        </ListItemButton>
                 )}
             </List>
             <Divider
                 sx={
-                {
-                    borderBottomColor: hexToRgb("#70797B"),
-                    marginLeft: '20px',
-                    marginRight: '20px',
-                }
-            }/>
+                    {
+                        borderBottomColor: hexToRgb("#70797B"),
+                        marginLeft: '20px',
+                        marginRight: '20px',
+                    }
+                }/>
             <List>
                 <ListSubheader
                     className={classes.accountHeader}>
@@ -139,8 +148,8 @@ const NavigationDrawerContent = (props) => {
                     in={isAccountOpen}
                     timeout={"auto"}
                     classes={{
-                    root: classes.accountMenu,
-                }}>
+                        root: classes.accountMenu,
+                    }}>
                     <List>
                         <ListItemButton
                             className={classes.accountItems}
@@ -152,6 +161,7 @@ const NavigationDrawerContent = (props) => {
                                 primary={"Account preferences"}/>
                         </ListItemButton>
                         <ListItemButton
+                            onClick={onLogoutClicked}
                             className={classes.accountItems}>
                             <ListItemIcon>
                                 <ArrowBackOutlined/>

@@ -4,19 +4,22 @@ import {useSelector} from "react-redux";
 import {useState} from "react";
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
+import {useNavigate} from "react-router";
 
 const StartPage = () => {
     const classes = useStyle();
+    const navigate = useNavigate();
     const isAuthenticated = useSelector(state => state.account.isLoggedIn);
     const checkupFunction = () => {
+        console.log(isAuthenticated)
         if (isAuthenticated) {
             setLoading(false);
             setSuccess(true);
-            setTimeout(() => window.location.replace(`${window.location.protocol}//study.${window.location.hostname}:${window.location.port}`), 300);
+            setTimeout(()=>navigate("/study"),300);
         } else {
             setLoading(false);
             setFailed(true);
-            setTimeout(() => window.location.replace(`${window.location.protocol}//auth.${window.location.hostname}:${window.location.port}`), 300);
+            setTimeout(()=>navigate("/auth"),300);
         }
     };
     const [isLoading, setLoading] = useState(true);

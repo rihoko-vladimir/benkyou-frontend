@@ -5,6 +5,8 @@ import {
     CHANGE_FIRST_NAME,
     CHANGE_LAST_NAME,
     CHANGE_PICTURE,
+    LOGIN_TEST,
+    LOGOUT_TEST,
     MODIFY_CARD,
     REMOVE_CARD
 } from "./types";
@@ -33,6 +35,14 @@ export const changePicture = (newPictureUrl) => ({
     type: CHANGE_PICTURE,
     payload: newPictureUrl,
 });
+
+export const loginTest = () => ({
+    type: LOGIN_TEST,
+})
+
+export const logoutTest = () => ({
+    type: LOGOUT_TEST,
+})
 
 export const addNewCard = (newCard) => ({
     type: ADD_NEW_CARD,
