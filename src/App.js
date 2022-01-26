@@ -8,10 +8,15 @@ import {Provider} from "react-redux";
 import {applyMiddleware, createStore} from "@reduxjs/toolkit";
 import rootReducer from "./Redux/reducers";
 import {loggingMiddleware} from "./Redux/middlewares";
+import {composeWithDevTools} from "redux-devtools-extension";
+import {saveState} from "./Redux/saveStateToCookies";
 
 
 function App() {
-    const store = createStore(rootReducer, applyMiddleware(loggingMiddleware));
+    const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(loggingMiddleware)));
+    store.subscribe(()=>{
+        saveState(store.getState())
+    })
     return (
         <Provider
             store={store}>

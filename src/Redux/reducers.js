@@ -6,11 +6,12 @@ import {
     CHANGE_LAST_NAME,
     CHANGE_PICTURE,
     LOG_IN,
-    LOG_OUT,
+    LOG_OUT, LOGIN_TEST, LOGOUT_TEST,
     MODIFY_CARD,
     REMOVE_CARD
 } from "./types";
 import {combineReducers} from "redux";
+import {loadState} from "./saveStateToCookies";
 
 const dummyAccountState = {
     firstName: "Vladimir",
@@ -21,9 +22,10 @@ const dummyAccountState = {
     accountImageUrl: "https://lh3.googleusercontent.com/a-/AOh14GineJdMiu0253KCDxizNsvnYdwMFjTDXL3fjgC1vQ=s288-p-rw-no",
     isLoggedIn: false,
 }
+const loadedState = loadState();
 const dummyCardsState = {myCards: []};
 
-const accountReducer = (state = dummyAccountState, action) => {
+const accountReducer = (state = Object.keys(loadedState).length===0?dummyAccountState:loadedState["account"], action) => {
     switch (action.type) {
         case CHANGE_FIRST_NAME:
             return {...state, firstName: action.payload}
@@ -36,14 +38,42 @@ const accountReducer = (state = dummyAccountState, action) => {
         case CHANGE_PICTURE:
             return {...state, accountImageUrl: action.payload}
         case LOG_IN:
-            return {...state, isLoggedIn: true}
+            return {
+                //TODO add api calls
+                ...state,
+                firstName: action.payload.firstName,
+                lastName: action.payload.lastName,
+                birthday: action.payload.birthday,
+                aboutAccount: action.payload.aboutAccount,
+                accountImageUrl: action.payload.accountImageUrl,
+                isLoggedIn: true
+            }
         case LOG_OUT:
-            return {...state, isLoggedIn: false}
+            //TODO add api calls
+            return {
+                ...state,
+                firstName: undefined,
+                lastName: undefined,
+                birthday: undefined,
+                aboutAccount: undefined,
+                accountImageUrl: undefined,
+                isLoggedIn: false
+            }
+        case LOGIN_TEST:
+            return {
+                ...state, isLoggedIn: true,
+            }
+        case LOGOUT_TEST:
+            return {
+                ...state, isLoggedIn: false,
+            }
     }
+    console.log("loaded",loadedState)
+    console.log("state",state)
     return state;
 }
 
-const myCardsReducer = (state = dummyCardsState, action) => {
+const myCardsReducer = (state = Object.keys(loadedState).length===0?dummyCardsState:loadedState["myCards"], action) => {
     switch (action.type) {
         case ADD_NEW_CARD:
             return {myCards: [...state.myCards, action.payload]}
@@ -52,6 +82,7 @@ const myCardsReducer = (state = dummyCardsState, action) => {
         case MODIFY_CARD:
             return {myCards: [...state.myCards, action.payload]}
     }
+    console.log(state)
     return state;
 }
 

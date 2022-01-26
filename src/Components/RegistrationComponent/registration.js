@@ -5,6 +5,7 @@ import {useNavigate} from "react-router";
 import UsernameComponent from "../UsernameStepComponent/username";
 import PasswordComponent from "../PasswordStepComponent/password";
 import TermsComponent from "../TermsStep/terms";
+import EmailConfirmationComponent from "../EmailConfirmationComponent/emailConfirmation";
 
 const RegistrationComponent = () => {
     const navigate = useNavigate();
@@ -16,7 +17,7 @@ const RegistrationComponent = () => {
     const previousStepCallback = () => {
         setCurrentStep(currentStep - 1);
     }
-    const onCancelClickListener = () => navigate("/");
+    const onCancelClickListener = () => navigate("/auth");
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -32,9 +33,6 @@ const RegistrationComponent = () => {
                 </Step>
                 <Step>
                     <StepLabel>Terms</StepLabel>
-                </Step>
-                <Step>
-                    <StepLabel>Preferences</StepLabel>
                 </Step>
                 <Step>
                     <StepLabel>Confirmation</StepLabel>
@@ -55,7 +53,10 @@ const RegistrationComponent = () => {
                     />)
                     : currentStep === 2
                         ? (<TermsComponent nextClickListener={nextStepCallback}
-                                           previousClickListener={previousStepCallback}/>) : null
+                                           previousClickListener={previousStepCallback}/>)
+                        : currentStep === 3
+                            ? (<EmailConfirmationComponent email={email}/>)
+                            : null
             }
         </div>
     )
