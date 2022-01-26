@@ -12,6 +12,7 @@ const useStyle = makeStyles({
         animationDuration: "3s",
         animationFillMode: "forwards",
         animationDelay: "1s",
+        animationTimingFunction:"ease-in-out",
         zIndex: 0,
         filter: "brightness(0.9)",
     },
@@ -29,7 +30,7 @@ const useStyle = makeStyles({
             filter: "brightness(0.9)",
         },
         to: {
-            filter: "brightness(0.5)",
+            filter: "brightness(0.4)",
         }
     },
     container: {

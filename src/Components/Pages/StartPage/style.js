@@ -15,6 +15,7 @@ const useStyle = makeStyles({
         animationDuration: "2s",
         animationFillMode: "forwards",
         animationDelay: "1s",
+        animationTimingFunction: "ease-in-out",
     },
     blur: {
         position: "absolute",

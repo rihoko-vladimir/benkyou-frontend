@@ -5,6 +5,7 @@ import {useNavigate} from "react-router";
 import UsernameComponent from "../UsernameStepComponent/username";
 import PasswordComponent from "../PasswordStepComponent/password";
 import TermsComponent from "../TermsStep/terms";
+import EmailConfirmationComponent from "../EmailConfirmationComponent/emailConfirmation";
 
 const RegistrationComponent = () => {
     const navigate = useNavigate();
@@ -34,9 +35,6 @@ const RegistrationComponent = () => {
                     <StepLabel>Terms</StepLabel>
                 </Step>
                 <Step>
-                    <StepLabel>Preferences</StepLabel>
-                </Step>
-                <Step>
                     <StepLabel>Confirmation</StepLabel>
                 </Step>
             </Stepper>
@@ -55,7 +53,10 @@ const RegistrationComponent = () => {
                     />)
                     : currentStep === 2
                         ? (<TermsComponent nextClickListener={nextStepCallback}
-                                           previousClickListener={previousStepCallback}/>) : null
+                                           previousClickListener={previousStepCallback}/>)
+                        : currentStep === 3
+                            ? (<EmailConfirmationComponent email={email}/>)
+                            : null
             }
         </div>
     )
