@@ -17,7 +17,7 @@ const RegistrationComponent = () => {
     const previousStepCallback = () => {
         setCurrentStep(currentStep - 1);
     }
-    const onCancelClickListener = () => navigate("/");
+    const onCancelClickListener = () => navigate("/auth");
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");

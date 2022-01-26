@@ -19,9 +19,9 @@ const LoginComponent = () => {
     const onLoginClicked = () => {
         //TODO fix that later!
         dispatch(loginTest())
-        window.location.replace(`${window.location.protocol}//${window.location.hostname.split(".")[1]}:${window.location.port}`);
+        navigate("/");
     };
-    const register = () => navigate("/registration");
+    const register = () => navigate("/auth/registration");
     return (
         <div>
             <Typography variant={"h4"}>Hey there!</Typography>

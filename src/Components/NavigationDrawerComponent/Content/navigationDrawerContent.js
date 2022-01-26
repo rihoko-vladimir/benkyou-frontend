@@ -35,22 +35,22 @@ const applicationItems = [
     {
         name: "Home",
         icon: <HomeOutlined/>,
-        path: "/"
+        path: "/study"
     },
     {
         name: "My Sets",
         icon: <StarOutlined/>,
-        path: "/my-sets"
+        path: "/study/my-sets"
     },
     {
         name: "All Sets",
         icon: <StarOutlineOutlined/>,
-        path: "/all-sets"
+        path: "/study/all-sets"
     },
     {
         name: "About",
         icon: <InfoOutlined/>,
-        path: "/about"
+        path: "/study/about"
     }
 ];
 
@@ -76,11 +76,11 @@ const NavigationDrawerContent = (props) => {
     const onLogoutClicked = () => {
         //TODO fix that later!
         dispatch(logoutTest());
-        window.location.replace(`${window.location.protocol}//${window.location.hostname.split(".")[1]}:${window.location.port}`);
+        navigate("/");
     }
 
     const navigateToAccountSettings =
-        () => navigate("/account");
+        () => navigate("/study/account");
 
     return (
         <Drawer variant={"permanent"}
