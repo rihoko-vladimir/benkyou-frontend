@@ -6,12 +6,13 @@ import {
     CHANGE_LAST_NAME,
     CHANGE_PICTURE,
     LOG_IN,
-    LOG_OUT, LOGIN_TEST, LOGOUT_TEST,
+    LOG_OUT,
+    LOGIN_TEST,
+    LOGOUT_TEST,
     MODIFY_CARD,
     REMOVE_CARD
 } from "./types";
 import {combineReducers} from "redux";
-import {loadState} from "./saveStateToCookies";
 
 const dummyAccountState = {
     firstName: "Vladimir",
@@ -22,10 +23,10 @@ const dummyAccountState = {
     accountImageUrl: "https://lh3.googleusercontent.com/a-/AOh14GineJdMiu0253KCDxizNsvnYdwMFjTDXL3fjgC1vQ=s288-p-rw-no",
     isLoggedIn: false,
 }
-const loadedState = loadState();
+
 const dummyCardsState = {myCards: []};
 
-const accountReducer = (state = Object.keys(loadedState).length===0?dummyAccountState:loadedState["account"], action) => {
+const accountReducer = (state = dummyAccountState, action) => {
     switch (action.type) {
         case CHANGE_FIRST_NAME:
             return {...state, firstName: action.payload}
@@ -68,12 +69,11 @@ const accountReducer = (state = Object.keys(loadedState).length===0?dummyAccount
                 ...state, isLoggedIn: false,
             }
     }
-    console.log("loaded",loadedState)
-    console.log("state",state)
+    console.log("state", state)
     return state;
 }
 
-const myCardsReducer = (state = Object.keys(loadedState).length===0?dummyCardsState:loadedState["myCards"], action) => {
+const myCardsReducer = (state = dummyCardsState, action) => {
     switch (action.type) {
         case ADD_NEW_CARD:
             return {myCards: [...state.myCards, action.payload]}

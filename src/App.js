@@ -9,26 +9,33 @@ import {applyMiddleware, createStore} from "@reduxjs/toolkit";
 import rootReducer from "./Redux/reducers";
 import {loggingMiddleware} from "./Redux/middlewares";
 import {composeWithDevTools} from "redux-devtools-extension";
-import {saveState} from "./Redux/saveStateToCookies";
+import {persistReducer, persistStore} from "redux-persist";
+import persistStorage from "redux-persist/lib/storage"
+import {PersistGate} from "redux-persist/integration/react";
 
 
 function App() {
-    const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(loggingMiddleware)));
-    store.subscribe(()=>{
-        saveState(store.getState())
-    })
+    const persistConfig = {
+        key: "APPLICATION_STORAGE",
+        storage: persistStorage
+    }
+    const reducer = persistReducer(persistConfig, rootReducer);
+    const store = createStore(reducer, composeWithDevTools(applyMiddleware(loggingMiddleware)));
+    const persist = persistStore(store);
     return (
         <Provider
             store={store}>
-            <StyledEngineProvider
-                injectFirst>
-                <ThemeProvider
-                    theme={projectLightTheme}>
-                    <BrowserRouter>
-                        <RoutingComponent/>
-                    </BrowserRouter>
-                </ThemeProvider>
-            </StyledEngineProvider>
+            <PersistGate loadint={null} persistor={persist}>
+                <StyledEngineProvider
+                    injectFirst>
+                    <ThemeProvider
+                        theme={projectLightTheme}>
+                        <BrowserRouter>
+                            <RoutingComponent/>
+                        </BrowserRouter>
+                    </ThemeProvider>
+                </StyledEngineProvider>
+            </PersistGate>
         </Provider>
     );
 }
