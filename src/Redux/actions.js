@@ -5,9 +5,12 @@ import {
     CHANGE_FIRST_NAME,
     CHANGE_LAST_NAME,
     CHANGE_PICTURE,
+    LOG_IN,
+    LOG_OUT,
     LOGIN_TEST,
     LOGOUT_TEST,
     MODIFY_CARD,
+    REGISTER,
     REMOVE_CARD
 } from "./types";
 
@@ -57,4 +60,18 @@ export const removeCard = (idToRemove) => ({
 export const modifyCard = (modifiedCard) => ({
     type: MODIFY_CARD,
     payload: modifiedCard,
+});
+
+export const login = (accountCredentials) => ({
+    type: LOG_IN,
+    payload: accountCredentials
+});
+
+export const register = (registrationCredentials) => ({
+    type: REGISTER,
+    payload: registrationCredentials
+})
+
+export const logout = () => ({
+    type: LOG_OUT,
 });

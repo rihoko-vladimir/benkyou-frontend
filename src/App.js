@@ -12,24 +12,24 @@ import {composeWithDevTools} from "redux-devtools-extension";
 import {persistReducer, persistStore} from "redux-persist";
 import persistStorage from "redux-persist/lib/storage"
 import {PersistGate} from "redux-persist/integration/react";
+import createSagaMiddleware from "redux-saga"
 
 
 function App() {
     const persistConfig = {
         key: "APPLICATION_STORAGE",
         storage: persistStorage
-    }
+    };
+    const sagaMiddleware = createSagaMiddleware();
     const reducer = persistReducer(persistConfig, rootReducer);
-    const store = createStore(reducer, composeWithDevTools(applyMiddleware(loggingMiddleware)));
+    const store = createStore(reducer, composeWithDevTools(applyMiddleware(loggingMiddleware, sagaMiddleware)));
     const persist = persistStore(store);
+    // sagaMiddleware.run()
     return (
-        <Provider
-            store={store}>
+        <Provider store={store}>
             <PersistGate loadint={null} persistor={persist}>
-                <StyledEngineProvider
-                    injectFirst>
-                    <ThemeProvider
-                        theme={projectLightTheme}>
+                <StyledEngineProvider injectFirst>
+                    <ThemeProvider theme={projectLightTheme}>
                         <BrowserRouter>
                             <RoutingComponent/>
                         </BrowserRouter>

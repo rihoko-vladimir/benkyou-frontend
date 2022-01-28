@@ -15,7 +15,7 @@ const StartPage = () => {
         if (isAuthenticated) {
             setLoading(false);
             setSuccess(true);
-            setTimeout(()=>navigate("/study"),300);
+            setTimeout(()=>navigate("/hub"),300);
         } else {
             setLoading(false);
             setFailed(true);

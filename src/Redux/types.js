@@ -10,3 +10,4 @@ export const LOG_IN = "account/login";
 export const LOG_OUT = "account/logout";
 export const LOGIN_TEST = "account/loginTest";
 export const LOGOUT_TEST = "account/logoutTest";
+export const REGISTER = "account/register";
