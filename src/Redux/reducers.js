@@ -86,6 +86,10 @@ const myCardsReducer = (state = dummyCardsState, action) => {
     return state;
 }
 
+const kanjiReadingsMatchReducer = ()=>{
+
+}
+
 export default combineReducers({
     account: accountReducer,
     myCards: myCardsReducer,

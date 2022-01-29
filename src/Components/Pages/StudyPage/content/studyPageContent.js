@@ -1,7 +1,10 @@
 import PropTypes from "prop-types";
 import {Button} from "@mui/material";
-import useStyle from "../style";
 import {useState} from "react";
+import MatchWelcome from "../../../MatchComponent/MatchWelcome/match";
+import Guess from "../../../GuessComponent/guess";
+import LearnContainer from "../../../LearnContainerComponent/LearnContainer";
+import MatchLearning from "../../../MatchComponent/MatchLearning/matchLearning";
 
 const modes = {
     NONE: "none",
@@ -10,7 +13,6 @@ const modes = {
 }
 
 const StudyPage = (props) => {
-    const classes = useStyle();
     const [selectedMode, setSelectedMode] = useState(modes.NONE);
     const onMatchClickListener = () => {
         setSelectedMode(modes.MATCH);
@@ -18,22 +20,18 @@ const StudyPage = (props) => {
     const onGuessClickListener = () => {
         setSelectedMode(modes.GUESS)
     };
-    switch (selectedMode){
+    switch (selectedMode) {
         case modes.NONE:
-            return <div className={classes.container}>
-                <Button variant={"outlined"} onClick={onMatchClickListener}>Match readings with kanji</Button>
-                <Button variant={"outlined"} onClick={onGuessClickListener}>Guess kanji by reading</Button>
-            </div>
-        case modes.GUESS:{
-            return <div className={classes.container}>
-                <p>Guess mode</p>
-            </div>
-        }
-        case modes.MATCH:{
-            return <div className={classes.container}>
-                <p>Match mode</p>
-            </div>
-        }
+            return <LearnContainer
+                render={<div>
+                    <Button variant={"outlined"} onClick={onMatchClickListener}>Match readings with kanji</Button>
+                    <Button variant={"outlined"} onClick={onGuessClickListener}>Guess kanji by reading</Button></div>}/>
+        case modes.GUESS:
+            return <LearnContainer render={<Guess/>}/>
+
+        case modes.MATCH:
+            return <LearnContainer render={<MatchLearning/>}/>
+
     }
 }
 

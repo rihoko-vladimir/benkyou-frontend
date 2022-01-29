@@ -11,3 +11,5 @@ Guess.propTypes = {
         onyoumi: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired
     }).isRequired).isRequired
 }
+
+export default Guess;
