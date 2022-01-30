@@ -9,9 +9,25 @@ const useStyle = makeStyles({
         paddingRight: "16px",
         borderRadius: "12px",
         display: "flex",
+        flex: "1",
+        flexWrap: "nowrap",
         columnGap: "8px",
+        alignItems: "start",
+        userSelect: "none",
+    },
+    readingsContainer: {
+        display: "flex",
+        flexDirection: "row",
+        flexWrap: "wrap",
+        columnGap: "8px",
+        rowGap: "8px",
+    },
+    textContainer: {
+        display: "flex",
         alignItems: "center",
-        userSelect: "none"
+        justifyContent: "center",
+        flexDirection: "column",
+        alignSelf: "stretch",
     }
 })
 

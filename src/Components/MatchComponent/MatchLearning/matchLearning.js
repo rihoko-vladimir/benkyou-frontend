@@ -12,9 +12,9 @@ const ALL = "field_all";
 
 const MatchLearning = (props) => {
     const classes = useStyle();
-    const [kunyoumiReadings, setKunyoumiReadings] = useState(["ok1", "ok1++", "ok1+++"]);
-    const [onyoumiReadings, setOnyoumiReadings] = useState(["ok2", "ok2++", "ok2+++"]);
-    const [readings, setReadings] = useState(["ok3", "ok3++", "ok3+++"]);
+    const [kunyoumiReadings, setKunyoumiReadings] = useState(["ok1", "ok1++", "ok1+++", "ok1++++"]);
+    const [onyoumiReadings, setOnyoumiReadings] = useState(["ok2", "ok2++", "ok2+++", "ok2++++"]);
+    const [readings, setReadings] = useState(["ok3", "ok3++", "ok3+++", "ok3++++"]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const fieldTypeMapping = {
         [KUNYOUMI]: {method: setKunyoumiReadings, value: kunyoumiReadings},

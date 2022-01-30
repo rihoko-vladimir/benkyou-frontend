@@ -5,17 +5,18 @@ const useStyle = makeStyles({
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        height: "100%"
+        height: "100%",
     },
     kanjiContainer: {
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        alignItems: "center"
+        alignItems: "center",
+        rowGap: "24px",
     },
     kanji: {
         display: "inline-flex",
-        fontSize: "11em",
+        fontSize: "10em",
         marginTop: "0px",
         marginBottom: "0px",
         userSelect: "none",
@@ -24,8 +25,8 @@ const useStyle = makeStyles({
         display: "flex",
         flexDirection: "row",
         columnGap: "48px",
-        justifyContent: "center",
-        width: "100%"
+        width: "100%",
+        alignItems: "start",
     },
     allReadingsAndButtons: {
         display: "flex",

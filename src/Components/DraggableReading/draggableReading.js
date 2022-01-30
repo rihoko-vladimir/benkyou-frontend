@@ -8,7 +8,7 @@ const DraggableReading = (props) => {
         type: "reading",
         item: {reading: props.reading},
         collect: (monitor) => ({
-            isDragging: !!monitor.isDragging(),
+            isDragging: monitor.isDragging(),
         }),
         end: (draggedItem, monitor) => {
             const dropResult = monitor.getDropResult();
