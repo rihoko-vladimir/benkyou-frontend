@@ -18,7 +18,10 @@ const DraggableReading = (props) => {
     }));
     const classes = useStyle();
     return <div className={classes.reading} ref={drag} style={isDragging
-        ? {backgroundColor: "rgba(130,196,203,0.05)"}
+        ? {
+            backgroundColor: "rgba(130,196,203,0.05)",
+            color: "darkcyan",
+        }
         : {}}>
         <Typography variant={"body2"}>{props.reading}</Typography>
     </div>
