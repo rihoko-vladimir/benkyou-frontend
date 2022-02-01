@@ -108,25 +108,27 @@ const arrayLog = (array, key) => {
 
 export const setCurrentAllReadings = (kanjiArray, currentKanjiIndex) => {
     const sourceArray = [...kanjiArray];
+    arrayLog(sourceArray, "source")
     const correctReadings = [...sourceArray[currentKanjiIndex].kunyoumi, ...sourceArray[currentKanjiIndex].onyoumi];
     arrayLog(sourceArray, "setall");
     sourceArray.splice(currentKanjiIndex, 1);
-    arrayLog(sourceArray, "arrayWithoutCurrentKanji");
-    const firstIncorrectKanjiIndex = Math.round(Math.random() * (sourceArray.length - 1));
+    const arrayWithoutCurrentKanji = [...sourceArray];
+    arrayLog(arrayWithoutCurrentKanji, "arrayWithoutCurrentKanji");
+    const firstIncorrectKanjiIndex = Math.round(Math.random() * (arrayWithoutCurrentKanji.length - 1));
     console.log("first index", firstIncorrectKanjiIndex)
     const firstIncorrectKanjiReadings = [
-        ...sourceArray[firstIncorrectKanjiIndex].kunyoumi,
-        ...sourceArray[firstIncorrectKanjiIndex].onyoumi];
+        ...arrayWithoutCurrentKanji[firstIncorrectKanjiIndex].kunyoumi,
+        ...arrayWithoutCurrentKanji[firstIncorrectKanjiIndex].onyoumi];
     arrayLog(firstIncorrectKanjiReadings, "first readings");
     let secondIncorrectKanjiIndex;
     while (true) {
-        secondIncorrectKanjiIndex = Math.round(Math.random() * (sourceArray.length - 1));
+        secondIncorrectKanjiIndex = Math.round(Math.random() * (arrayWithoutCurrentKanji.length - 1));
         if (firstIncorrectKanjiIndex !== secondIncorrectKanjiIndex) break;
     }
     console.log("second index", secondIncorrectKanjiIndex)
     const secondIncorrectKanjiReadings = [
-        ...sourceArray[secondIncorrectKanjiIndex].kunyoumi,
-        ...sourceArray[secondIncorrectKanjiIndex].onyoumi];
+        ...arrayWithoutCurrentKanji[secondIncorrectKanjiIndex].kunyoumi,
+        ...arrayWithoutCurrentKanji[secondIncorrectKanjiIndex].onyoumi];
     arrayLog(secondIncorrectKanjiReadings, "second readings");
     const allReadings = [...correctReadings, ...firstIncorrectKanjiReadings, ...secondIncorrectKanjiReadings].map(value => ({
         value,

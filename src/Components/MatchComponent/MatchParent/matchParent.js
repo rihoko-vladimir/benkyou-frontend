@@ -36,7 +36,7 @@ const MatchParent = (props) => {
     const onReturnResults = ({selectedKunyoumi, selectedOnyoumi}) => {
         dispatch(addCurrentKanjiMatchResult({selectedKunyoumi, selectedOnyoumi}));
         dispatch(setCurrentKanjiIndex(store.getState().learn.currentKanjiIndex + 1));
-        dispatch(setCurrentAllReadings(store.getState().readings, store.getState().learn.currentKanjiIndex));
+        dispatch(setCurrentAllReadings(store.getState().randomList, store.getState().learn.currentKanjiIndex));
     }
     const allReadings = useSelector(state => state.readings);
     const randomedList = useSelector(state => state.randomList);

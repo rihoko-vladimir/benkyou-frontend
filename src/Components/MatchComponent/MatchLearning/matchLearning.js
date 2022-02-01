@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import useStyle from "./style";
 import ReadingField from "../../ReadingField/readingField";
 import {ArrowForward} from "@mui/icons-material";
@@ -14,6 +14,11 @@ const MatchLearning = (props) => {
     const [kunyoumiReadings, setKunyoumiReadings] = useState([]);
     const [onyoumiReadings, setOnyoumiReadings] = useState([]);
     const [readings, setReadings] = useState(props.allReadings);
+    useEffect(() => {
+        setReadings(props.allReadings);
+        setOnyoumiReadings([]);
+        setKunyoumiReadings([]);
+    }, [props.allReadings]);
     const fieldTypeMapping = {
         [KUNYOUMI]: {method: setKunyoumiReadings, value: kunyoumiReadings},
         [ONYOUMI]: {method: setOnyoumiReadings, value: onyoumiReadings},
