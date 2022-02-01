@@ -1,16 +1,22 @@
 import {
+    ADD_MATCH_RESULT,
     ADD_NEW_CARD,
     CHANGE_ABOUT_INFO,
     CHANGE_BIRTH_DATE,
     CHANGE_FIRST_NAME,
     CHANGE_LAST_NAME,
     CHANGE_PICTURE,
+    FINISH_MATCH_LEARNING,
     LOG_IN,
     LOG_OUT,
     LOGIN_TEST,
     LOGOUT_TEST,
     MODIFY_CARD,
-    REMOVE_CARD
+    REMOVE_CARD,
+    SET_CURRENT_ALL_READINGS,
+    SET_CURRENT_KANJI_INDEX,
+    SET_RANDOM_LIST,
+    START_MATCH
 } from "./types";
 import {combineReducers} from "redux";
 
@@ -25,6 +31,12 @@ const dummyAccountState = {
 }
 
 const dummyCardsState = {myCards: []};
+
+
+const dummyLearnState = {
+    currentKanjiIndex: 0,
+    isMatching: false
+}
 
 const accountReducer = (state = dummyAccountState, action) => {
     switch (action.type) {
@@ -69,7 +81,6 @@ const accountReducer = (state = dummyAccountState, action) => {
                 ...state, isLoggedIn: false,
             }
     }
-    console.log("state", state)
     return state;
 }
 
@@ -82,15 +93,52 @@ const myCardsReducer = (state = dummyCardsState, action) => {
         case MODIFY_CARD:
             return {myCards: [...state.myCards, action.payload]}
     }
-    console.log(state)
     return state;
 }
 
-const kanjiReadingsMatchReducer = ()=>{
+const randomListReducer = (state = [], action) => {
+    switch (action.type) {
+        case SET_RANDOM_LIST:
+            console.log("random in reducer: ", action.payload)
+            return [...action.payload]
+    }
+    return state;
+}
 
+const readingsReducer = (state = [], action) => {
+    switch (action.type) {
+        case SET_CURRENT_ALL_READINGS:
+            console.log("readings in reducer: ", action.payload)
+            return [...action.payload]
+    }
+    return state;
+}
+
+const resultsReducer = (state = [], action) => {
+    switch (action.type) {
+        case ADD_MATCH_RESULT:
+            return [...state, action.payload]
+    }
+    return state;
+}
+
+const learnReducer = (state = dummyLearnState, action) => {
+    switch (action.type) {
+        case SET_CURRENT_KANJI_INDEX:
+            return {...state, currentKanjiIndex: action.payload}
+        case START_MATCH:
+            return {...state, isMatching: true}
+        case FINISH_MATCH_LEARNING:
+            return dummyLearnState
+    }
+    return state;
 }
 
 export default combineReducers({
     account: accountReducer,
     myCards: myCardsReducer,
+    learn: learnReducer,
+    randomList: randomListReducer,
+    readings: readingsReducer,
+    results: resultsReducer,
 });

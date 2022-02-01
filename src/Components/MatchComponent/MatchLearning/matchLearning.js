@@ -1,5 +1,4 @@
 import PropTypes from "prop-types";
-import Kanji from "../../../Models/kanji";
 import {useState} from "react";
 import useStyle from "./style";
 import ReadingField from "../../ReadingField/readingField";
@@ -12,16 +11,14 @@ const ALL = "field_all";
 
 const MatchLearning = (props) => {
     const classes = useStyle();
-    const [kunyoumiReadings, setKunyoumiReadings] = useState(["ok1", "ok1++", "ok1+++", "ok1++++"]);
-    const [onyoumiReadings, setOnyoumiReadings] = useState(["ok2", "ok2++", "ok2+++", "ok2++++"]);
-    const [readings, setReadings] = useState(["ok3", "ok3++", "ok3+++", "ok3++++"]);
-    const [currentIndex, setCurrentIndex] = useState(0);
+    const [kunyoumiReadings, setKunyoumiReadings] = useState([]);
+    const [onyoumiReadings, setOnyoumiReadings] = useState([]);
+    const [readings, setReadings] = useState(props.allReadings);
     const fieldTypeMapping = {
         [KUNYOUMI]: {method: setKunyoumiReadings, value: kunyoumiReadings},
         [ONYOUMI]: {method: setOnyoumiReadings, value: onyoumiReadings},
         [ALL]: {method: setReadings, value: readings}
     }
-    const sampleData = props.kanjiList || [new Kanji("日", ["ニチ", "ジツ", "ニ"], ["ひ", "は"])];
     const onReadingDropped = ({from, to, reading}) => {
         console.log(`from: ${from} to: ${to} reading: ${reading}`);
         if (from === to) return
@@ -32,12 +29,10 @@ const MatchLearning = (props) => {
         const toMethod = fieldTypeMapping[to].method;
         toMethod([...toValue, reading])
     }
-    const data = sampleData.map(value => ({value, sort: Math.random()}))
-        .sort((a, b) => a.sort - b.sort)
-        .map(({value}) => value);
+
     return <div className={classes.rootContainer}>
         <div className={classes.kanjiContainer}>
-            <p className={classes.kanji}>{data[currentIndex].kanji}</p>
+            <p className={classes.kanji}>{props.kanji}</p>
             <div className={classes.kanjiReadings}>
                 <ReadingField currentReadings={kunyoumiReadings} onReadingsCallback={setKunyoumiReadings}
                               fieldName={"Kunyoumi:"}
@@ -52,18 +47,19 @@ const MatchLearning = (props) => {
             <ReadingField currentReadings={readings} fieldName={"Readings:"} fieldUniqueName={ALL}
                           onReadingDropped={onReadingDropped}/>
             <div className={classes.button}>
-                <Button endIcon={<ArrowForward/>} variant={"outlined"}>Next</Button>
+                <Button endIcon={<ArrowForward/>} variant={"outlined"} onClick={() => props.onReturnResults({
+                    selectedKunyoumi: kunyoumiReadings,
+                    selectedOnyoumi: onyoumiReadings
+                })}>Next</Button>
             </div>
         </div>
     </div>
 }
 
 MatchLearning.propTypes = {
-    kanjiList: PropTypes.arrayOf(PropTypes.exact({
-        kanji: PropTypes.string.isRequired,
-        kunyoumi: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-        onyoumi: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired
-    }).isRequired).isRequired
-}
+    allReadings: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+    onReturnResults: PropTypes.func.isRequired,
+    kanji: PropTypes.string.isRequired
+};
 
 export default MatchLearning;

@@ -1,10 +1,9 @@
 import PropTypes from "prop-types";
 import {Button} from "@mui/material";
 import {useState} from "react";
-import MatchWelcome from "../../../MatchComponent/MatchWelcome/match";
 import Guess from "../../../GuessComponent/guess";
 import LearnContainer from "../../../LearnContainerComponent/LearnContainer";
-import MatchLearning from "../../../MatchComponent/MatchLearning/matchLearning";
+import MatchParent from "../../../MatchComponent/MatchParent/matchParent";
 
 const modes = {
     NONE: "none",
@@ -30,7 +29,7 @@ const StudyPage = (props) => {
             return <LearnContainer render={<Guess/>}/>
 
         case modes.MATCH:
-            return <LearnContainer render={<MatchLearning/>}/>
+            return <LearnContainer render={<MatchParent/>}/>
 
     }
 }
