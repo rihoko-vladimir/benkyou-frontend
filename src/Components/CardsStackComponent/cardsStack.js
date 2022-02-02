@@ -2,7 +2,7 @@ import useStyle from "./style";
 import PropTypes from "prop-types";
 import Card from "../CardComponent/card";
 import {useState} from "react";
-import {Pagination} from "@mui/material";
+import {Pagination, Typography} from "@mui/material";
 
 const CardsStack = (props) => {
     const info = props.info;
@@ -19,26 +19,24 @@ const CardsStack = (props) => {
         setCurrentPage(value);
     }
     return (
-        <div
-            className={classes.mainContainer}>
-            <div
-                className={classes.cardsContainer}>
-                {(isPaginateAble ? currentCards : info).map(element =>
-                    <Card
-                        cardName={element.title}
-                        cardDescription={element.description}
-                        kanji={element.kanji}/>
-                )}
+        info.length !== 0
+            ? <div className={classes.mainContainer}>
+                <div className={classes.cardsContainer}>
+                    {(isPaginateAble ? currentCards : info).map(element =>
+                        <Card cardName={element.title}
+                              cardDescription={element.description}
+                              kanji={element.kanji}/>
+                    )}
+                </div>
+                {isPaginateAble
+                    ? <Pagination count={pages}
+                                  size={"large"}
+                                  color={"primary"}
+                                  page={currentPage}
+                                  onChange={onNavigationClicked}/>
+                    : null}
             </div>
-            {isPaginateAble
-                ? <Pagination
-                count={pages}
-                size={"large"}
-                color={"primary"}
-                page={currentPage}
-                onChange={onNavigationClicked}/>
-                : null}
-        </div>
+            : <Typography variant={"h6"}>Cards currently unavailable</Typography>
     )
 }
 

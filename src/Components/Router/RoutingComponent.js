@@ -12,26 +12,51 @@ import MySetsPageContent from "../Pages/MySetsPage/Content/mySetsPageContent";
 import AllSetsPageContent from "../Pages/AllSetsPage/Content/allSetsPageContent";
 import AboutPageContent from "../Pages/AboutPage/Content/aboutPageContent";
 import AccountPage from "../Pages/AccountPage/accountPage";
+import StudyPage from "../Pages/StudyPage/content/studyPageContent";
+import {
+    ABOUT_PATH,
+    ACCOUNT_PATH,
+    ALL_SETS_PATH,
+    AUTH_PATH,
+    ERROR_PATH,
+    FINISH_PATH,
+    HUB_PATH,
+    MATCH_PATH,
+    MY_SETS_PATH,
+    NOT_FOUND_PATH,
+    REGISTRATION_PATH,
+    STUDY_PATH
+} from "./paths";
+import MatchResults from "../MatchComponent/MatchResults/matchResults";
+import MatchParent from "../MatchComponent/MatchParent/matchParent";
+import LearnContainer from "../LearnContainerComponent/LearnContainer";
 
 const RoutingComponent = () => {
     const classes = useStyles();
     return <Routes>
-        <Route path={"error"}><Route path={"404"} element={<ErrorPage/>}/></Route>
-        <Route path={"auth"}>
-            <Route path={"registration"} element={<AuthPage render={<Registration/>}/>}/>
+        <Route path={ERROR_PATH}><Route path={NOT_FOUND_PATH} element={<ErrorPage/>}/></Route>
+        <Route path={AUTH_PATH}>
+            <Route path={REGISTRATION_PATH} element={<AuthPage render={<Registration/>}/>}/>
             <Route index element={<AuthPage render={<LoginComponent/>}/>}/>
             <Route path={"*"} element={<Typography variant={"h4"}>Unknown route</Typography>}/>
         </Route>
-        <Route path={"study"}>
+        <Route path={HUB_PATH}>
             <Route index element={<div className={classes.homePage}><NavigationDrawer/><HomePageContent/></div>}/>
-            <Route path={"my-sets"}
+            <Route path={MY_SETS_PATH}
                    element={<div className={classes.homePage}><NavigationDrawer/><MySetsPageContent/></div>}/>
-            <Route path={"all-sets"}
+            <Route path={ALL_SETS_PATH}
                    element={<div className={classes.homePage}><NavigationDrawer/><AllSetsPageContent/></div>}/>
-            <Route path={"about"}
+            <Route path={ABOUT_PATH}
                    element={<div className={classes.homePage}><NavigationDrawer/><AboutPageContent/></div>}/>
-            <Route path={"account"}
+            <Route path={ACCOUNT_PATH}
                    element={<div className={classes.homePage}><NavigationDrawer/><AccountPage/></div>}/>
+            <Route path={STUDY_PATH}>
+                <Route index element={<StudyPage/>}/>
+                <Route path={MATCH_PATH}>
+                    <Route index element={<LearnContainer render={<MatchParent/>}/>}/>
+                    <Route path={FINISH_PATH} element={<LearnContainer render={<MatchResults/>}/>}/>
+                </Route>
+            </Route>
         </Route>
         <Route index element={<StartPage/>}/>
         {/*<Route path={"*"} element={<Navigate to={"/error/404"}/>}/>*/}

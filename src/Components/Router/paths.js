@@ -1,0 +1,14 @@
+export const ERROR_PATH = "error";
+export const AUTH_PATH = "auth";
+export const REGISTRATION_PATH = "registration";
+export const HUB_PATH = "hub";
+export const MY_SETS_PATH = "my-sets";
+export const ALL_SETS_PATH = "all-sets";
+export const ABOUT_PATH = "about";
+export const ACCOUNT_PATH = "account";
+export const STUDY_PATH = "study";
+export const INDEX_PATH = "/";
+export const NOT_FOUND_PATH = "404";
+export const MATCH_PATH = "match";
+export const FINISH_PATH = "finish"
+export const GUESS_PATH = "guess";

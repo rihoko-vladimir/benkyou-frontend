@@ -35,22 +35,22 @@ const applicationItems = [
     {
         name: "Home",
         icon: <HomeOutlined/>,
-        path: "/study"
+        path: "/hub"
     },
     {
         name: "My Sets",
         icon: <StarOutlined/>,
-        path: "/study/my-sets"
+        path: "/hub/my-sets"
     },
     {
         name: "All Sets",
         icon: <StarOutlineOutlined/>,
-        path: "/study/all-sets"
+        path: "/hub/all-sets"
     },
     {
         name: "About",
         icon: <InfoOutlined/>,
-        path: "/study/about"
+        path: "/hub/about"
     }
 ];
 
@@ -80,7 +80,7 @@ const NavigationDrawerContent = (props) => {
     }
 
     const navigateToAccountSettings =
-        () => navigate("/study/account");
+        () => navigate("/hub/account");
 
     return (
         <Drawer variant={"permanent"}

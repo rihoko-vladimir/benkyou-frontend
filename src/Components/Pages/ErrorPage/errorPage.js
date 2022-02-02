@@ -1,5 +1,5 @@
 const ErrorPage = ()=><p>
-    Error 404
+    Error!?
 </p>
 
 export default ErrorPage;

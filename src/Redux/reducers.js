@@ -1,17 +1,24 @@
 import {
+    ADD_MATCH_RESULT,
     ADD_NEW_CARD,
     CHANGE_ABOUT_INFO,
     CHANGE_BIRTH_DATE,
     CHANGE_FIRST_NAME,
     CHANGE_LAST_NAME,
     CHANGE_PICTURE,
+    FINISH_MATCH_LEARNING,
     LOG_IN,
-    LOG_OUT, LOGIN_TEST, LOGOUT_TEST,
+    LOG_OUT,
+    LOGIN_TEST,
+    LOGOUT_TEST,
     MODIFY_CARD,
-    REMOVE_CARD
+    REMOVE_CARD,
+    SET_CURRENT_ALL_READINGS,
+    SET_CURRENT_KANJI_INDEX,
+    SET_RANDOM_LIST,
+    START_MATCH
 } from "./types";
 import {combineReducers} from "redux";
-import {loadState} from "./saveStateToCookies";
 
 const dummyAccountState = {
     firstName: "Vladimir",
@@ -22,10 +29,16 @@ const dummyAccountState = {
     accountImageUrl: "https://lh3.googleusercontent.com/a-/AOh14GineJdMiu0253KCDxizNsvnYdwMFjTDXL3fjgC1vQ=s288-p-rw-no",
     isLoggedIn: false,
 }
-const loadedState = loadState();
+
 const dummyCardsState = {myCards: []};
 
-const accountReducer = (state = Object.keys(loadedState).length===0?dummyAccountState:loadedState["account"], action) => {
+
+const dummyLearnState = {
+    currentKanjiIndex: 0,
+    isMatching: false
+}
+
+const accountReducer = (state = dummyAccountState, action) => {
     switch (action.type) {
         case CHANGE_FIRST_NAME:
             return {...state, firstName: action.payload}
@@ -68,12 +81,10 @@ const accountReducer = (state = Object.keys(loadedState).length===0?dummyAccount
                 ...state, isLoggedIn: false,
             }
     }
-    console.log("loaded",loadedState)
-    console.log("state",state)
     return state;
 }
 
-const myCardsReducer = (state = Object.keys(loadedState).length===0?dummyCardsState:loadedState["myCards"], action) => {
+const myCardsReducer = (state = dummyCardsState, action) => {
     switch (action.type) {
         case ADD_NEW_CARD:
             return {myCards: [...state.myCards, action.payload]}
@@ -82,11 +93,58 @@ const myCardsReducer = (state = Object.keys(loadedState).length===0?dummyCardsSt
         case MODIFY_CARD:
             return {myCards: [...state.myCards, action.payload]}
     }
-    console.log(state)
+    return state;
+}
+
+const randomListReducer = (state = [], action) => {
+    switch (action.type) {
+        case SET_RANDOM_LIST:
+            console.log("random in reducer: ", action.payload)
+            return [...action.payload]
+        case FINISH_MATCH_LEARNING:
+            return []
+    }
+    return state;
+}
+
+const readingsReducer = (state = [], action) => {
+    switch (action.type) {
+        case SET_CURRENT_ALL_READINGS:
+            console.log("readings in reducer: ", action.payload)
+            return [...action.payload]
+        case FINISH_MATCH_LEARNING:
+            return [];
+    }
+    return state;
+}
+
+const resultsReducer = (state = [], action) => {
+    switch (action.type) {
+        case ADD_MATCH_RESULT:
+            return [...state, action.payload]
+        case FINISH_MATCH_LEARNING:
+            return []
+    }
+    return state;
+}
+
+const learnReducer = (state = dummyLearnState, action) => {
+    switch (action.type) {
+        case SET_CURRENT_KANJI_INDEX:
+            return {...state, currentKanjiIndex: action.payload}
+        case START_MATCH:
+            return {...state, isMatching: true}
+        case FINISH_MATCH_LEARNING:
+            return dummyLearnState
+    }
     return state;
 }
 
 export default combineReducers({
     account: accountReducer,
     myCards: myCardsReducer,
+    learn: learnReducer,
+    randomList: randomListReducer,
+    readings: readingsReducer,
+    results: resultsReducer,
 });
