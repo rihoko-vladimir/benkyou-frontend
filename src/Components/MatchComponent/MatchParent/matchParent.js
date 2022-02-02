@@ -1,9 +1,8 @@
-import PropTypes from "prop-types";
 import Kanji from "../../../Models/kanji";
 import MatchLearning from "../MatchLearning/matchLearning";
 import {useDispatch, useSelector, useStore} from "react-redux";
 import {
-    addCurrentKanjiMatchResult, finishMatchLearning,
+    addCurrentKanjiMatchResult,
     setCurrentAllReadings,
     setCurrentKanjiIndex,
     setRandomList,
@@ -35,19 +34,28 @@ const MatchParent = (props) => {
         dispatch(startMatch());
     }
 
-    const onReturnResults = ({selectedKunyoumi, selectedOnyoumi}) => {
-        dispatch(addCurrentKanjiMatchResult({selectedKunyoumi, selectedOnyoumi}));
+    const onNext = ({selectedKunyoumi, selectedOnyoumi}) => {
+        dispatch(addCurrentKanjiMatchResult({
+            selectedKunyoumi,
+            selectedOnyoumi,
+            correctKanji: store.getState().randomList[store.getState().learn.currentKanjiIndex]
+        }));
         dispatch(setCurrentKanjiIndex(store.getState().learn.currentKanjiIndex + 1));
         dispatch(setCurrentAllReadings(store.getState().randomList, store.getState().learn.currentKanjiIndex));
     }
-    const onFinish = ()=>{
+    const onFinish = ({selectedKunyoumi, selectedOnyoumi}) => {
         console.log("finished")
+        dispatch(addCurrentKanjiMatchResult({
+            selectedKunyoumi,
+            selectedOnyoumi,
+            correctKanji: store.getState().randomList[store.getState().learn.currentKanjiIndex]
+        }));
         navigate("finish")
     }
     const allReadings = useSelector(state => state.readings);
     const randomedList = useSelector(state => state.randomList);
     const currentKanjiIndex = useSelector(state => state.learn.currentKanjiIndex);
-    return <MatchLearning onReturnResults={onReturnResults} allReadings={allReadings}
+    return <MatchLearning onReturnResults={onNext} allReadings={allReadings}
                           kanji={randomedList[currentKanjiIndex].kanji}
                           isFinal={currentKanjiIndex === randomedList.length - 1} onFinish={onFinish}/>
 

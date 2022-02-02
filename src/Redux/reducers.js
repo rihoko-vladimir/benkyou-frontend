@@ -101,6 +101,8 @@ const randomListReducer = (state = [], action) => {
         case SET_RANDOM_LIST:
             console.log("random in reducer: ", action.payload)
             return [...action.payload]
+        case FINISH_MATCH_LEARNING:
+            return []
     }
     return state;
 }
@@ -110,6 +112,8 @@ const readingsReducer = (state = [], action) => {
         case SET_CURRENT_ALL_READINGS:
             console.log("readings in reducer: ", action.payload)
             return [...action.payload]
+        case FINISH_MATCH_LEARNING:
+            return [];
     }
     return state;
 }
@@ -118,6 +122,8 @@ const resultsReducer = (state = [], action) => {
     switch (action.type) {
         case ADD_MATCH_RESULT:
             return [...state, action.payload]
+        case FINISH_MATCH_LEARNING:
+            return []
     }
     return state;
 }

@@ -53,7 +53,12 @@ const MatchLearning = (props) => {
                           onReadingDropped={onReadingDropped}/>
             <div className={classes.button}>
                 <Button endIcon={props.isFinal ? <Done/> : <ArrowForward/>} variant={"outlined"}
-                        onClick={props.isFinal ? () => {props.onFinish()}
+                        onClick={props.isFinal ? () => {
+                                props.onFinish({
+                                    selectedKunyoumi: kunyoumiReadings,
+                                    selectedOnyoumi: onyoumiReadings
+                                })
+                            }
                             : () => props.onReturnResults({
                                 selectedKunyoumi: kunyoumiReadings,
                                 selectedOnyoumi: onyoumiReadings
