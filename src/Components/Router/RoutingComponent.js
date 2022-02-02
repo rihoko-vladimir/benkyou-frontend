@@ -14,15 +14,22 @@ import AboutPageContent from "../Pages/AboutPage/Content/aboutPageContent";
 import AccountPage from "../Pages/AccountPage/accountPage";
 import StudyPage from "../Pages/StudyPage/content/studyPageContent";
 import {
-    ABOUT_PATH, ACCOUNT_PATH,
+    ABOUT_PATH,
+    ACCOUNT_PATH,
     ALL_SETS_PATH,
     AUTH_PATH,
     ERROR_PATH,
+    FINISH_PATH,
     HUB_PATH,
+    MATCH_PATH,
     MY_SETS_PATH,
     NOT_FOUND_PATH,
-    REGISTRATION_PATH, STUDY_PATH
+    REGISTRATION_PATH,
+    STUDY_PATH
 } from "./paths";
+import MatchResults from "../MatchComponent/MatchResults/matchResults";
+import MatchParent from "../MatchComponent/MatchParent/matchParent";
+import LearnContainer from "../LearnContainerComponent/LearnContainer";
 
 const RoutingComponent = () => {
     const classes = useStyles();
@@ -43,8 +50,13 @@ const RoutingComponent = () => {
                    element={<div className={classes.homePage}><NavigationDrawer/><AboutPageContent/></div>}/>
             <Route path={ACCOUNT_PATH}
                    element={<div className={classes.homePage}><NavigationDrawer/><AccountPage/></div>}/>
-            <Route path={STUDY_PATH}
-                   element={<StudyPage/>}/>
+            <Route path={STUDY_PATH}>
+                <Route index element={<StudyPage/>}/>
+                <Route path={MATCH_PATH}>
+                    <Route index element={<LearnContainer render={<MatchParent/>}/>}/>
+                    <Route path={FINISH_PATH} element={<LearnContainer render={<MatchResults/>}/>}/>
+                </Route>
+            </Route>
         </Route>
         <Route index element={<StartPage/>}/>
         {/*<Route path={"*"} element={<Navigate to={"/error/404"}/>}/>*/}

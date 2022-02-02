@@ -1,15 +1,11 @@
-import PropTypes from "prop-types";
+import {useDispatch, useSelector} from "react-redux";
+import {finishMatchLearning} from "../../../Redux/actions";
 
-const MatchResults = (props) => {
-
-}
-
-MatchResults.propTypes = {
-    kanjiList: PropTypes.arrayOf(PropTypes.exact({
-        kanji: PropTypes.string.isRequired,
-        kunyoumi: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-        onyoumi: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired
-    }).isRequired).isRequired
+const MatchResults = () => {
+    const results = useSelector(state => state.results);
+    const dispatch = useDispatch();
+    dispatch(finishMatchLearning());
+    return <p>Results: {results}</p>
 }
 
 export default MatchResults;

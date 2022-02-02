@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import {useEffect, useState} from "react";
 import useStyle from "./style";
 import ReadingField from "../../ReadingField/readingField";
-import {ArrowForward} from "@mui/icons-material";
+import {ArrowForward, Done} from "@mui/icons-material";
 import {Button} from "@mui/material";
 
 const KUNYOUMI = "field_kunyoumi";
@@ -52,10 +52,12 @@ const MatchLearning = (props) => {
             <ReadingField currentReadings={readings} fieldName={"Readings:"} fieldUniqueName={ALL}
                           onReadingDropped={onReadingDropped}/>
             <div className={classes.button}>
-                <Button endIcon={<ArrowForward/>} variant={"outlined"} onClick={() => props.onReturnResults({
-                    selectedKunyoumi: kunyoumiReadings,
-                    selectedOnyoumi: onyoumiReadings
-                })}>Next</Button>
+                <Button endIcon={props.isFinal ? <Done/> : <ArrowForward/>} variant={"outlined"}
+                        onClick={props.isFinal ? () => {props.onFinish()}
+                            : () => props.onReturnResults({
+                                selectedKunyoumi: kunyoumiReadings,
+                                selectedOnyoumi: onyoumiReadings
+                            })}>{props.isFinal ? "Finish" : "Next"}</Button>
             </div>
         </div>
     </div>
@@ -64,7 +66,9 @@ const MatchLearning = (props) => {
 MatchLearning.propTypes = {
     allReadings: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
     onReturnResults: PropTypes.func.isRequired,
-    kanji: PropTypes.string.isRequired
+    kanji: PropTypes.string.isRequired,
+    isFinal: PropTypes.bool.isRequired,
+    onFinish: PropTypes.func.isRequired
 };
 
 export default MatchLearning;

@@ -9,3 +9,5 @@ export const ACCOUNT_PATH = "account";
 export const STUDY_PATH = "study";
 export const INDEX_PATH = "/";
 export const NOT_FOUND_PATH = "404";
+export const MATCH_PATH = "match";
+export const FINISH_PATH = "finish"
