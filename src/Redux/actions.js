@@ -6,14 +6,17 @@ import {
     CHANGE_FIRST_NAME,
     CHANGE_LAST_NAME,
     CHANGE_PICTURE,
+    CLOSE_EDIT_DIALOG,
+    EDIT_CARD,
     FINISH_MATCH_LEARNING,
     LOG_IN,
     LOG_OUT,
     LOGIN_TEST,
     LOGOUT_TEST,
-    EDIT_CARD,
+    OPEN_EDIT_DIALOG,
     REGISTER,
     REMOVE_CARD,
+    SELECT_CARD,
     SELECT_CURRENT_KANJI_LIST,
     SET_CURRENT_ALL_READINGS,
     SET_CURRENT_KANJI_INDEX,
@@ -161,4 +164,17 @@ export const startMatch = () => ({
 export const selectKanjiList = (kanjiList) => ({
     type: SELECT_CURRENT_KANJI_LIST,
     payload: [...kanjiList]
+})
+
+export const openDialog = () => ({
+    type: OPEN_EDIT_DIALOG,
+})
+
+export const closeDialog = () => ({
+    type: CLOSE_EDIT_DIALOG,
+})
+
+export const selectCard = (card) => ({
+    type: SELECT_CARD,
+    payload: card
 })

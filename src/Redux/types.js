@@ -18,3 +18,6 @@ export const SET_CURRENT_ALL_READINGS = "learn/setCurrentAllReadings";
 export const FINISH_MATCH_LEARNING = "learn/finishMatchLearning"
 export const ADD_MATCH_RESULT = "learn/addMatchResult"
 export const SELECT_CURRENT_KANJI_LIST = "learn/selectCurrentKanjiList";
+export const OPEN_EDIT_DIALOG = "myCards/openEditDialog";
+export const CLOSE_EDIT_DIALOG = "myCards/closeEditDialog";
+export const SELECT_CARD = "myCards/selectCard";

@@ -6,13 +6,16 @@ import {
     CHANGE_FIRST_NAME,
     CHANGE_LAST_NAME,
     CHANGE_PICTURE,
+    CLOSE_EDIT_DIALOG,
     EDIT_CARD,
     FINISH_MATCH_LEARNING,
     LOG_IN,
     LOG_OUT,
     LOGIN_TEST,
     LOGOUT_TEST,
+    OPEN_EDIT_DIALOG,
     REMOVE_CARD,
+    SELECT_CARD,
     SELECT_CURRENT_KANJI_LIST,
     SET_CURRENT_ALL_READINGS,
     SET_CURRENT_KANJI_INDEX,
@@ -103,7 +106,6 @@ const myCardsReducer = (state = dummyCardsState, action) => {
             stateCopy[editedIndex] = editedCard;
             return stateCopy;
         }
-
     }
     return state;
 }
@@ -156,8 +158,24 @@ const selectedKanjiReducer = (state = [], action) => {
     switch (action.type) {
         case SELECT_CURRENT_KANJI_LIST:
             return action.payload
-        case FINISH_MATCH_LEARNING:
-            return []
+    }
+    return state;
+}
+
+const editDialogReducer = (state = false, action) => {
+    switch (action.type) {
+        case OPEN_EDIT_DIALOG:
+            return true;
+        case CLOSE_EDIT_DIALOG:
+            return false;
+    }
+    return state;
+}
+
+const selectedCardReducer = (state = {}, action) => {
+    switch (action.type) {
+        case SELECT_CARD:
+            return action.payload
     }
     return state;
 }
@@ -169,5 +187,7 @@ export default combineReducers({
     randomList: randomListReducer,
     readings: readingsReducer,
     results: resultsReducer,
-    selectedKanji: selectedKanjiReducer
+    selectedKanji: selectedKanjiReducer,
+    isEditDialogOpened: editDialogReducer,
+    selectedCard: selectedCardReducer
 });

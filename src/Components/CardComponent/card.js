@@ -5,8 +5,10 @@ import {ExpandLessOutlined, ExpandMoreOutlined} from "@mui/icons-material";
 import {useState} from "react";
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router";
-import {selectKanjiList} from "../../Redux/actions";
+import {openDialog, selectCard, selectKanjiList} from "../../Redux/actions";
 import KanjiInfo from "../KanjiInfoComponent/kanjiInfo";
+import {hostUrl} from "../../applicationSettings";
+import {ACCOUNT_PATH, HUB_PATH} from "../Router/paths";
 
 const Card = (props) => {
     const [isOpenButtonPressed, setButtonPressed] = useState(false);
@@ -22,7 +24,9 @@ const Card = (props) => {
     }
 
     const onEditClicked = () => {
-
+        console.log(props.card);
+        dispatch(selectCard(props.card));
+        dispatch(openDialog());
     }
 
     return (
@@ -41,7 +45,7 @@ const Card = (props) => {
                     Author: <Link
                     underline={"hover"}
                     rel={"noreferrer"}
-                    href={"#"}>
+                    href={`${hostUrl}/${HUB_PATH}/${ACCOUNT_PATH}/id/${props.card.id}`}>
                     {props.card.author}
                 </Link>
                 </Typography>
@@ -69,8 +73,7 @@ const Card = (props) => {
                         <Button
                             variant={"outlined"}
                             className={classes.button}
-                            onClick={onEditClicked}
-                        >
+                            onClick={onEditClicked}>
                             Edit
                         </Button>
                         <Button

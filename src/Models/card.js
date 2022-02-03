@@ -3,10 +3,13 @@ class Card {
     name;
     description;
     author;
+    authorId;
     kanjiList;
 
-    constructor(id, name, description, author, kanjiList) {
+
+    constructor(id, authorId, name, description, author, kanjiList) {
         this.id = id;
+        this.authorId = authorId;
         this.name = name;
         this.description = description;
         this.author = author;
