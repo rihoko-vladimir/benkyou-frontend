@@ -14,7 +14,7 @@ const useStyle = makeStyles({
         flexDirection:"column",
         width:"100%",
         justifyContent: "space-between",
-        alignItems:"center",
+        alignItems:"start",
         rowGap: "24px"
     }
 })

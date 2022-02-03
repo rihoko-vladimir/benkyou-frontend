@@ -11,9 +11,10 @@ import {
     LOG_OUT,
     LOGIN_TEST,
     LOGOUT_TEST,
-    MODIFY_CARD,
+    EDIT_CARD,
     REGISTER,
     REMOVE_CARD,
+    SELECT_CURRENT_KANJI_LIST,
     SET_CURRENT_ALL_READINGS,
     SET_CURRENT_KANJI_INDEX,
     SET_RANDOM_LIST,
@@ -64,7 +65,7 @@ export const removeCard = (idToRemove) => ({
 });
 
 export const modifyCard = (modifiedCard) => ({
-    type: MODIFY_CARD,
+    type: EDIT_CARD,
     payload: modifiedCard,
 });
 
@@ -155,4 +156,9 @@ export const finishMatchLearning = () => ({
 
 export const startMatch = () => ({
     type: START_MATCH,
+})
+
+export const selectKanjiList = (kanjiList) => ({
+    type: SELECT_CURRENT_KANJI_LIST,
+    payload: [...kanjiList]
 })

@@ -6,13 +6,14 @@ import {
     CHANGE_FIRST_NAME,
     CHANGE_LAST_NAME,
     CHANGE_PICTURE,
+    EDIT_CARD,
     FINISH_MATCH_LEARNING,
     LOG_IN,
     LOG_OUT,
     LOGIN_TEST,
     LOGOUT_TEST,
-    MODIFY_CARD,
     REMOVE_CARD,
+    SELECT_CURRENT_KANJI_LIST,
     SET_CURRENT_ALL_READINGS,
     SET_CURRENT_KANJI_INDEX,
     SET_RANDOM_LIST,
@@ -30,7 +31,7 @@ const dummyAccountState = {
     isLoggedIn: false,
 }
 
-const dummyCardsState = {myCards: []};
+const dummyCardsState = [];
 
 
 const dummyLearnState = {
@@ -87,11 +88,22 @@ const accountReducer = (state = dummyAccountState, action) => {
 const myCardsReducer = (state = dummyCardsState, action) => {
     switch (action.type) {
         case ADD_NEW_CARD:
-            return {myCards: [...state.myCards, action.payload]}
+            return [...state.myCards, action.payload]
         case REMOVE_CARD:
-            return {myCards: [...state.myCards.filter((card) => card.id !== action.payload)]}
-        case MODIFY_CARD:
-            return {myCards: [...state.myCards, action.payload]}
+            return [...state.myCards.filter((card) => card.id !== action.payload)]
+        case EDIT_CARD: {
+            const getIndexById = (id, array) => {
+                for (const index in array) {
+                    if (array[index].id === id) return index;
+                }
+            }
+            const editedCard = action.payload;
+            const editedIndex = getIndexById(editedCard.id, state)
+            const stateCopy = [...state];
+            stateCopy[editedIndex] = editedCard;
+            return stateCopy;
+        }
+
     }
     return state;
 }
@@ -140,6 +152,16 @@ const learnReducer = (state = dummyLearnState, action) => {
     return state;
 }
 
+const selectedKanjiReducer = (state = [], action) => {
+    switch (action.type) {
+        case SELECT_CURRENT_KANJI_LIST:
+            return action.payload
+        case FINISH_MATCH_LEARNING:
+            return []
+    }
+    return state;
+}
+
 export default combineReducers({
     account: accountReducer,
     myCards: myCardsReducer,
@@ -147,4 +169,5 @@ export default combineReducers({
     randomList: randomListReducer,
     readings: readingsReducer,
     results: resultsReducer,
+    selectedKanji: selectedKanjiReducer
 });
