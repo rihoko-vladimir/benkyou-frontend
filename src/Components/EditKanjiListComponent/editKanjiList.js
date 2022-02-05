@@ -6,7 +6,7 @@ const EditKanjiList = () => {
     const kanjiList = useSelector(state => state.editCard.kanjiList);
     return <div>
         <Divider/>
-        {kanjiList.map((kanji, index) => <EditKanjiElement kanji={kanji} index={index}/>)}
+        {kanjiList.map((kanji, index) => <EditKanjiElement kanji={kanji} index={index} key={index}/>)}
         <Divider/>
     </div>;
 }

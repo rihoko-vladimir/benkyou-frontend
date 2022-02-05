@@ -1,11 +1,11 @@
 import useStyle from "./style";
 import {Button, Collapse, IconButton, Link, Typography} from "@mui/material";
 import PropTypes from "prop-types";
-import {ExpandLessOutlined, ExpandMoreOutlined} from "@mui/icons-material";
+import {Close, ExpandLessOutlined, ExpandMoreOutlined} from "@mui/icons-material";
 import {useState} from "react";
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router";
-import {openDialog, selectKanjiList} from "../../Redux/actions";
+import {openDialog, removeCard, selectKanjiList, showSnackbar} from "../../Redux/actions";
 import KanjiInfo from "../KanjiInfoComponent/kanjiInfo";
 import {hostUrl} from "../../applicationSettings";
 import {ACCOUNT_PATH, HUB_PATH} from "../Router/paths";
@@ -24,30 +24,39 @@ const Card = (props) => {
     }
 
     const onEditClicked = () => {
-        console.log(props.card);
         dispatch(openDialog(props.card));
+    }
+
+    const onDeleteClicked = ()=>{
+        dispatch(removeCard(props.card.id))
+        dispatch(showSnackbar("Card removed"))
     }
 
     return (
         <div className={classes.card}>
-            <div className={classes.cardTitle}>
-                <Typography
-                    variant={"subtitle1"}>
-                    {props.card.name}
-                </Typography>
-                <Typography
-                    variant={"subtitle2"}>
-                    {props.card.description}
-                </Typography>
-                <Typography
-                    variant={"subtitle2"}>
-                    Author: <Link
-                    underline={"hover"}
-                    rel={"noreferrer"}
-                    href={`${hostUrl}/${HUB_PATH}/${ACCOUNT_PATH}/id/${props.card.id}`}>
-                    {props.card.author}
-                </Link>
-                </Typography>
+            <div className={classes.topSection}>
+                <div className={classes.cardTitle}>
+                    <Typography
+                        variant={"subtitle1"}>
+                        {props.card.name}
+                    </Typography>
+                    <Typography
+                        variant={"subtitle2"}>
+                        {props.card.description}
+                    </Typography>
+                    <Typography
+                        variant={"subtitle2"}>
+                        Author: <Link
+                        underline={"hover"}
+                        rel={"noreferrer"}
+                        href={`${hostUrl}/${HUB_PATH}/${ACCOUNT_PATH}/id/${props.card.id}`}>
+                        {props.card.author}
+                    </Link>
+                    </Typography>
+                </div>
+                <IconButton onClick={onDeleteClicked}>
+                    <Close/>
+                </IconButton>
             </div>
             <div
                 className={classes.lowerCardContent}>
@@ -56,9 +65,9 @@ const Card = (props) => {
                     timeout={"auto"}>
                     <div
                         className={classes.kanjiList}>
-                        {props.card.kanjiList.map(kanji => (
+                        {props.card.kanjiList.map((kanji, index) => (
                             <KanjiInfo
-                                kanjiObject={kanji}/>))}
+                                kanjiObject={kanji} key={index}/>))}
                     </div>
                 </Collapse>
                 <div

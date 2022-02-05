@@ -8,6 +8,7 @@ import {
     CHANGE_PICTURE,
     CLOSE_EDIT_DIALOG,
     FINISH_MATCH_LEARNING,
+    HIDE_SNACKBAR,
     LOG_IN,
     LOG_OUT,
     LOGIN_TEST,
@@ -24,6 +25,7 @@ import {
     SET_NEW_KUNYOUMI,
     SET_NEW_ONYOUMI,
     SET_RANDOM_LIST,
+    SHOW_SNACKBAR,
     START_MATCH
 } from "./types";
 import {combineReducers} from "redux";
@@ -46,7 +48,21 @@ const dummyCardsState = [new Card(1, 1, "Default card", "This is my test descrip
     new Kanji("日3", ["ニチ3", "ジツ3", "ニ3"], ["ひ3", "は3"]),
     new Kanji("日4", ["ニチ4", "ジツ4", "ニ4"], ["ひ4", "は4"]),
     new Kanji("日5", ["ニチ5", "ジツ5", "ニ5"], ["ひ5", "は5"]),
-    new Kanji("日6", ["ニチ6", "ジツ6", "ニ6"], ["ひ6", "は6"]),])];
+    new Kanji("日6", ["ニチ6", "ジツ6", "ニ6"], ["ひ6", "は6"]),]),
+    new Card(2, 1, "Default card", "This is my test description", "Me", [
+        new Kanji("日1", ["ニチ1", "ジツ1", "ニ1"], ["ひ1", "は1"]),
+        new Kanji("日2", ["ニチ2", "ジツ2", "ニ2"], ["ひ2", "は2"]),
+        new Kanji("日3", ["ニチ3", "ジツ3", "ニ3"], ["ひ3", "は3"]),
+        new Kanji("日4", ["ニチ4", "ジツ4", "ニ4"], ["ひ4", "は4"]),
+        new Kanji("日5", ["ニチ5", "ジツ5", "ニ5"], ["ひ5", "は5"]),
+        new Kanji("日6", ["ニチ6", "ジツ6", "ニ6"], ["ひ6", "は6"]),]),
+    new Card(3, 1, "Default card", "This is my test description", "Me", [
+        new Kanji("日1", ["ニチ1", "ジツ1", "ニ1"], ["ひ1", "は1"]),
+        new Kanji("日2", ["ニチ2", "ジツ2", "ニ2"], ["ひ2", "は2"]),
+        new Kanji("日3", ["ニチ3", "ジツ3", "ニ3"], ["ひ3", "は3"]),
+        new Kanji("日4", ["ニチ4", "ジツ4", "ニ4"], ["ひ4", "は4"]),
+        new Kanji("日5", ["ニチ5", "ジツ5", "ニ5"], ["ひ5", "は5"]),
+        new Kanji("日6", ["ニチ6", "ジツ6", "ニ6"], ["ひ6", "は6"]),])];
 
 
 const dummyLearnState = {
@@ -55,6 +71,11 @@ const dummyLearnState = {
 }
 
 const editCardDummyState = {}
+
+const snackbarDummyState = {
+    isShown: false,
+    message: "",
+};
 
 const accountReducer = (state = dummyAccountState, action) => {
     switch (action.type) {
@@ -105,9 +126,9 @@ const accountReducer = (state = dummyAccountState, action) => {
 const myCardsReducer = (state = dummyCardsState, action) => {
     switch (action.type) {
         case ADD_NEW_CARD:
-            return [...state.myCards, action.payload]
+            return [...state, action.payload]
         case REMOVE_CARD:
-            return [...state.myCards.filter((card) => card.id !== action.payload)]
+            return [...state.filter((card) => card.id !== action.payload)]
         case SAVE_EDITED_CARD: {
             const editedCard = action.payload;
             let newIndex = 0;
@@ -210,6 +231,16 @@ const editedValuesReducer = (state = editCardDummyState, action) => {
     return state;
 }
 
+const snackbarReducer = (state = snackbarDummyState, action) => {
+    switch (action.type) {
+        case SHOW_SNACKBAR:
+            return {isShown: true, message: action.payload}
+        case HIDE_SNACKBAR:
+            return {isShown: false, message: ""}
+    }
+    return state;
+}
+
 export default combineReducers({
     account: accountReducer,
     myCards: myCardsReducer,
@@ -219,5 +250,6 @@ export default combineReducers({
     results: resultsReducer,
     selectedKanji: selectedKanjiReducer,
     isEditDialogOpened: editDialogReducer,
-    editCard: editedValuesReducer
+    editCard: editedValuesReducer,
+    snackbar: snackbarReducer
 });

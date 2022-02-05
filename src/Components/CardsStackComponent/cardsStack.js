@@ -23,7 +23,7 @@ const CardsStack = (props) => {
             ? <div className={classes.mainContainer}>
                 <div className={classes.cardsContainer}>
                     {(isPaginateAble ? currentCards : info).map(card =>
-                        <Card card={card}/>
+                        <Card card={card} key={card.id}/>
                     )}
                 </div>
                 {isPaginateAble

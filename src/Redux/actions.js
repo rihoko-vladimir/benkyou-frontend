@@ -9,6 +9,7 @@ import {
     CLOSE_EDIT_DIALOG,
     EDIT_CARD,
     FINISH_MATCH_LEARNING,
+    HIDE_SNACKBAR,
     LOG_IN,
     LOG_OUT,
     LOGIN_TEST,
@@ -26,6 +27,7 @@ import {
     SET_NEW_KUNYOUMI,
     SET_NEW_ONYOUMI,
     SET_RANDOM_LIST,
+    SHOW_SNACKBAR,
     START_MATCH
 } from "./types";
 
@@ -199,4 +201,13 @@ export const setNewCardDescription = (newCardDescription) => ({
 export const saveCard = (newCard) => ({
     type: SAVE_EDITED_CARD,
     payload: newCard
+})
+
+export const showSnackbar = (message) => ({
+    type: SHOW_SNACKBAR,
+    payload: message
+})
+
+export const hideSnackbar = () => ({
+    type: HIDE_SNACKBAR
 })

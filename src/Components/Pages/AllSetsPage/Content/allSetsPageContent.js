@@ -33,7 +33,7 @@ const AllSetsPageContent = () => {
                     placeholder={"Search for new sets"}/>
             </div>
             <CardsStack
-                info={state.filteredResults}/>
+                info={state.filteredResults} cards={info}/>
         </div>
     )
 }
