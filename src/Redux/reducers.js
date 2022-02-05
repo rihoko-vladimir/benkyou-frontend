@@ -15,7 +15,6 @@ import {
     OPEN_EDIT_DIALOG,
     REMOVE_CARD,
     SAVE_EDITED_CARD,
-    SELECT_CARD,
     SELECT_CURRENT_KANJI_LIST,
     SET_CURRENT_ALL_READINGS,
     SET_CURRENT_KANJI_INDEX,
@@ -28,6 +27,8 @@ import {
     START_MATCH
 } from "./types";
 import {combineReducers} from "redux";
+import Card from "../Models/card";
+import Kanji from "../Models/kanji";
 
 const dummyAccountState = {
     firstName: "Vladimir",
@@ -39,7 +40,13 @@ const dummyAccountState = {
     isLoggedIn: false,
 }
 
-const dummyCardsState = [];
+const dummyCardsState = [new Card(1, 1, "Default card", "This is my test description", "Me", [
+    new Kanji("日1", ["ニチ1", "ジツ1", "ニ1"], ["ひ1", "は1"]),
+    new Kanji("日2", ["ニチ2", "ジツ2", "ニ2"], ["ひ2", "は2"]),
+    new Kanji("日3", ["ニチ3", "ジツ3", "ニ3"], ["ひ3", "は3"]),
+    new Kanji("日4", ["ニチ4", "ジツ4", "ニ4"], ["ひ4", "は4"]),
+    new Kanji("日5", ["ニチ5", "ジツ5", "ニ5"], ["ひ5", "は5"]),
+    new Kanji("日6", ["ニチ6", "ジツ6", "ニ6"], ["ひ6", "は6"]),])];
 
 
 const dummyLearnState = {
@@ -101,6 +108,16 @@ const myCardsReducer = (state = dummyCardsState, action) => {
             return [...state.myCards, action.payload]
         case REMOVE_CARD:
             return [...state.myCards.filter((card) => card.id !== action.payload)]
+        case SAVE_EDITED_CARD: {
+            const editedCard = action.payload;
+            let newIndex = 0;
+            for (const index in state) {
+                if (state[index].id === editedCard.id) newIndex = index;
+            }
+            const originalState = [...state];
+            originalState[newIndex] = editedCard;
+            return originalState;
+        }
     }
     return state;
 }
@@ -108,7 +125,6 @@ const myCardsReducer = (state = dummyCardsState, action) => {
 const randomListReducer = (state = [], action) => {
     switch (action.type) {
         case SET_RANDOM_LIST:
-            console.log("random in reducer: ", action.payload)
             return [...action.payload]
         case FINISH_MATCH_LEARNING:
             return []
@@ -119,7 +135,6 @@ const randomListReducer = (state = [], action) => {
 const readingsReducer = (state = [], action) => {
     switch (action.type) {
         case SET_CURRENT_ALL_READINGS:
-            console.log("readings in reducer: ", action.payload)
             return [...action.payload]
         case FINISH_MATCH_LEARNING:
             return [];

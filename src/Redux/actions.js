@@ -15,8 +15,8 @@ import {
     LOGOUT_TEST,
     OPEN_EDIT_DIALOG,
     REGISTER,
-    REMOVE_CARD, SAVE_EDITED_CARD,
-    SELECT_CARD,
+    REMOVE_CARD,
+    SAVE_EDITED_CARD,
     SELECT_CURRENT_KANJI_LIST,
     SET_CURRENT_ALL_READINGS,
     SET_CURRENT_KANJI_INDEX,
@@ -95,7 +95,6 @@ export const setRandomList = (kanjiList) => {
     const randomedList = kanjiList.map(value => ({value, sort: Math.random()}))
         .sort((a, b) => a.sort - b.sort)
         .map(({value}) => value);
-    console.log(randomedList);
     return {
         type: SET_RANDOM_LIST, payload: randomedList,
     }
@@ -117,35 +116,27 @@ const arrayLog = (array, key) => {
 
 export const setCurrentAllReadings = (kanjiArray, currentKanjiIndex) => {
     const sourceArray = [...kanjiArray];
-    arrayLog(sourceArray, "source")
     const correctReadings = [...sourceArray[currentKanjiIndex].kunyoumi, ...sourceArray[currentKanjiIndex].onyoumi];
-    arrayLog(sourceArray, "setall");
     sourceArray.splice(currentKanjiIndex, 1);
     const arrayWithoutCurrentKanji = [...sourceArray];
-    arrayLog(arrayWithoutCurrentKanji, "arrayWithoutCurrentKanji");
     const firstIncorrectKanjiIndex = Math.round(Math.random() * (arrayWithoutCurrentKanji.length - 1));
-    console.log("first index", firstIncorrectKanjiIndex)
     const firstIncorrectKanjiReadings = [
         ...arrayWithoutCurrentKanji[firstIncorrectKanjiIndex].kunyoumi,
         ...arrayWithoutCurrentKanji[firstIncorrectKanjiIndex].onyoumi];
-    arrayLog(firstIncorrectKanjiReadings, "first readings");
     let secondIncorrectKanjiIndex;
     while (true) {
         secondIncorrectKanjiIndex = Math.round(Math.random() * (arrayWithoutCurrentKanji.length - 1));
         if (firstIncorrectKanjiIndex !== secondIncorrectKanjiIndex) break;
     }
-    console.log("second index", secondIncorrectKanjiIndex)
     const secondIncorrectKanjiReadings = [
         ...arrayWithoutCurrentKanji[secondIncorrectKanjiIndex].kunyoumi,
         ...arrayWithoutCurrentKanji[secondIncorrectKanjiIndex].onyoumi];
-    arrayLog(secondIncorrectKanjiReadings, "second readings");
     const allReadings = [...correctReadings, ...firstIncorrectKanjiReadings, ...secondIncorrectKanjiReadings].map(value => ({
         value,
         sort: Math.random()
     }))
         .sort((a, b) => a.sort - b.sort)
         .map(({value}) => value)
-    arrayLog(allReadings, "all readings");
     return {
         type: SET_CURRENT_ALL_READINGS,
         payload: allReadings
@@ -205,7 +196,7 @@ export const setNewCardDescription = (newCardDescription) => ({
     payload: newCardDescription,
 })
 
-export const saveCard = (newCard)=>({
+export const saveCard = (newCard) => ({
     type: SAVE_EDITED_CARD,
     payload: newCard
 })
