@@ -11,12 +11,16 @@ const MatchResults = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const classes = useStyle();
+    const clear = () => {
+        dispatch(finishMatchLearning());
+    }
     const onRestart = () => {
-
+        clear();
+        navigate("../");
     }
     const onFinish = () => {
-        dispatch(finishMatchLearning());
-        navigate("../../../");
+        clear();
+        navigate("../../../my-sets");
     }
     console.log(results)
     return <div className={classes.container}>

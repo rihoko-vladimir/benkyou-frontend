@@ -1,13 +1,12 @@
 import {makeStyles} from "@mui/styles";
 
 const useStyle = makeStyles({
-    kanjiInfoContainer: {
+    container: {
         display: "flex",
         flexDirection: "row",
-        width: "99%",
-        borderWidth: "1px",
-        borderStyle: "solid",
-        borderColor: "black",
+        width: "100%",
+        alignItems: "center",
+        columnGap: "8px",
     },
     kanji: {
         display: "inline-flex",
@@ -15,28 +14,25 @@ const useStyle = makeStyles({
         marginTop: "0px",
         marginBottom: "0px",
         userSelect: "none",
-        flex: "3",
+        flex: "1",
         alignItems: "center",
-        justifyContent: "center",
-        borderRightWidth: "1px",
-        borderRightStyle: "solid",
+        justifyContent: "center"
     },
-    kanjiReadings: {
+    readingsContainer: {
         display: "flex",
         flexDirection: "column",
-        flex: "8",
+        flex: "7",
         rowGap: "8px",
         paddingTop: "12px",
         paddingBottom: "12px",
     },
-    reading: {
+    readings: {
         display: "flex",
         flexDirection: "row",
         columnGap: "12px",
         flex: "1",
-        paddingLeft: "8px",
-        paddingRight: "8px",
     }
-})
+});
+
 
 export default useStyle;

@@ -6,16 +6,25 @@ import {
     CHANGE_FIRST_NAME,
     CHANGE_LAST_NAME,
     CHANGE_PICTURE,
+    CLOSE_EDIT_DIALOG,
+    EDIT_CARD,
     FINISH_MATCH_LEARNING,
     LOG_IN,
     LOG_OUT,
     LOGIN_TEST,
     LOGOUT_TEST,
-    MODIFY_CARD,
+    OPEN_EDIT_DIALOG,
     REGISTER,
     REMOVE_CARD,
+    SAVE_EDITED_CARD,
+    SELECT_CURRENT_KANJI_LIST,
     SET_CURRENT_ALL_READINGS,
     SET_CURRENT_KANJI_INDEX,
+    SET_NEW_CARD_DESCRIPTION,
+    SET_NEW_CARD_NAME,
+    SET_NEW_KANJI,
+    SET_NEW_KUNYOUMI,
+    SET_NEW_ONYOUMI,
     SET_RANDOM_LIST,
     START_MATCH
 } from "./types";
@@ -64,7 +73,7 @@ export const removeCard = (idToRemove) => ({
 });
 
 export const modifyCard = (modifiedCard) => ({
-    type: MODIFY_CARD,
+    type: EDIT_CARD,
     payload: modifiedCard,
 });
 
@@ -86,7 +95,6 @@ export const setRandomList = (kanjiList) => {
     const randomedList = kanjiList.map(value => ({value, sort: Math.random()}))
         .sort((a, b) => a.sort - b.sort)
         .map(({value}) => value);
-    console.log(randomedList);
     return {
         type: SET_RANDOM_LIST, payload: randomedList,
     }
@@ -108,35 +116,27 @@ const arrayLog = (array, key) => {
 
 export const setCurrentAllReadings = (kanjiArray, currentKanjiIndex) => {
     const sourceArray = [...kanjiArray];
-    arrayLog(sourceArray, "source")
     const correctReadings = [...sourceArray[currentKanjiIndex].kunyoumi, ...sourceArray[currentKanjiIndex].onyoumi];
-    arrayLog(sourceArray, "setall");
     sourceArray.splice(currentKanjiIndex, 1);
     const arrayWithoutCurrentKanji = [...sourceArray];
-    arrayLog(arrayWithoutCurrentKanji, "arrayWithoutCurrentKanji");
     const firstIncorrectKanjiIndex = Math.round(Math.random() * (arrayWithoutCurrentKanji.length - 1));
-    console.log("first index", firstIncorrectKanjiIndex)
     const firstIncorrectKanjiReadings = [
         ...arrayWithoutCurrentKanji[firstIncorrectKanjiIndex].kunyoumi,
         ...arrayWithoutCurrentKanji[firstIncorrectKanjiIndex].onyoumi];
-    arrayLog(firstIncorrectKanjiReadings, "first readings");
     let secondIncorrectKanjiIndex;
     while (true) {
         secondIncorrectKanjiIndex = Math.round(Math.random() * (arrayWithoutCurrentKanji.length - 1));
         if (firstIncorrectKanjiIndex !== secondIncorrectKanjiIndex) break;
     }
-    console.log("second index", secondIncorrectKanjiIndex)
     const secondIncorrectKanjiReadings = [
         ...arrayWithoutCurrentKanji[secondIncorrectKanjiIndex].kunyoumi,
         ...arrayWithoutCurrentKanji[secondIncorrectKanjiIndex].onyoumi];
-    arrayLog(secondIncorrectKanjiReadings, "second readings");
     const allReadings = [...correctReadings, ...firstIncorrectKanjiReadings, ...secondIncorrectKanjiReadings].map(value => ({
         value,
         sort: Math.random()
     }))
         .sort((a, b) => a.sort - b.sort)
         .map(({value}) => value)
-    arrayLog(allReadings, "all readings");
     return {
         type: SET_CURRENT_ALL_READINGS,
         payload: allReadings
@@ -155,4 +155,48 @@ export const finishMatchLearning = () => ({
 
 export const startMatch = () => ({
     type: START_MATCH,
+})
+
+export const selectKanjiList = (kanjiList) => ({
+    type: SELECT_CURRENT_KANJI_LIST,
+    payload: [...kanjiList]
+})
+
+export const openDialog = (card) => ({
+    type: OPEN_EDIT_DIALOG,
+    payload: card
+})
+
+export const closeDialog = () => ({
+    type: CLOSE_EDIT_DIALOG,
+})
+
+export const setNewKanji = (newKanji, index) => ({
+    type: SET_NEW_KANJI,
+    payload: {index, newKanji}
+})
+
+export const setNewKunyoumi = (newReadingsArray, index) => ({
+    type: SET_NEW_KUNYOUMI,
+    payload: {index, newReadingsArray}
+})
+
+export const setNewOnyoumi = (newReadingsArray, index) => ({
+    type: SET_NEW_ONYOUMI,
+    payload: {index, newReadingsArray}
+})
+
+export const setNewCardName = (newCardName) => ({
+    type: SET_NEW_CARD_NAME,
+    payload: newCardName
+})
+
+export const setNewCardDescription = (newCardDescription) => ({
+    type: SET_NEW_CARD_DESCRIPTION,
+    payload: newCardDescription,
+})
+
+export const saveCard = (newCard) => ({
+    type: SAVE_EDITED_CARD,
+    payload: newCard
 })

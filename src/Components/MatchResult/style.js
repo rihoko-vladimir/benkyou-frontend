@@ -5,7 +5,6 @@ const useStyle = makeStyles({
         display: "flex",
         flexDirection: "row",
         width: "100%",
-        backgroundColor: "rgba(0,0,0,0.08)",
         borderTopWidth:"1px",
         borderBottomWidth:"1px",
         borderRightWidth:"1px",

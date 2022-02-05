@@ -5,7 +5,7 @@ import {useState} from "react";
 import {Pagination, Typography} from "@mui/material";
 
 const CardsStack = (props) => {
-    const info = props.info;
+    const info = props.cards;
     const classes = useStyle();
     const cardsPerPage = 8;
     const [currentPage, setCurrentPage] = useState(1);
@@ -22,10 +22,8 @@ const CardsStack = (props) => {
         info.length !== 0
             ? <div className={classes.mainContainer}>
                 <div className={classes.cardsContainer}>
-                    {(isPaginateAble ? currentCards : info).map(element =>
-                        <Card cardName={element.title}
-                              cardDescription={element.description}
-                              kanji={element.kanji}/>
+                    {(isPaginateAble ? currentCards : info).map(card =>
+                        <Card card={card}/>
                     )}
                 </div>
                 {isPaginateAble
@@ -41,11 +39,7 @@ const CardsStack = (props) => {
 }
 
 CardsStack.propTypes = {
-    info: PropTypes.arrayOf(PropTypes.objectOf({
-        title: PropTypes.string.isRequired,
-        description: PropTypes.string.isRequired,
-        kanji: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired
-    }).isRequired).isRequired
+    cards: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired
 }
 
 export default CardsStack;

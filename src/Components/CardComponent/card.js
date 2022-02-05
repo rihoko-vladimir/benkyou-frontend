@@ -3,34 +3,49 @@ import {Button, Collapse, IconButton, Link, Typography} from "@mui/material";
 import PropTypes from "prop-types";
 import {ExpandLessOutlined, ExpandMoreOutlined} from "@mui/icons-material";
 import {useState} from "react";
+import {useDispatch} from "react-redux";
+import {useNavigate} from "react-router";
+import {openDialog, selectKanjiList} from "../../Redux/actions";
 import KanjiInfo from "../KanjiInfoComponent/kanjiInfo";
-import Kanji from "../../Models/kanji";
+import {hostUrl} from "../../applicationSettings";
+import {ACCOUNT_PATH, HUB_PATH} from "../Router/paths";
 
 const Card = (props) => {
     const [isOpenButtonPressed, setButtonPressed] = useState(false);
     const classes = useStyle();
-    const author = "";
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const onOpenButtonPressed = () => setButtonPressed(!isOpenButtonPressed);
+
+    const onBenkyouClicked = () => {
+        dispatch(selectKanjiList(props.card.kanjiList));
+        navigate("../study/")
+    }
+
+    const onEditClicked = () => {
+        console.log(props.card);
+        dispatch(openDialog(props.card));
+    }
 
     return (
         <div className={classes.card}>
             <div className={classes.cardTitle}>
                 <Typography
                     variant={"subtitle1"}>
-                    {props.cardName}
+                    {props.card.name}
                 </Typography>
                 <Typography
                     variant={"subtitle2"}>
-                    {props.cardDescription}
+                    {props.card.description}
                 </Typography>
                 <Typography
                     variant={"subtitle2"}>
                     Author: <Link
                     underline={"hover"}
                     rel={"noreferrer"}
-                    href={"#"}>
-                    {author}
+                    href={`${hostUrl}/${HUB_PATH}/${ACCOUNT_PATH}/id/${props.card.id}`}>
+                    {props.card.author}
                 </Link>
                 </Typography>
             </div>
@@ -41,9 +56,9 @@ const Card = (props) => {
                     timeout={"auto"}>
                     <div
                         className={classes.kanjiList}>
-                        {props.kanji.map(kanji => (
+                        {props.card.kanjiList.map(kanji => (
                             <KanjiInfo
-                                kanjiObject={new Kanji(kanji, ["ニチ", "ジツ", "ニ"], ["ひ", "ほ"])}/>))}
+                                kanjiObject={kanji}/>))}
                     </div>
                 </Collapse>
                 <div
@@ -56,12 +71,14 @@ const Card = (props) => {
                         className={classes.actionButtons}>
                         <Button
                             variant={"outlined"}
-                            className={classes.button}>
+                            className={classes.button}
+                            onClick={onEditClicked}>
                             Edit
                         </Button>
                         <Button
                             variant={"contained"}
-                            className={classes.button}>
+                            className={classes.button}
+                            onClick={onBenkyouClicked}>
                             勉強！
                         </Button>
                     </div>
@@ -71,9 +88,7 @@ const Card = (props) => {
 }
 
 Card.propTypes = {
-    cardName: PropTypes.string.isRequired,
-    cardDescription: PropTypes.string.isRequired,
-    kanji: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+    card: PropTypes.object.isRequired
 }
 
 export default Card;

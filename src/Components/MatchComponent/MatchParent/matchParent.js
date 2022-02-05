@@ -10,18 +10,11 @@ import {
 } from "../../../Redux/actions";
 import {useNavigate} from "react-router";
 
-const MatchParent = (props) => {
+const MatchParent = () => {
     const dispatch = useDispatch();
     const store = useStore();
     const navigate = useNavigate()
-    const data = props.kanjiList || [
-        new Kanji("日1", ["ニチ1", "ジツ1", "ニ1"], ["ひ1", "は1"]),
-        new Kanji("日2", ["ニチ2", "ジツ2", "ニ2"], ["ひ2", "は2"]),
-        new Kanji("日3", ["ニチ3", "ジツ3", "ニ3"], ["ひ3", "は3"]),
-        new Kanji("日4", ["ニチ4", "ジツ4", "ニ4"], ["ひ4", "は4"]),
-        new Kanji("日5", ["ニチ5", "ジツ5", "ニ5"], ["ひ5", "は5"]),
-        new Kanji("日6", ["ニチ6", "ジツ6", "ニ6"], ["ひ6", "は6"]),
-    ];
+    const data = useSelector(state => state.selectedKanji);
     const isMatching = useSelector(state => state.learn.isMatching);
     if (!isMatching) {
         dispatch(setRandomList(data));
