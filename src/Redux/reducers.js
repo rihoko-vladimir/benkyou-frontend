@@ -7,7 +7,6 @@ import {
     CHANGE_LAST_NAME,
     CHANGE_PICTURE,
     CLOSE_EDIT_DIALOG,
-    EDIT_CARD,
     FINISH_MATCH_LEARNING,
     LOG_IN,
     LOG_OUT,
@@ -15,10 +14,16 @@ import {
     LOGOUT_TEST,
     OPEN_EDIT_DIALOG,
     REMOVE_CARD,
+    SAVE_EDITED_CARD,
     SELECT_CARD,
     SELECT_CURRENT_KANJI_LIST,
     SET_CURRENT_ALL_READINGS,
     SET_CURRENT_KANJI_INDEX,
+    SET_NEW_CARD_DESCRIPTION,
+    SET_NEW_CARD_NAME,
+    SET_NEW_KANJI,
+    SET_NEW_KUNYOUMI,
+    SET_NEW_ONYOUMI,
     SET_RANDOM_LIST,
     START_MATCH
 } from "./types";
@@ -41,6 +46,8 @@ const dummyLearnState = {
     currentKanjiIndex: 0,
     isMatching: false
 }
+
+const editCardDummyState = {}
 
 const accountReducer = (state = dummyAccountState, action) => {
     switch (action.type) {
@@ -94,18 +101,6 @@ const myCardsReducer = (state = dummyCardsState, action) => {
             return [...state.myCards, action.payload]
         case REMOVE_CARD:
             return [...state.myCards.filter((card) => card.id !== action.payload)]
-        case EDIT_CARD: {
-            const getIndexById = (id, array) => {
-                for (const index in array) {
-                    if (array[index].id === id) return index;
-                }
-            }
-            const editedCard = action.payload;
-            const editedIndex = getIndexById(editedCard.id, state)
-            const stateCopy = [...state];
-            stateCopy[editedIndex] = editedCard;
-            return stateCopy;
-        }
     }
     return state;
 }
@@ -168,14 +163,34 @@ const editDialogReducer = (state = false, action) => {
             return true;
         case CLOSE_EDIT_DIALOG:
             return false;
+        case SAVE_EDITED_CARD:
+            return false;
     }
     return state;
 }
-
-const selectedCardReducer = (state = {}, action) => {
+const editedValuesReducer = (state = editCardDummyState, action) => {
     switch (action.type) {
-        case SELECT_CARD:
-            return action.payload
+        case OPEN_EDIT_DIALOG:
+            return {...action.payload}
+        case SET_NEW_KANJI: {
+            const kanjiList = [...state.kanjiList];
+            kanjiList[action.payload.index].kanji = action.payload.newKanji;
+            return {...state, kanjiList}
+        }
+        case SET_NEW_KUNYOUMI: {
+            const kanjiList = [...state.kanjiList];
+            kanjiList[action.payload.index].kunyoumi = action.payload.newReadingsArray
+            return {...state, kanjiList}
+        }
+        case SET_NEW_ONYOUMI: {
+            const kanjiList = [...state.kanjiList];
+            kanjiList[action.payload.index].onyoumi = action.payload.newReadingsArray
+            return {...state, kanjiList}
+        }
+        case SET_NEW_CARD_NAME:
+            return {...state, name: action.payload}
+        case SET_NEW_CARD_DESCRIPTION:
+            return {...state, description: action.payload}
     }
     return state;
 }
@@ -189,5 +204,5 @@ export default combineReducers({
     results: resultsReducer,
     selectedKanji: selectedKanjiReducer,
     isEditDialogOpened: editDialogReducer,
-    selectedCard: selectedCardReducer
+    editCard: editedValuesReducer
 });

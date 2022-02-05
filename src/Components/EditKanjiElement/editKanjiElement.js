@@ -1,14 +1,26 @@
 import PropTypes from "prop-types";
 import useStyle from "./style";
 import {Divider, TextField} from "@mui/material";
-import {useState} from "react";
 import ChipInput from "../ChipInput/chipInput";
+import {useDispatch} from "react-redux";
+import {setNewKanji, setNewKunyoumi, setNewOnyoumi} from "../../Redux/actions";
 
 const EditKanjiElement = (props) => {
     const classes = useStyle();
-    const [kanji, setKanji] = useState(props.kanji.kanji);
-    const [kunyoumi, setKunyoumi] = useState(props.kanji.kunyoumi);
-    const [onyoumi, setOnyoumi] = useState(props.kanji.onyoumi);
+    const dispatch = useDispatch();
+    const kunyoumi = props.kanji.kunyoumi;
+    const onyoumi = props.kanji.onyoumi
+    const kanji = props.kanji.kanji;
+    const setKunyoumi = (newKunyoumiArray) => {
+        dispatch(setNewKunyoumi(newKunyoumiArray, props.index));
+    }
+    const setOnyoumi = (newOnyoumiArray) => {
+        dispatch(setNewOnyoumi(newOnyoumiArray, props.index));
+    }
+    const setKanji = (newKanji) => {
+        dispatch(setNewKanji(newKanji, props.index));
+    }
+
     const addKunyoumi = (newReading) => {
         setKunyoumi([...kunyoumi, newReading])
     }
@@ -26,12 +38,14 @@ const EditKanjiElement = (props) => {
                    onChange={(event) => setKanji(event.target.value)} inputProps={{maxLength: 1}}/>
         <div className={classes.readingsContainer}>
             <div className={classes.readings}>
-                <ChipInput fullWidth variant={"outlined"} value={kunyoumi} allowDuplicates={false} label={"Kunyoumi"}
+                <ChipInput fullWidth variant={"outlined"} value={kunyoumi} allowDuplicates={false}
+                           label={"Kunyoumi"}
                            onAdd={addKunyoumi} onDelete={deleteKunyoumi}/>
             </div>
             <Divider/>
             <div className={classes.readings}>
-                <ChipInput fullWidth variant={"outlined"} value={onyoumi} allowDuplicates={false} label={"Onyoumi"}
+                <ChipInput fullWidth variant={"outlined"} value={onyoumi} allowDuplicates={false}
+                           label={"Onyoumi"}
                            onAdd={addOnyoumi} onDelete={deleteOnyoumi}/>
             </div>
         </div>
@@ -39,6 +53,7 @@ const EditKanjiElement = (props) => {
 }
 
 EditKanjiElement.propTypes = {
+    index: PropTypes.number.isRequired,
     kanji: PropTypes.object.isRequired
 };
 

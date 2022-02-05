@@ -15,11 +15,16 @@ import {
     LOGOUT_TEST,
     OPEN_EDIT_DIALOG,
     REGISTER,
-    REMOVE_CARD,
+    REMOVE_CARD, SAVE_EDITED_CARD,
     SELECT_CARD,
     SELECT_CURRENT_KANJI_LIST,
     SET_CURRENT_ALL_READINGS,
     SET_CURRENT_KANJI_INDEX,
+    SET_NEW_CARD_DESCRIPTION,
+    SET_NEW_CARD_NAME,
+    SET_NEW_KANJI,
+    SET_NEW_KUNYOUMI,
+    SET_NEW_ONYOUMI,
     SET_RANDOM_LIST,
     START_MATCH
 } from "./types";
@@ -166,15 +171,41 @@ export const selectKanjiList = (kanjiList) => ({
     payload: [...kanjiList]
 })
 
-export const openDialog = () => ({
+export const openDialog = (card) => ({
     type: OPEN_EDIT_DIALOG,
+    payload: card
 })
 
 export const closeDialog = () => ({
     type: CLOSE_EDIT_DIALOG,
 })
 
-export const selectCard = (card) => ({
-    type: SELECT_CARD,
-    payload: card
+export const setNewKanji = (newKanji, index) => ({
+    type: SET_NEW_KANJI,
+    payload: {index, newKanji}
+})
+
+export const setNewKunyoumi = (newReadingsArray, index) => ({
+    type: SET_NEW_KUNYOUMI,
+    payload: {index, newReadingsArray}
+})
+
+export const setNewOnyoumi = (newReadingsArray, index) => ({
+    type: SET_NEW_ONYOUMI,
+    payload: {index, newReadingsArray}
+})
+
+export const setNewCardName = (newCardName) => ({
+    type: SET_NEW_CARD_NAME,
+    payload: newCardName
+})
+
+export const setNewCardDescription = (newCardDescription) => ({
+    type: SET_NEW_CARD_DESCRIPTION,
+    payload: newCardDescription,
+})
+
+export const saveCard = (newCard)=>({
+    type: SAVE_EDITED_CARD,
+    payload: newCard
 })

@@ -1,17 +1,14 @@
-import PropTypes from "prop-types";
 import EditKanjiElement from "../EditKanjiElement/editKanjiElement";
 import {Divider} from "@mui/material";
+import {useSelector} from "react-redux";
 
-const EditKanjiList = (props) => {
+const EditKanjiList = () => {
+    const kanjiList = useSelector(state => state.editCard.kanjiList);
     return <div>
         <Divider/>
-        {props.kanjiList.map(kanji => <EditKanjiElement kanji={kanji}/>)}
+        {kanjiList.map((kanji, index) => <EditKanjiElement kanji={kanji} index={index}/>)}
         <Divider/>
     </div>;
 }
-
-EditKanjiList.propTypes = {
-    kanjiList: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired
-};
 
 export default EditKanjiList;

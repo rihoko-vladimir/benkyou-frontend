@@ -5,7 +5,7 @@ import {ExpandLessOutlined, ExpandMoreOutlined} from "@mui/icons-material";
 import {useState} from "react";
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router";
-import {openDialog, selectCard, selectKanjiList} from "../../Redux/actions";
+import {openDialog, selectKanjiList} from "../../Redux/actions";
 import KanjiInfo from "../KanjiInfoComponent/kanjiInfo";
 import {hostUrl} from "../../applicationSettings";
 import {ACCOUNT_PATH, HUB_PATH} from "../Router/paths";
@@ -25,8 +25,7 @@ const Card = (props) => {
 
     const onEditClicked = () => {
         console.log(props.card);
-        dispatch(selectCard(props.card));
-        dispatch(openDialog());
+        dispatch(openDialog(props.card));
     }
 
     return (
