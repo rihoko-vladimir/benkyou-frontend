@@ -38,13 +38,13 @@ const EditKanjiElement = (props) => {
                    onChange={(event) => setKanji(event.target.value)} inputProps={{maxLength: 1}}/>
         <div className={classes.readingsContainer}>
             <div className={classes.readings}>
-                <ChipInput fullWidth variant={"outlined"} value={kunyoumi} allowDuplicates={false}
+                <ChipInput fullWidth variant={"filled"} value={kunyoumi} allowDuplicates={false}
                            label={"Kunyoumi"}
                            onAdd={addKunyoumi} onDelete={deleteKunyoumi}/>
             </div>
             <Divider/>
             <div className={classes.readings}>
-                <ChipInput fullWidth variant={"outlined"} value={onyoumi} allowDuplicates={false}
+                <ChipInput fullWidth variant={"filled"} value={onyoumi} allowDuplicates={false}
                            label={"Onyoumi"}
                            onAdd={addOnyoumi} onDelete={deleteOnyoumi}/>
             </div>

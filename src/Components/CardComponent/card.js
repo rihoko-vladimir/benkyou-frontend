@@ -1,5 +1,5 @@
 import useStyle from "./style";
-import {Button, Collapse, IconButton, Link, Typography} from "@mui/material";
+import {Button, Collapse, IconButton, Link, Tooltip, Typography, Zoom} from "@mui/material";
 import PropTypes from "prop-types";
 import {Close, ExpandLessOutlined, ExpandMoreOutlined} from "@mui/icons-material";
 import {useState} from "react";
@@ -27,7 +27,7 @@ const Card = (props) => {
         dispatch(openDialog(props.card));
     }
 
-    const onDeleteClicked = ()=>{
+    const onDeleteClicked = () => {
         dispatch(removeCard(props.card.id))
         dispatch(showSnackbar("Card removed"))
     }
@@ -54,9 +54,11 @@ const Card = (props) => {
                     </Link>
                     </Typography>
                 </div>
-                <IconButton onClick={onDeleteClicked}>
-                    <Close/>
-                </IconButton>
+                <Tooltip title={"Remove card"} placement={"top"} arrow TransitionComponent={Zoom}>
+                    <IconButton onClick={onDeleteClicked}>
+                        <Close/>
+                    </IconButton>
+                </Tooltip>
             </div>
             <div
                 className={classes.lowerCardContent}>
@@ -72,10 +74,12 @@ const Card = (props) => {
                 </Collapse>
                 <div
                     className={classes.buttons}>
-                    <IconButton
-                        onClick={() => onOpenButtonPressed()}>
-                        {isOpenButtonPressed ? <ExpandMoreOutlined/> : <ExpandLessOutlined/>}
-                    </IconButton>
+                    <Tooltip title={"Expand / Hide"} placement={"bottom"} arrow TransitionComponent={Zoom}>
+                        <IconButton
+                            onClick={() => onOpenButtonPressed()}>
+                            {isOpenButtonPressed ? <ExpandMoreOutlined/> : <ExpandLessOutlined/>}
+                        </IconButton>
+                    </Tooltip>
                     <div
                         className={classes.actionButtons}>
                         <Button
@@ -84,12 +88,15 @@ const Card = (props) => {
                             onClick={onEditClicked}>
                             Edit
                         </Button>
-                        <Button
-                            variant={"contained"}
-                            className={classes.button}
-                            onClick={onBenkyouClicked}>
-                            勉強！
-                        </Button>
+                        <Tooltip title={"Learn!"} placement={"bottom"} arrow TransitionComponent={Zoom}
+                                 enterDelay={650}>
+                            <Button
+                                variant={"contained"}
+                                className={classes.button}
+                                onClick={onBenkyouClicked}>
+                                勉強！
+                            </Button>
+                        </Tooltip>
                     </div>
                 </div>
             </div>

@@ -34,7 +34,7 @@ const CardsStack = (props) => {
                                   onChange={onNavigationClicked}/>
                     : null}
             </div>
-            : <Typography variant={"h6"}>Cards currently unavailable</Typography>
+            : <Typography variant={"h6"}>It's kinda empty here...</Typography>
     )
 }
 
