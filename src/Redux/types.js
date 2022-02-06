@@ -29,3 +29,5 @@ export const SET_NEW_CARD_DESCRIPTION = "myCards/setNewCardDescription";
 export const SAVE_EDITED_CARD = "myCards/saveEditedCard";
 export const SHOW_SNACKBAR = "snackbar/showDialod"
 export const HIDE_SNACKBAR = "snackbar/hideSnackbar"
+export const REMOVE_KANJI = "myCards/removeKanji";
+export const ADD_KANJI = "myCards/addKanji";

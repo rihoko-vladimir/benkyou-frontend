@@ -1,4 +1,5 @@
 import {
+    ADD_KANJI,
     ADD_MATCH_RESULT,
     ADD_NEW_CARD,
     CHANGE_ABOUT_INFO,
@@ -15,6 +16,7 @@ import {
     LOGOUT_TEST,
     OPEN_EDIT_DIALOG,
     REMOVE_CARD,
+    REMOVE_KANJI,
     SAVE_EDITED_CARD,
     SELECT_CURRENT_KANJI_LIST,
     SET_CURRENT_ALL_READINGS,
@@ -225,8 +227,20 @@ const editedValuesReducer = (state = editCardDummyState, action) => {
         }
         case SET_NEW_CARD_NAME:
             return {...state, name: action.payload}
+
         case SET_NEW_CARD_DESCRIPTION:
             return {...state, description: action.payload}
+
+        case REMOVE_KANJI: {
+            const kanjiList = [...state.kanjiList];
+            kanjiList.splice(action.payload, 1);
+            return {...state, kanjiList}
+        }
+        case ADD_KANJI: {
+            const kanjiList = [...state.kanjiList];
+            kanjiList.push(new Kanji("", [], []))
+            return {...state, kanjiList};
+        }
     }
     return state;
 }

@@ -1,4 +1,5 @@
 import {
+    ADD_KANJI,
     ADD_MATCH_RESULT,
     ADD_NEW_CARD,
     CHANGE_ABOUT_INFO,
@@ -17,6 +18,7 @@ import {
     OPEN_EDIT_DIALOG,
     REGISTER,
     REMOVE_CARD,
+    REMOVE_KANJI,
     SAVE_EDITED_CARD,
     SELECT_CURRENT_KANJI_LIST,
     SET_CURRENT_ALL_READINGS,
@@ -210,4 +212,12 @@ export const showSnackbar = (message) => ({
 
 export const hideSnackbar = () => ({
     type: HIDE_SNACKBAR
+})
+
+export const deleteKanji = (index) => ({
+    type: REMOVE_KANJI,
+    payload: index
+})
+export const addKanji = () => ({
+    type: ADD_KANJI
 })
