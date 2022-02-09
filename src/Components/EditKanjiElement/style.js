@@ -22,14 +22,14 @@ const useStyle = makeStyles({
         display: "flex",
         flexDirection: "column",
         flex: "7",
-        rowGap: "8px",
+        rowGap: "12px",
         paddingTop: "12px",
         paddingBottom: "12px",
     },
     readings: {
         display: "flex",
         flexDirection: "row",
-        columnGap: "12px",
+        columnGap: "16px",
         flex: "1",
     }
 });

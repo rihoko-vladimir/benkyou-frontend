@@ -1,5 +1,5 @@
 import useStyle from "./style";
-import {TextField, Typography} from "@mui/material";
+import {Alert, AlertTitle, TextField, Typography} from "@mui/material";
 import CardsStack from "../../../CardsStackComponent/cardsStack";
 import {useState} from "react";
 
@@ -32,8 +32,12 @@ const AllSetsPageContent = () => {
                         onTextInputChanged(event.target.value)}
                     placeholder={"Search for new sets"}/>
             </div>
-            <CardsStack
-                info={state.filteredResults}/>
+            <Alert severity={"warning"}>
+                <AlertTitle>Work in progress</AlertTitle>
+                Currently this component won't work as expected - please stay tuned!
+            </Alert>
+            {/*<CardsStack*/}
+            {/*    info={state.filteredResults} cards={info}/>*/}
         </div>
     )
 }

@@ -1,11 +1,11 @@
 import useStyle from "./style";
-import {Button, Collapse, IconButton, Link, Typography} from "@mui/material";
+import {Button, Collapse, IconButton, Link, Tooltip, Typography, Zoom} from "@mui/material";
 import PropTypes from "prop-types";
-import {ExpandLessOutlined, ExpandMoreOutlined} from "@mui/icons-material";
+import {Close, ExpandLessOutlined, ExpandMoreOutlined} from "@mui/icons-material";
 import {useState} from "react";
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router";
-import {openDialog, selectKanjiList} from "../../Redux/actions";
+import {openEditDialog, removeCard, selectKanjiList, showSnackbar} from "../../Redux/actions";
 import KanjiInfo from "../KanjiInfoComponent/kanjiInfo";
 import {hostUrl} from "../../applicationSettings";
 import {ACCOUNT_PATH, HUB_PATH} from "../Router/paths";
@@ -24,30 +24,41 @@ const Card = (props) => {
     }
 
     const onEditClicked = () => {
-        console.log(props.card);
-        dispatch(openDialog(props.card));
+        dispatch(openEditDialog(props.card));
+    }
+
+    const onDeleteClicked = () => {
+        dispatch(removeCard(props.card.id))
+        dispatch(showSnackbar("Card removed"))
     }
 
     return (
         <div className={classes.card}>
-            <div className={classes.cardTitle}>
-                <Typography
-                    variant={"subtitle1"}>
-                    {props.card.name}
-                </Typography>
-                <Typography
-                    variant={"subtitle2"}>
-                    {props.card.description}
-                </Typography>
-                <Typography
-                    variant={"subtitle2"}>
-                    Author: <Link
-                    underline={"hover"}
-                    rel={"noreferrer"}
-                    href={`${hostUrl}/${HUB_PATH}/${ACCOUNT_PATH}/id/${props.card.id}`}>
-                    {props.card.author}
-                </Link>
-                </Typography>
+            <div className={classes.topSection}>
+                <div className={classes.cardTitle}>
+                    <Typography
+                        variant={"subtitle1"}>
+                        {props.card.name}
+                    </Typography>
+                    <Typography
+                        variant={"subtitle2"}>
+                        {props.card.description}
+                    </Typography>
+                    <Typography
+                        variant={"subtitle2"}>
+                        Author: <Link
+                        underline={"hover"}
+                        rel={"noreferrer"}
+                        href={`${hostUrl}/${HUB_PATH}/${ACCOUNT_PATH}/id/${props.card.id}`}>
+                        {props.card.author}
+                    </Link>
+                    </Typography>
+                </div>
+                <Tooltip title={"Remove card"} placement={"top"} arrow TransitionComponent={Zoom}>
+                    <IconButton onClick={onDeleteClicked}>
+                        <Close/>
+                    </IconButton>
+                </Tooltip>
             </div>
             <div
                 className={classes.lowerCardContent}>
@@ -56,17 +67,19 @@ const Card = (props) => {
                     timeout={"auto"}>
                     <div
                         className={classes.kanjiList}>
-                        {props.card.kanjiList.map(kanji => (
+                        {props.card.kanjiList.map((kanji, index) => (
                             <KanjiInfo
-                                kanjiObject={kanji}/>))}
+                                kanjiObject={kanji} key={index}/>))}
                     </div>
                 </Collapse>
                 <div
                     className={classes.buttons}>
-                    <IconButton
-                        onClick={() => onOpenButtonPressed()}>
-                        {isOpenButtonPressed ? <ExpandMoreOutlined/> : <ExpandLessOutlined/>}
-                    </IconButton>
+                    <Tooltip title={"Expand / Hide"} placement={"bottom"} arrow TransitionComponent={Zoom}>
+                        <IconButton
+                            onClick={() => onOpenButtonPressed()}>
+                            {isOpenButtonPressed ? <ExpandMoreOutlined/> : <ExpandLessOutlined/>}
+                        </IconButton>
+                    </Tooltip>
                     <div
                         className={classes.actionButtons}>
                         <Button
@@ -75,12 +88,15 @@ const Card = (props) => {
                             onClick={onEditClicked}>
                             Edit
                         </Button>
-                        <Button
-                            variant={"contained"}
-                            className={classes.button}
-                            onClick={onBenkyouClicked}>
-                            勉強！
-                        </Button>
+                        <Tooltip title={"Learn!"} placement={"bottom"} arrow TransitionComponent={Zoom}
+                                 enterDelay={650}>
+                            <Button
+                                variant={"contained"}
+                                className={classes.button}
+                                onClick={onBenkyouClicked}>
+                                勉強！
+                            </Button>
+                        </Tooltip>
                     </div>
                 </div>
             </div>

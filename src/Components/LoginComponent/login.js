@@ -39,8 +39,7 @@ const LoginComponent = () => {
                            InputProps={{
                                endAdornment: <InputAdornment position={"end"}>
                                    <IconButton onClick={onShowPasswordClick}
-                                               onMouseDown={event => event.preventDefault()}
-                                   >
+                                               onMouseDown={event => event.preventDefault()}>
                                        {isPasswordVisible ? <VisibilityOff/> : <Visibility/>}
                                    </IconButton>
                                </InputAdornment>

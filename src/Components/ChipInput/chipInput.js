@@ -557,7 +557,7 @@ class ChipInput extends React.Component {
         const InputMore = {}
         if (variant === 'outlined') {
             InputMore.notched = shrinkFloatingLabel
-            InputMore.labelWidth =
+            InputMore.labelwidth =
                 (shrinkFloatingLabel && this.labelNode && this.labelNode.offsetWidth) ||
                 0
         }

@@ -9,13 +9,14 @@ const useStyle = makeStyles({
         rowGap: "16px",
         columnGap: "28px",
     },
-    mainContainer:{
-        display:"flex",
-        flexDirection:"column",
-        width:"100%",
+    mainContainer: {
+        display: "flex",
+        flexDirection: "column",
+        width: "100%",
         justifyContent: "space-between",
-        alignItems:"start",
-        rowGap: "24px"
+        alignItems: "start",
+        rowGap: "24px",
+        paddingBottom: "24px",
     }
 })
 

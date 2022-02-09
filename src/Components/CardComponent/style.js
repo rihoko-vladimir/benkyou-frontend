@@ -5,7 +5,7 @@ const useStyle = makeStyles({
         maxWidth: "360px",
         maxHeight: "480px",
         padding: "16px",
-        position:"relative",
+        position: "relative",
         width: "360px",
         height: "480px",
         borderRadius: "12px",
@@ -16,11 +16,11 @@ const useStyle = makeStyles({
         flexDirection: "column",
         justifyContent: "space-between",
         transition: "all 0.3s cubic-bezier(.25,.8,.25,1)",
-        "&:hover":{
+        "&:hover": {
             boxShadow: "0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)",
             cursor: "hover",
         },
-        boxSizing:"border-box",
+        boxSizing: "border-box",
     },
     cardTitle: {
         display: "flex",
@@ -34,26 +34,32 @@ const useStyle = makeStyles({
     button: {
         marginLeft: "10px",
     },
-    displayedKanji:{
-        overflowX:"hidden",
-        overflowY:"hidden",
+    displayedKanji: {
+        overflowX: "hidden",
+        overflowY: "hidden",
     },
-    buttons:{
-        display:"flex",
-        flexDirection:"row",
+    buttons: {
+        display: "flex",
+        flexDirection: "row",
         justifyContent: "space-between",
     },
-    lowerCardContent:{
+    lowerCardContent: {
         rowGap: "16px",
-        display:"flex",
-        flexDirection:"column",
+        display: "flex",
+        flexDirection: "column",
     },
-    kanjiList:{
+    kanjiList: {
         display: "flex",
         flexDirection: "column",
         width: "100%",
         maxHeight: "300px",
         overflowY: "scroll",
+    },
+    topSection: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent:"space-between",
+        alignItems:"start"
     }
 });
 export default useStyle;

@@ -1,9 +1,10 @@
 import PropTypes from "prop-types";
 import useStyle from "./style";
-import {Divider, TextField} from "@mui/material";
+import {IconButton, TextField, Tooltip, Zoom} from "@mui/material";
 import ChipInput from "../ChipInput/chipInput";
 import {useDispatch} from "react-redux";
-import {setNewKanji, setNewKunyoumi, setNewOnyoumi} from "../../Redux/actions";
+import {deleteKanji, setNewKanji, setNewKunyoumi, setNewOnyoumi} from "../../Redux/actions";
+import {PlaylistRemove} from "@mui/icons-material";
 
 const EditKanjiElement = (props) => {
     const classes = useStyle();
@@ -33,22 +34,29 @@ const EditKanjiElement = (props) => {
     const deleteOnyoumi = (readingToRemove) => {
         setOnyoumi([...onyoumi.filter(reading => reading !== readingToRemove)])
     }
+    const removeKanji = () => {
+        dispatch(deleteKanji(props.index));
+    }
     return <div className={classes.container}>
         <TextField label={"Kanji"} className={classes.kanji} fullWidth variant={"outlined"} value={kanji}
                    onChange={(event) => setKanji(event.target.value)} inputProps={{maxLength: 1}}/>
         <div className={classes.readingsContainer}>
             <div className={classes.readings}>
-                <ChipInput fullWidth variant={"outlined"} value={kunyoumi} allowDuplicates={false}
+                <ChipInput fullWidth variant={"filled"} value={kunyoumi} allowDuplicates={false}
                            label={"Kunyoumi"}
                            onAdd={addKunyoumi} onDelete={deleteKunyoumi}/>
             </div>
-            <Divider/>
             <div className={classes.readings}>
-                <ChipInput fullWidth variant={"outlined"} value={onyoumi} allowDuplicates={false}
+                <ChipInput fullWidth variant={"filled"} value={onyoumi} allowDuplicates={false}
                            label={"Onyoumi"}
                            onAdd={addOnyoumi} onDelete={deleteOnyoumi}/>
             </div>
         </div>
+        <Tooltip title={"Remove this kanji"} placement={"right"} arrow TransitionComponent={Zoom}>
+            <IconButton onClick={removeKanji}>
+                <PlaylistRemove/>
+            </IconButton>
+        </Tooltip>
     </div>
 }
 

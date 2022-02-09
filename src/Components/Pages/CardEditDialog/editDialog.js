@@ -2,11 +2,13 @@ import {Button, Dialog, DialogActions, DialogContent, DialogTitle} from "@mui/ma
 import {useDispatch, useSelector, useStore} from "react-redux";
 import {closeDialog, saveCard} from "../../../Redux/actions";
 import EditKanji from "../../EditKanjiComponent/editKanji";
+import {dialogModes} from "../../../Redux/reducers";
 
 const EditDialog = () => {
     const store = useStore();
     const dispatch = useDispatch();
-    const isOpen = useSelector(state => state.isEditDialogOpened);
+    const isOpen = useSelector(state => state.dialog.isOpened);
+    const mode = useSelector(state => state.dialog.mode);
     const onClose = () => {
         dispatch(closeDialog())
     }
@@ -18,7 +20,7 @@ const EditDialog = () => {
         scroll={"paper"}
         open={isOpen}
         onClose={onClose}>
-        <DialogTitle>Edit card</DialogTitle>
+        <DialogTitle>{mode === dialogModes.edit ? "Edit card" : mode === dialogModes.create ? "Create card" : "?"}</DialogTitle>
         <DialogContent dividers={true}>
             <EditKanji/>
         </DialogContent>

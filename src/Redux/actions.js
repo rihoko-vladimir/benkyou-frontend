@@ -1,4 +1,5 @@
 import {
+    ADD_KANJI,
     ADD_MATCH_RESULT,
     ADD_NEW_CARD,
     CHANGE_ABOUT_INFO,
@@ -6,17 +7,20 @@ import {
     CHANGE_FIRST_NAME,
     CHANGE_LAST_NAME,
     CHANGE_PICTURE,
-    CLOSE_EDIT_DIALOG,
+    CLOSE_DIALOG,
     EDIT_CARD,
     FINISH_MATCH_LEARNING,
+    HIDE_SNACKBAR,
     LOG_IN,
     LOG_OUT,
     LOGIN_TEST,
     LOGOUT_TEST,
+    OPEN_CREATE_NEW_SET_DIALOG,
     OPEN_EDIT_DIALOG,
     REGISTER,
     REMOVE_CARD,
-    SAVE_EDITED_CARD,
+    REMOVE_KANJI,
+    SAVE_CARD,
     SELECT_CURRENT_KANJI_LIST,
     SET_CURRENT_ALL_READINGS,
     SET_CURRENT_KANJI_INDEX,
@@ -26,6 +30,7 @@ import {
     SET_NEW_KUNYOUMI,
     SET_NEW_ONYOUMI,
     SET_RANDOM_LIST,
+    SHOW_SNACKBAR,
     START_MATCH
 } from "./types";
 
@@ -106,14 +111,6 @@ export const setCurrentKanjiIndex = (newIndex) => ({
     payload: newIndex
 })
 
-const arrayLog = (array, key) => {
-    console.log(`Logging ${key}`);
-    for (const arrayIndex in array) {
-        console.log(array[arrayIndex]);
-    }
-}
-
-
 export const setCurrentAllReadings = (kanjiArray, currentKanjiIndex) => {
     const sourceArray = [...kanjiArray];
     const correctReadings = [...sourceArray[currentKanjiIndex].kunyoumi, ...sourceArray[currentKanjiIndex].onyoumi];
@@ -162,13 +159,18 @@ export const selectKanjiList = (kanjiList) => ({
     payload: [...kanjiList]
 })
 
-export const openDialog = (card) => ({
+export const openEditDialog = (card) => ({
     type: OPEN_EDIT_DIALOG,
     payload: card
 })
 
 export const closeDialog = () => ({
-    type: CLOSE_EDIT_DIALOG,
+    type: CLOSE_DIALOG,
+})
+
+export const openCreateDialog = (card) => ({
+    type: OPEN_CREATE_NEW_SET_DIALOG,
+    payload: card
 })
 
 export const setNewKanji = (newKanji, index) => ({
@@ -197,6 +199,23 @@ export const setNewCardDescription = (newCardDescription) => ({
 })
 
 export const saveCard = (newCard) => ({
-    type: SAVE_EDITED_CARD,
+    type: SAVE_CARD,
     payload: newCard
+})
+
+export const showSnackbar = (message) => ({
+    type: SHOW_SNACKBAR,
+    payload: message
+})
+
+export const hideSnackbar = () => ({
+    type: HIDE_SNACKBAR
+})
+
+export const deleteKanji = (index) => ({
+    type: REMOVE_KANJI,
+    payload: index
+})
+export const addKanji = () => ({
+    type: ADD_KANJI
 })
