@@ -7,17 +7,18 @@ import {
     CHANGE_FIRST_NAME,
     CHANGE_LAST_NAME,
     CHANGE_PICTURE,
-    CLOSE_EDIT_DIALOG,
+    CLOSE_DIALOG,
     FINISH_MATCH_LEARNING,
     HIDE_SNACKBAR,
     LOG_IN,
     LOG_OUT,
     LOGIN_TEST,
     LOGOUT_TEST,
+    OPEN_CREATE_NEW_SET_DIALOG,
     OPEN_EDIT_DIALOG,
     REMOVE_CARD,
     REMOVE_KANJI,
-    SAVE_EDITED_CARD,
+    SAVE_CARD,
     SELECT_CURRENT_KANJI_LIST,
     SET_CURRENT_ALL_READINGS,
     SET_CURRENT_KANJI_INDEX,
@@ -35,6 +36,7 @@ import Card from "../Models/card";
 import Kanji from "../Models/kanji";
 
 const dummyAccountState = {
+    accountId: 1,
     firstName: "Vladimir",
     lastName: "Kozlovsky",
     //YYYY-MM-DD
@@ -42,6 +44,16 @@ const dummyAccountState = {
     aboutAccount: "lorem ipsum i guess",
     accountImageUrl: "https://lh3.googleusercontent.com/a-/AOh14GineJdMiu0253KCDxizNsvnYdwMFjTDXL3fjgC1vQ=s288-p-rw-no",
     isLoggedIn: false,
+}
+
+export const dialogModes = {
+    edit: "EDIT",
+    create: "CREATE",
+}
+
+const dialogDummyState = {
+    isOpened: false,
+    mode: dialogModes.create
 }
 
 const dummyCardsState = [new Card(1, 1, "Default card", "This is my test description", "Me", [
@@ -131,14 +143,18 @@ const myCardsReducer = (state = dummyCardsState, action) => {
             return [...state, action.payload]
         case REMOVE_CARD:
             return [...state.filter((card) => card.id !== action.payload)]
-        case SAVE_EDITED_CARD: {
-            const editedCard = action.payload;
-            let newIndex = 0;
+        case SAVE_CARD: {
+            const newCard = action.payload;
+            let newIndex = -1;
             for (const index in state) {
-                if (state[index].id === editedCard.id) newIndex = index;
+                if (state[index].id === newCard.id) newIndex = index;
             }
             const originalState = [...state];
-            originalState[newIndex] = editedCard;
+            if (newIndex === -1) {
+                originalState.push(newCard);
+                return originalState;
+            }
+            originalState[newIndex] = newCard;
             return originalState;
         }
     }
@@ -195,20 +211,24 @@ const selectedKanjiReducer = (state = [], action) => {
     return state;
 }
 
-const editDialogReducer = (state = false, action) => {
+const dialogReducer = (state = dialogDummyState, action) => {
     switch (action.type) {
         case OPEN_EDIT_DIALOG:
-            return true;
-        case CLOSE_EDIT_DIALOG:
-            return false;
-        case SAVE_EDITED_CARD:
-            return false;
+            return {isOpened: true, mode: dialogModes.edit};
+        case OPEN_CREATE_NEW_SET_DIALOG:
+            return {isOpened: true, mode: dialogModes.create}
+        case CLOSE_DIALOG:
+            return {...state, isOpened: false};
+        case SAVE_CARD:
+            return {...state, isOpened: false};
     }
     return state;
 }
 const editedValuesReducer = (state = editCardDummyState, action) => {
     switch (action.type) {
         case OPEN_EDIT_DIALOG:
+            return {...action.payload}
+        case OPEN_CREATE_NEW_SET_DIALOG:
             return {...action.payload}
         case SET_NEW_KANJI: {
             const kanjiList = [...state.kanjiList];
@@ -263,7 +283,7 @@ export default combineReducers({
     readings: readingsReducer,
     results: resultsReducer,
     selectedKanji: selectedKanjiReducer,
-    isEditDialogOpened: editDialogReducer,
+    dialog: dialogReducer,
     editCard: editedValuesReducer,
     snackbar: snackbarReducer
 });

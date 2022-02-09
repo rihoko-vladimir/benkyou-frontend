@@ -2,7 +2,7 @@ import useStyle from "./style";
 import PropTypes from "prop-types";
 import Card from "../CardComponent/card";
 import {useState} from "react";
-import {Pagination, Typography} from "@mui/material";
+import {Typography} from "@mui/material";
 
 const CardsStack = (props) => {
     const info = props.cards;
@@ -26,13 +26,13 @@ const CardsStack = (props) => {
                         <Card card={card} key={card.id}/>
                     )}
                 </div>
-                {isPaginateAble
-                    ? <Pagination count={pages}
-                                  size={"large"}
-                                  color={"primary"}
-                                  page={currentPage}
-                                  onChange={onNavigationClicked}/>
-                    : null}
+                {/*{isPaginateAble*/}
+                {/*    ? <Pagination count={pages}*/}
+                {/*                  size={"large"}*/}
+                {/*                  color={"primary"}*/}
+                {/*                  page={currentPage}*/}
+                {/*                  onChange={onNavigationClicked}/>*/}
+                {/*    : null}*/}
             </div>
             : <Typography variant={"h6"}>It's kinda empty here...</Typography>
     )
