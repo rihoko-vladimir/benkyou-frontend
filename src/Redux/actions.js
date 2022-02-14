@@ -1,99 +1,65 @@
-import {
-    ADD_KANJI,
-    ADD_MATCH_RESULT,
-    ADD_NEW_CARD,
-    CHANGE_ABOUT_INFO,
-    CHANGE_BIRTH_DATE,
-    CHANGE_FIRST_NAME,
-    CHANGE_LAST_NAME,
-    CHANGE_PICTURE,
-    CLOSE_DIALOG,
-    EDIT_CARD,
-    FINISH_MATCH_LEARNING,
-    HIDE_SNACKBAR,
-    LOG_IN,
-    LOG_OUT,
-    LOGIN_TEST,
-    LOGOUT_TEST,
-    OPEN_CREATE_NEW_SET_DIALOG,
-    OPEN_EDIT_DIALOG,
-    REGISTER,
-    REMOVE_CARD,
-    REMOVE_KANJI,
-    SAVE_CARD,
-    SELECT_CURRENT_KANJI_LIST,
-    SET_CURRENT_ALL_READINGS,
-    SET_CURRENT_KANJI_INDEX,
-    SET_NEW_CARD_DESCRIPTION,
-    SET_NEW_CARD_NAME,
-    SET_NEW_KANJI,
-    SET_NEW_KUNYOUMI,
-    SET_NEW_ONYOUMI,
-    SET_RANDOM_LIST,
-    SHOW_SNACKBAR,
-    START_MATCH
-} from "./types";
+import * as types from "./types";
 
 export const changeFirstName = (newName) => ({
-    type: CHANGE_FIRST_NAME,
+    type: types.CHANGE_FIRST_NAME,
     payload: newName,
 });
 
 export const changeLastName = (newLastName) => ({
-    type: CHANGE_LAST_NAME,
+    type: types.CHANGE_LAST_NAME,
     payload: newLastName,
 });
 
 export const changeBirthDate = (newBirthDate) => ({
-    type: CHANGE_BIRTH_DATE,
+    type: types.CHANGE_BIRTH_DATE,
     payload: newBirthDate,
 });
 
 export const changeAboutInfo = (newAboutInfo) => ({
-    type: CHANGE_ABOUT_INFO,
+    type: types.CHANGE_ABOUT_INFO,
     payload: newAboutInfo,
 });
 
 export const changePicture = (newPictureUrl) => ({
-    type: CHANGE_PICTURE,
+    type: types.CHANGE_PICTURE,
     payload: newPictureUrl,
 });
 
 export const loginTest = () => ({
-    type: LOGIN_TEST,
+    type: types.LOGIN_TEST,
 })
 
 export const logoutTest = () => ({
-    type: LOGOUT_TEST,
+    type: types.LOGOUT_TEST,
 })
 
 export const addNewCard = (newCard) => ({
-    type: ADD_NEW_CARD,
+    type: types.ADD_NEW_CARD,
     payload: newCard,
 });
 
 export const removeCard = (idToRemove) => ({
-    type: REMOVE_CARD,
+    type: types.REMOVE_CARD,
     payload: idToRemove,
 });
 
 export const modifyCard = (modifiedCard) => ({
-    type: EDIT_CARD,
+    type: types.EDIT_CARD,
     payload: modifiedCard,
 });
 
 export const login = (accountCredentials) => ({
-    type: LOG_IN,
+    type: types.LOG_IN,
     payload: accountCredentials
 });
 
 export const register = (registrationCredentials) => ({
-    type: REGISTER,
+    type: types.REGISTER,
     payload: registrationCredentials
 })
 
 export const logout = () => ({
-    type: LOG_OUT,
+    type: types.LOG_OUT,
 });
 
 export const setRandomList = (kanjiList) => {
@@ -101,13 +67,13 @@ export const setRandomList = (kanjiList) => {
         .sort((a, b) => a.sort - b.sort)
         .map(({value}) => value);
     return {
-        type: SET_RANDOM_LIST, payload: randomedList,
+        type: types.SET_RANDOM_LIST, payload: randomedList,
     }
 }
 
 
 export const setCurrentKanjiIndex = (newIndex) => ({
-    type: SET_CURRENT_KANJI_INDEX,
+    type: types.SET_CURRENT_KANJI_INDEX,
     payload: newIndex
 })
 
@@ -135,87 +101,87 @@ export const setCurrentAllReadings = (kanjiArray, currentKanjiIndex) => {
         .sort((a, b) => a.sort - b.sort)
         .map(({value}) => value)
     return {
-        type: SET_CURRENT_ALL_READINGS,
+        type: types.SET_CURRENT_ALL_READINGS,
         payload: allReadings
     }
 }
 
 export const addCurrentKanjiMatchResult = (result) => ({
-    type: ADD_MATCH_RESULT,
+    type: types.ADD_MATCH_RESULT,
     payload: result
 })
 
 
 export const finishMatchLearning = () => ({
-    type: FINISH_MATCH_LEARNING
+    type: types.FINISH_MATCH_LEARNING
 })
 
 export const startMatch = () => ({
-    type: START_MATCH,
+    type: types.START_MATCH,
 })
 
 export const selectKanjiList = (kanjiList) => ({
-    type: SELECT_CURRENT_KANJI_LIST,
+    type: types.SELECT_CURRENT_KANJI_LIST,
     payload: [...kanjiList]
 })
 
 export const openEditDialog = (card) => ({
-    type: OPEN_EDIT_DIALOG,
+    type: types.OPEN_EDIT_DIALOG,
     payload: card
 })
 
 export const closeDialog = () => ({
-    type: CLOSE_DIALOG,
+    type: types.CLOSE_DIALOG,
 })
 
 export const openCreateDialog = (card) => ({
-    type: OPEN_CREATE_NEW_SET_DIALOG,
+    type: types.OPEN_CREATE_NEW_SET_DIALOG,
     payload: card
 })
 
 export const setNewKanji = (newKanji, index) => ({
-    type: SET_NEW_KANJI,
+    type: types.SET_NEW_KANJI,
     payload: {index, newKanji}
 })
 
 export const setNewKunyoumi = (newReadingsArray, index) => ({
-    type: SET_NEW_KUNYOUMI,
+    type: types.SET_NEW_KUNYOUMI,
     payload: {index, newReadingsArray}
 })
 
 export const setNewOnyoumi = (newReadingsArray, index) => ({
-    type: SET_NEW_ONYOUMI,
+    type: types.SET_NEW_ONYOUMI,
     payload: {index, newReadingsArray}
 })
 
 export const setNewCardName = (newCardName) => ({
-    type: SET_NEW_CARD_NAME,
+    type: types.SET_NEW_CARD_NAME,
     payload: newCardName
 })
 
 export const setNewCardDescription = (newCardDescription) => ({
-    type: SET_NEW_CARD_DESCRIPTION,
+    type: types.SET_NEW_CARD_DESCRIPTION,
     payload: newCardDescription,
 })
 
 export const saveCard = (newCard) => ({
-    type: SAVE_CARD,
+    type: types.SAVE_CARD,
     payload: newCard
 })
 
 export const showSnackbar = (message) => ({
-    type: SHOW_SNACKBAR,
+    type: types.SHOW_SNACKBAR,
     payload: message
 })
 
 export const hideSnackbar = () => ({
-    type: HIDE_SNACKBAR
+    type: types.HIDE_SNACKBAR
 })
 
 export const deleteKanji = (index) => ({
-    type: REMOVE_KANJI,
+    type: types.REMOVE_KANJI,
     payload: index
 })
 export const addKanji = () => ({
-    type: ADD_KANJI
+    type: types.ADD_KANJI
 })

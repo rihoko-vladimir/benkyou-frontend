@@ -1,36 +1,4 @@
-import {
-    ADD_KANJI,
-    ADD_MATCH_RESULT,
-    ADD_NEW_CARD,
-    CHANGE_ABOUT_INFO,
-    CHANGE_BIRTH_DATE,
-    CHANGE_FIRST_NAME,
-    CHANGE_LAST_NAME,
-    CHANGE_PICTURE,
-    CLOSE_DIALOG,
-    FINISH_MATCH_LEARNING,
-    HIDE_SNACKBAR,
-    LOG_IN,
-    LOG_OUT,
-    LOGIN_TEST,
-    LOGOUT_TEST,
-    OPEN_CREATE_NEW_SET_DIALOG,
-    OPEN_EDIT_DIALOG,
-    REMOVE_CARD,
-    REMOVE_KANJI,
-    SAVE_CARD,
-    SELECT_CURRENT_KANJI_LIST,
-    SET_CURRENT_ALL_READINGS,
-    SET_CURRENT_KANJI_INDEX,
-    SET_NEW_CARD_DESCRIPTION,
-    SET_NEW_CARD_NAME,
-    SET_NEW_KANJI,
-    SET_NEW_KUNYOUMI,
-    SET_NEW_ONYOUMI,
-    SET_RANDOM_LIST,
-    SHOW_SNACKBAR,
-    START_MATCH
-} from "./types";
+import * as type from "./types";
 import {combineReducers} from "redux";
 import Card from "../Models/card";
 import Kanji from "../Models/kanji";
@@ -43,7 +11,7 @@ const dummyAccountState = {
     birthday: "2021-12-13",
     aboutAccount: "lorem ipsum i guess",
     accountImageUrl: "https://lh3.googleusercontent.com/a-/AOh14GineJdMiu0253KCDxizNsvnYdwMFjTDXL3fjgC1vQ=s288-p-rw-no",
-    isLoggedIn: false,
+    isLoggedIn: true,
 }
 
 export const dialogModes = {
@@ -93,17 +61,17 @@ const snackbarDummyState = {
 
 const accountReducer = (state = dummyAccountState, action) => {
     switch (action.type) {
-        case CHANGE_FIRST_NAME:
+        case type.CHANGE_FIRST_NAME:
             return {...state, firstName: action.payload}
-        case CHANGE_LAST_NAME:
+        case type.CHANGE_LAST_NAME:
             return {...state, lastName: action.payload}
-        case CHANGE_BIRTH_DATE:
+        case type.CHANGE_BIRTH_DATE:
             return {...state, birthday: action.payload}
-        case CHANGE_ABOUT_INFO:
+        case type.CHANGE_ABOUT_INFO:
             return {...state, aboutAccount: action.payload}
-        case CHANGE_PICTURE:
+        case type.CHANGE_PICTURE:
             return {...state, accountImageUrl: action.payload}
-        case LOG_IN:
+        case type.LOG_IN:
             return {
                 //TODO add api calls
                 ...state,
@@ -114,7 +82,7 @@ const accountReducer = (state = dummyAccountState, action) => {
                 accountImageUrl: action.payload.accountImageUrl,
                 isLoggedIn: true
             }
-        case LOG_OUT:
+        case type.LOG_OUT:
             //TODO add api calls
             return {
                 ...state,
@@ -125,11 +93,11 @@ const accountReducer = (state = dummyAccountState, action) => {
                 accountImageUrl: undefined,
                 isLoggedIn: false
             }
-        case LOGIN_TEST:
+        case type.LOGIN_TEST:
             return {
                 ...state, isLoggedIn: true,
             }
-        case LOGOUT_TEST:
+        case type.LOGOUT_TEST:
             return {
                 ...state, isLoggedIn: false,
             }
@@ -139,11 +107,11 @@ const accountReducer = (state = dummyAccountState, action) => {
 
 const myCardsReducer = (state = dummyCardsState, action) => {
     switch (action.type) {
-        case ADD_NEW_CARD:
+        case type.ADD_NEW_CARD:
             return [...state, action.payload]
-        case REMOVE_CARD:
+        case type.REMOVE_CARD:
             return [...state.filter((card) => card.id !== action.payload)]
-        case SAVE_CARD: {
+        case type.SAVE_CARD: {
             const newCard = action.payload;
             let newIndex = -1;
             for (const index in state) {
@@ -163,9 +131,9 @@ const myCardsReducer = (state = dummyCardsState, action) => {
 
 const randomListReducer = (state = [], action) => {
     switch (action.type) {
-        case SET_RANDOM_LIST:
+        case type.SET_RANDOM_LIST:
             return [...action.payload]
-        case FINISH_MATCH_LEARNING:
+        case type.FINISH_MATCH_LEARNING:
             return []
     }
     return state;
@@ -173,9 +141,9 @@ const randomListReducer = (state = [], action) => {
 
 const readingsReducer = (state = [], action) => {
     switch (action.type) {
-        case SET_CURRENT_ALL_READINGS:
+        case type.SET_CURRENT_ALL_READINGS:
             return [...action.payload]
-        case FINISH_MATCH_LEARNING:
+        case type.FINISH_MATCH_LEARNING:
             return [];
     }
     return state;
@@ -183,9 +151,9 @@ const readingsReducer = (state = [], action) => {
 
 const resultsReducer = (state = [], action) => {
     switch (action.type) {
-        case ADD_MATCH_RESULT:
+        case type.ADD_MATCH_RESULT:
             return [...state, action.payload]
-        case FINISH_MATCH_LEARNING:
+        case type.FINISH_MATCH_LEARNING:
             return []
     }
     return state;
@@ -193,11 +161,11 @@ const resultsReducer = (state = [], action) => {
 
 const learnReducer = (state = dummyLearnState, action) => {
     switch (action.type) {
-        case SET_CURRENT_KANJI_INDEX:
+        case type.SET_CURRENT_KANJI_INDEX:
             return {...state, currentKanjiIndex: action.payload}
-        case START_MATCH:
+        case type.START_MATCH:
             return {...state, isMatching: true}
-        case FINISH_MATCH_LEARNING:
+        case type.FINISH_MATCH_LEARNING:
             return dummyLearnState
     }
     return state;
@@ -205,7 +173,7 @@ const learnReducer = (state = dummyLearnState, action) => {
 
 const selectedKanjiReducer = (state = [], action) => {
     switch (action.type) {
-        case SELECT_CURRENT_KANJI_LIST:
+        case type.SELECT_CURRENT_KANJI_LIST:
             return action.payload
     }
     return state;
@@ -213,50 +181,50 @@ const selectedKanjiReducer = (state = [], action) => {
 
 const dialogReducer = (state = dialogDummyState, action) => {
     switch (action.type) {
-        case OPEN_EDIT_DIALOG:
+        case type.OPEN_EDIT_DIALOG:
             return {isOpened: true, mode: dialogModes.edit};
-        case OPEN_CREATE_NEW_SET_DIALOG:
+        case type.OPEN_CREATE_NEW_SET_DIALOG:
             return {isOpened: true, mode: dialogModes.create}
-        case CLOSE_DIALOG:
+        case type.CLOSE_DIALOG:
             return {...state, isOpened: false};
-        case SAVE_CARD:
+        case type.SAVE_CARD:
             return {...state, isOpened: false};
     }
     return state;
 }
 const editedValuesReducer = (state = editCardDummyState, action) => {
     switch (action.type) {
-        case OPEN_EDIT_DIALOG:
+        case type.OPEN_EDIT_DIALOG:
             return {...action.payload}
-        case OPEN_CREATE_NEW_SET_DIALOG:
+        case type.OPEN_CREATE_NEW_SET_DIALOG:
             return {...action.payload}
-        case SET_NEW_KANJI: {
+        case type.SET_NEW_KANJI: {
             const kanjiList = [...state.kanjiList];
             kanjiList[action.payload.index].kanji = action.payload.newKanji;
             return {...state, kanjiList}
         }
-        case SET_NEW_KUNYOUMI: {
+        case type.SET_NEW_KUNYOUMI: {
             const kanjiList = [...state.kanjiList];
             kanjiList[action.payload.index].kunyoumi = action.payload.newReadingsArray
             return {...state, kanjiList}
         }
-        case SET_NEW_ONYOUMI: {
+        case type.SET_NEW_ONYOUMI: {
             const kanjiList = [...state.kanjiList];
             kanjiList[action.payload.index].onyoumi = action.payload.newReadingsArray
             return {...state, kanjiList}
         }
-        case SET_NEW_CARD_NAME:
+        case type.SET_NEW_CARD_NAME:
             return {...state, name: action.payload}
 
-        case SET_NEW_CARD_DESCRIPTION:
+        case type.SET_NEW_CARD_DESCRIPTION:
             return {...state, description: action.payload}
 
-        case REMOVE_KANJI: {
+        case type.REMOVE_KANJI: {
             const kanjiList = [...state.kanjiList];
             kanjiList.splice(action.payload, 1);
             return {...state, kanjiList}
         }
-        case ADD_KANJI: {
+        case type.ADD_KANJI: {
             const kanjiList = [...state.kanjiList];
             kanjiList.push(new Kanji("", [], []))
             return {...state, kanjiList};
@@ -267,9 +235,9 @@ const editedValuesReducer = (state = editCardDummyState, action) => {
 
 const snackbarReducer = (state = snackbarDummyState, action) => {
     switch (action.type) {
-        case SHOW_SNACKBAR:
+        case type.SHOW_SNACKBAR:
             return {isShown: true, message: action.payload}
-        case HIDE_SNACKBAR:
+        case type.HIDE_SNACKBAR:
             return {isShown: false, message: ""}
     }
     return state;

@@ -1,8 +1,6 @@
 import './App.css';
 import {BrowserRouter} from "react-router-dom";
-import RoutingComponent from "./Components/Router/RoutingComponent";
-import {ThemeProvider} from "@mui/styles";
-import projectLightTheme from "./Theme/projectTheme";
+import RoutingComponent from "./Router";
 import {StyledEngineProvider} from "@mui/styled-engine";
 import {Provider} from "react-redux";
 import {applyMiddleware, createStore} from "@reduxjs/toolkit";
@@ -13,6 +11,8 @@ import {persistReducer, persistStore} from "redux-persist";
 import persistStorage from "redux-persist/lib/storage"
 import {PersistGate} from "redux-persist/integration/react";
 import createSagaMiddleware from "redux-saga"
+import {ThemeProvider} from "@mui/styles";
+import theme from "./theme";
 
 
 function App() {
@@ -28,13 +28,13 @@ function App() {
     return (
         <Provider store={store}>
             <PersistGate loadint={null} persistor={persist}>
-                <StyledEngineProvider injectFirst>
-                    <ThemeProvider theme={projectLightTheme}>
+                <ThemeProvider theme={theme}>
+                    <StyledEngineProvider injectFirst>
                         <BrowserRouter>
                             <RoutingComponent/>
                         </BrowserRouter>
-                    </ThemeProvider>
-                </StyledEngineProvider>
+                    </StyledEngineProvider>
+                </ThemeProvider>
             </PersistGate>
         </Provider>
     );
