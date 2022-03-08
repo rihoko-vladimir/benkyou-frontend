@@ -12,6 +12,8 @@ const dummyAccountState = {
     aboutAccount: "lorem ipsum i guess",
     accountImageUrl: "https://lh3.googleusercontent.com/a-/AOh14GineJdMiu0253KCDxizNsvnYdwMFjTDXL3fjgC1vQ=s288-p-rw-no",
     isLoggedIn: true,
+    login: "rihoko",
+    email: "vovakozlouskiy@gmail.com",
 }
 
 export const dialogModes = {

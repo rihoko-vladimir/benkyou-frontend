@@ -25,6 +25,21 @@ export const changePicture = (newPictureUrl) => ({
     payload: newPictureUrl,
 });
 
+export const changeEmail = (newEmail) =>({
+    type : types.CHANGE_EMAIL,
+    payload: newEmail
+});
+
+export const changePassword = (newPassword) =>({
+    type : types.CHANGE_PASSWORD,
+    payload : newPassword
+})
+
+export const changeLogin = (newLogin)=>({
+    type : types.CHANGE_LOGIN,
+    payload: newLogin
+})
+
 export const loginTest = () => ({
     type: types.LOGIN_TEST,
 })

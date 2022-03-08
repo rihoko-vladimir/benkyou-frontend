@@ -3,7 +3,14 @@ import useStyles from "../style";
 import PropTypes from "prop-types";
 import {useState} from "react";
 import {useDispatch} from "react-redux";
-import {changeAboutInfo, changeBirthDate, changeFirstName, changeLastName} from "../../../Redux/actions";
+import {
+    changeAboutInfo,
+    changeBirthDate,
+    changeEmail,
+    changeFirstName,
+    changeLastName,
+    changeLogin, changePassword
+} from "../../../Redux/actions";
 
 const AccountPageContent = (props) => {
 
@@ -14,6 +21,9 @@ const AccountPageContent = (props) => {
     const [temporaryAbout, setTemporaryAbout] = useState(props.aboutAccount);
     const [temporaryBirthday, setTemporaryBirthday] = useState(props.birthday);
     const [temporaryAccountImage, setTemporaryAccountImage] = useState(props.accountImage);
+    const [temporaryLogin, setTemporaryLogin] = useState(props.login);
+    const [temporaryEmail, setTemporaryEmail] = useState(props.email);
+    const [temporaryPassword, setTemporaryPassword] = useState("************");
     const dispatch = useDispatch();
 
     const editPage = () => {
@@ -30,6 +40,12 @@ const AccountPageContent = (props) => {
             dispatch(changeAboutInfo(temporaryAbout));
         if (!(temporaryBirthday === props.birthday))
             dispatch(changeBirthDate(temporaryBirthday));
+        if (!(temporaryLogin === props.login))
+            dispatch(changeLogin(temporaryLogin));
+        if (!(temporaryEmail === props.email))
+            dispatch(changeEmail(temporaryEmail));
+        // validate if password is correct TODO
+        dispatch(changePassword(temporaryPassword));
         //TODO Implement account image change
     };
 
@@ -111,17 +127,44 @@ const AccountPageContent = (props) => {
                                         fullWidth
                                     />
                                 </div>
+                                <div className={classes.dividedTextFields}>
+                                <TextField
+                                    label="Login"
+                                    type="text"
+                                    fullWidth
+                                    value={temporaryLogin}
+                                    onChange={(event)=>setTemporaryLogin(event.target.value)}
+                                    disabled={!isEditable}
+                                />
+                                <TextField
+                                    label="Email"
+                                    type="email"
+                                    fullWidth
+                                    value={temporaryEmail}
+                                    onChange={(event)=>setTemporaryEmail(event.target.value)}
+                                    disabled={!isEditable}
+                                />
+                                </div>
                                 <TextField
                                     id="date"
                                     label="Birthday"
                                     type="date"
                                     value={temporaryBirthday}
+                                    fullWidth
                                     onChange={(event) =>
                                         setTemporaryBirthday(event.target.value)}
                                     sx={{width: 220}}
                                     InputLabelProps={{
                                         shrink: true,
                                     }}
+                                    disabled={!isEditable}
+                                />
+                                <TextField
+                                    label={"Password"}
+                                    type={"password"}
+                                    value={temporaryPassword}
+                                    onChange={(event)=>setTemporaryPassword(event.target.value)}
+                                    onFocus={()=>setTemporaryPassword("")}
                                     disabled={!isEditable}
                                 />
                                 <TextField
@@ -161,7 +204,9 @@ AccountPageContent.propTypes = {
     lastName: PropTypes.string.isRequired,
     aboutAccount: PropTypes.string.isRequired,
     birthday: PropTypes.string.isRequired,
-    cardsCount: PropTypes.number.isRequired
+    cardsCount: PropTypes.number.isRequired,
+    login : PropTypes.string.isRequired,
+    email : PropTypes.string.isRequired
 }
 
 export default AccountPageContent;

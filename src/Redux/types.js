@@ -1,3 +1,6 @@
+export const CHANGE_EMAIL = "account/changeEmail";
+export const CHANGE_LOGIN = "account/changeLogin";
+export const CHANGE_PASSWORD = "account/changePassword";
 export const CHANGE_FIRST_NAME = "account/changeFirstName";
 export const CHANGE_LAST_NAME = "account/changeLastName";
 export const CHANGE_BIRTH_DATE = "account/changeBirthDate";

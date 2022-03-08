@@ -22,7 +22,12 @@ const useStyles = makeStyles({
     nameAndSurname: {
         display: "flex",
         flexDirection: "row",
-        marginTop: "48px",
+        marginTop: "32px",
+        columnGap: "16px",
+    },
+    dividedTextFields: {
+        display: "flex",
+        flexDirection: "row",
         columnGap: "16px",
     },
     avatarClass: {
