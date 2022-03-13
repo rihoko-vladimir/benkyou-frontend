@@ -1,5 +1,48 @@
 import * as types from "./types";
 
+export const checkUserName = (userName) =>({
+    type: types.CHECK_USERNAME,
+    payload : userName
+})
+
+export const checkUserNameSuccess = () => ({
+    type : types.CHECK_USERNAME_SUCCESS
+})
+
+export const checkUserNameFailure = (errorMessage) => ({
+    type: types.CHECK_USERNAME_FAILURE,
+    payload : errorMessage
+})
+
+export const checkEmailSuccess = ()=>({
+    type: types.CHECK_EMAIL_SUCCESS
+})
+
+export const checkEmailFailure = (errorMessage)=>({
+    type: types.CHECK_EMAIL_FAILURE,
+    payload: errorMessage
+})
+
+export const checkEmail = (email) =>({
+    type : types.CHECK_EMAIL,
+    payload: email
+})
+
+export const sendEmailCode = ({emailCode, userId}) =>({
+    type : types.SEND_EMAIL_CODE,
+    payload: {emailCode, userId}
+})
+
+export const sendEmailCodeSuccess = () =>({
+    type : types.SEND_EMAIL_CODE_SUCCESS,
+})
+
+export const sendEmailCodeFailure = (errorMessage) =>({
+    type : types.SEND_EMAIL_CODE_FAILURE,
+    payload: errorMessage
+})
+
+
 export const changeFirstName = (newName) => ({
     type: types.CHANGE_FIRST_NAME,
     payload: newName,
@@ -25,18 +68,18 @@ export const changePicture = (newPictureUrl) => ({
     payload: newPictureUrl,
 });
 
-export const changeEmail = (newEmail) =>({
-    type : types.CHANGE_EMAIL,
+export const changeEmail = (newEmail) => ({
+    type: types.CHANGE_EMAIL,
     payload: newEmail
 });
 
-export const changePassword = (newPassword) =>({
-    type : types.CHANGE_PASSWORD,
-    payload : newPassword
+export const changePassword = (newPassword) => ({
+    type: types.CHANGE_PASSWORD,
+    payload: newPassword
 })
 
-export const changeLogin = (newLogin)=>({
-    type : types.CHANGE_LOGIN,
+export const changeLogin = (newLogin) => ({
+    type: types.CHANGE_LOGIN,
     payload: newLogin
 })
 
@@ -68,9 +111,52 @@ export const login = (accountCredentials) => ({
     payload: accountCredentials
 });
 
+export const loginSuccess = ({id, userName, firstName, lastName, birthday, about, avatarUrl, email}) => (
+    {
+        type: types.LOG_IN_SUCCESS,
+        payload: {
+            id,
+            userName,
+            firstName,
+            lastName,
+            birthday,
+            about,
+            avatarUrl,
+            email,
+        }
+    })
+
+export const startLoading = ()=>({
+    type: types.START_LOADING
+})
+
+export const finishLoading = ()=>({
+    type: types.FINISH_LOADING
+})
+
+export const tokenSuccess = (tokens) => ({
+    type: types.TOKEN_SUCCESS,
+    payload: tokens
+})
+
+export const loginFailure = (errorMessage) => ({
+    type: types.LOG_IN_FAILURE,
+    payload: errorMessage
+})
+
 export const register = (registrationCredentials) => ({
     type: types.REGISTER,
     payload: registrationCredentials
+})
+
+export const registerSuccess = (userId) => ({
+    type: types.REGISTER_SUCCESS,
+    payload: userId
+})
+
+export const registerFailure = (errorMessage) => ({
+    type: types.REGISTER_FAILURE,
+    payload: errorMessage
 })
 
 export const logout = () => ({
@@ -85,7 +171,6 @@ export const setRandomList = (kanjiList) => {
         type: types.SET_RANDOM_LIST, payload: randomedList,
     }
 }
-
 
 export const setCurrentKanjiIndex = (newIndex) => ({
     type: types.SET_CURRENT_KANJI_INDEX,

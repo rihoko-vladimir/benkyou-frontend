@@ -4,17 +4,18 @@ import Card from "../Models/card";
 import Kanji from "../Models/kanji";
 
 const dummyAccountState = {
-    accountId: 1,
-    firstName: "Vladimir",
-    lastName: "Kozlovsky",
-    //YYYY-MM-DD
+    accountId: 0,
+    firstName: "test",
+    lastName: "test",
     birthday: "2021-12-13",
-    aboutAccount: "lorem ipsum i guess",
+    aboutAccount: "test",
     accountImageUrl: "https://lh3.googleusercontent.com/a-/AOh14GineJdMiu0253KCDxizNsvnYdwMFjTDXL3fjgC1vQ=s288-p-rw-no",
-    isLoggedIn: true,
+    isLoggedIn: false,
     login: "rihoko",
     email: "vovakozlouskiy@gmail.com",
 }
+
+export const isLoading = false;
 
 export const dialogModes = {
     edit: "EDIT",
@@ -73,26 +74,28 @@ const accountReducer = (state = dummyAccountState, action) => {
             return {...state, aboutAccount: action.payload}
         case type.CHANGE_PICTURE:
             return {...state, accountImageUrl: action.payload}
-        case type.LOG_IN:
+        case type.LOG_IN_SUCCESS:
             return {
-                //TODO add api calls
-                ...state,
+                accountId: action.payload.id,
+                login: action.payload.userName,
                 firstName: action.payload.firstName,
                 lastName: action.payload.lastName,
                 birthday: action.payload.birthday,
-                aboutAccount: action.payload.aboutAccount,
-                accountImageUrl: action.payload.accountImageUrl,
+                aboutAccount: action.payload.about,
+                accountImageUrl: action.payload.avatarUrl,
+                email: action.payload.email,
                 isLoggedIn: true
             }
         case type.LOG_OUT:
-            //TODO add api calls
             return {
-                ...state,
+                accountId: undefined,
+                login: undefined,
                 firstName: undefined,
                 lastName: undefined,
                 birthday: undefined,
                 aboutAccount: undefined,
                 accountImageUrl: undefined,
+                email: undefined,
                 isLoggedIn: false
             }
         case type.LOGIN_TEST:
@@ -245,6 +248,66 @@ const snackbarReducer = (state = snackbarDummyState, action) => {
     return state;
 }
 
+const isLoadingReducer = (state = isLoading, action) =>{
+    switch (action.type){
+        case type.START_LOADING:
+            return true;
+        case type.FINISH_LOADING:
+            return false;
+    }
+    return state;
+}
+
+const registerReducer = (state = {success: false, payload: ""}, action) =>{
+    switch (action.type){
+        case type.REGISTER_SUCCESS:
+            return {success: true, payload: action.payload}
+        case type.REGISTER_FAILURE:
+            return {success: false, payload: action.payload}
+    }
+    return state;
+}
+
+const isUserNameSuccessReducer = (state = {status : false, message: undefined}, action) =>{
+    switch (action.type){
+        case type.CHECK_USERNAME_SUCCESS:
+            return {status : true, message: undefined};
+        case type.CHECK_USERNAME_FAILURE:
+            return {status : false, message: action.payload};
+    }
+    return state;
+}
+
+const isEmailSuccessReducer = (state = {status : false, message: undefined}, action) =>{
+    switch (action.type){
+        case type.CHECK_EMAIL_SUCCESS:
+            return {status : true, message: undefined};
+        case type.CHECK_EMAIL_FAILURE:
+            return {status : false, message: action.payload};
+    }
+    return state;
+}
+
+const isEmailCodeSuccessReducer = (state = {status : false, message: undefined}, action) =>{
+    switch (action.type){
+        case type.SEND_EMAIL_CODE_SUCCESS:
+            return {status : true, message: undefined};
+        case type.SEND_EMAIL_CODE_FAILURE:
+            return {status : false, message: action.payload};
+    }
+    return state;
+}
+
+const resultReducer = (state = {success : false, message: undefined, value : undefined} ,action)=>{
+    switch (action.type){
+        case type.SEND_EMAIL_CODE_SUCCESS:
+            return {success : true, message: undefined, value: action.payload};
+        case type.SEND_EMAIL_CODE_FAILURE:
+            return {success : false, message: action.payload, value: undefined};
+    }
+    return state;
+}
+
 export default combineReducers({
     account: accountReducer,
     myCards: myCardsReducer,
@@ -255,5 +318,11 @@ export default combineReducers({
     selectedKanji: selectedKanjiReducer,
     dialog: dialogReducer,
     editCard: editedValuesReducer,
-    snackbar: snackbarReducer
+    snackbar: snackbarReducer,
+    isLoading : isLoadingReducer,
+    register: registerReducer,
+    isUserNameSuccess : isUserNameSuccessReducer,
+    isEmailSuccess: isEmailSuccessReducer,
+    isEmailCodeSuccess : isEmailCodeSuccessReducer,
+    result: resultReducer,
 });

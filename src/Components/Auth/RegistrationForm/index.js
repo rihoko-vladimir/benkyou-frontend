@@ -1,19 +1,18 @@
 import useStyle from "./style";
 import {Step, StepLabel, Stepper, Typography} from "@mui/material";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useNavigate} from "react-router";
 import UsernameComponent from "./Steps/UsernameStep";
 import PasswordComponent from "./Steps/PasswordStep";
 import TermsComponent from "./Steps/TermsStep";
 import EmailConfirmationComponent from "./Steps/EmailConfirmation";
+import * as actions from "../../../Redux/actions";
+import {useDispatch, useSelector} from "react-redux";
 
 const RegistrationComponent = () => {
     const navigate = useNavigate();
     const classes = useStyle();
     const [currentStep, setCurrentStep] = useState(0);
-    const nextStepCallback = () => {
-        setCurrentStep(currentStep + 1);
-    };
     const previousStepCallback = () => {
         setCurrentStep(currentStep - 1);
     }
@@ -21,6 +20,21 @@ const RegistrationComponent = () => {
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const dispatch = useDispatch();
+    const nextStepCallback = () => {
+        if (currentStep === 2) {
+            dispatch(actions.register({userName: username, email, firstName, lastName, password, isTermsAccepted: true}))
+        } else {
+            setCurrentStep(currentStep + 1);
+        }
+    };
+    const register = useSelector(state => state.register);
+    useEffect(()=>()=>{
+        if (register.success){
+            setCurrentStep(3)
+        }}, [register])
     return (
         <div>
             <Typography variant={"h4"}>Registration</Typography>
@@ -44,7 +58,11 @@ const RegistrationComponent = () => {
                                       usernameCallback={setUsername}
                                       nextClickListener={nextStepCallback}
                                       email={email}
-                                      username={username}/>)
+                                      username={username}
+                                      firstName={firstName}
+                                      firstNameCallback={setFirstName}
+                                      lastName={lastName}
+                                      lastNameCallback={setLastName}/>)
                 : currentStep === 1
                     ? (<PasswordComponent previousClickListener={previousStepCallback}
                                           nextClickListener={nextStepCallback}
