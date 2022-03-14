@@ -366,6 +366,28 @@ const registrationReducer = (state = defaultRegistrationState, action) =>{
     return state;
 }
 
+const loginRequestReducer = (state = null, action) =>{
+    switch (action.type){
+        case type.LOG_IN_SUCCESS:
+            return true
+        case type.LOG_IN_FAILURE:
+            return false
+        case type.FINISH_LOGIN:
+            return null;
+    }
+    return null;
+}
+
+const emailConfirmationResultReducer = (state = false, action) =>{
+    switch (action.type){
+        case type.EMAIL_CONFIRMATION_REQUIRED:
+            return true;
+        case type.FINISH_REGISTRATION:
+            return false;
+    }
+    return false;
+}
+
 export default combineReducers({
     account: accountReducer,
     myCards: myCardsReducer,
@@ -383,5 +405,7 @@ export default combineReducers({
     isEmailSuccess: isEmailSuccessReducer,
     isEmailCodeSuccess : isEmailCodeSuccessReducer,
     result: resultReducer,
-    registration: registrationReducer
+    registration: registrationReducer,
+    emailConfirmation: emailConfirmationResultReducer,
+    login: loginRequestReducer
 });

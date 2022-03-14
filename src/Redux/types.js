@@ -61,3 +61,5 @@ export const REGISTRATION_CHANGE_PASSWORD = "registration/changePassword";
 export const REGISTRATION_CHANGE_PASSWORD_CONFIRMATION = "registration/changePasswordConfirmation";
 export const SET_REGISTRATION_STEP = "registration/setRegistrationStep";
 export const FINISH_REGISTRATION = "registration/finishRegistration";
+export const FINISH_LOGIN = "registration/finishLogin";
+export const EMAIL_CONFIRMATION_REQUIRED = "login/emailConfirmationRequired"

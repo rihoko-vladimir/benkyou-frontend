@@ -1,45 +1,45 @@
 import * as types from "./types";
 import {REGISTRATION_CHANGE_LAST_NAME, SET_REGISTRATION_STEP} from "./types";
 
-export const checkUserName = (userName) =>({
+export const checkUserName = (userName) => ({
     type: types.CHECK_USERNAME,
-    payload : userName
+    payload: userName
 })
 
 export const checkUserNameSuccess = () => ({
-    type : types.CHECK_USERNAME_SUCCESS
+    type: types.CHECK_USERNAME_SUCCESS
 })
 
 export const checkUserNameFailure = (errorMessage) => ({
     type: types.CHECK_USERNAME_FAILURE,
-    payload : errorMessage
+    payload: errorMessage
 })
 
-export const checkEmailSuccess = ()=>({
+export const checkEmailSuccess = () => ({
     type: types.CHECK_EMAIL_SUCCESS
 })
 
-export const checkEmailFailure = (errorMessage)=>({
+export const checkEmailFailure = (errorMessage) => ({
     type: types.CHECK_EMAIL_FAILURE,
     payload: errorMessage
 })
 
-export const checkEmail = (email) =>({
-    type : types.CHECK_EMAIL,
+export const checkEmail = (email) => ({
+    type: types.CHECK_EMAIL,
     payload: email
 })
 
-export const sendEmailCode = ({emailCode, userId}) =>({
-    type : types.SEND_EMAIL_CODE,
+export const sendEmailCode = ({emailCode, userId}) => ({
+    type: types.SEND_EMAIL_CODE,
     payload: {emailCode, userId}
 })
 
-export const sendEmailCodeSuccess = () =>({
-    type : types.SEND_EMAIL_CODE_SUCCESS,
+export const sendEmailCodeSuccess = () => ({
+    type: types.SEND_EMAIL_CODE_SUCCESS,
 })
 
-export const sendEmailCodeFailure = (errorMessage) =>({
-    type : types.SEND_EMAIL_CODE_FAILURE,
+export const sendEmailCodeFailure = (errorMessage) => ({
+    type: types.SEND_EMAIL_CODE_FAILURE,
     payload: errorMessage
 })
 
@@ -127,11 +127,11 @@ export const loginSuccess = ({id, userName, firstName, lastName, birthday, about
         }
     })
 
-export const startLoading = ()=>({
+export const startLoading = () => ({
     type: types.START_LOADING
 })
 
-export const finishLoading = ()=>({
+export const finishLoading = () => ({
     type: types.FINISH_LOADING
 })
 
@@ -287,37 +287,37 @@ export const addKanji = () => ({
     type: types.ADD_KANJI
 })
 
-export const changeRegistrationFirstName = (firstName) =>({
+export const changeRegistrationFirstName = (firstName) => ({
     type: types.REGISTRATION_CHANGE_FIRST_NAME,
-    payload : firstName
+    payload: firstName
 })
 
-export const changeRegistrationLastName = (lastName)=>({
-    type:REGISTRATION_CHANGE_LAST_NAME,
+export const changeRegistrationLastName = (lastName) => ({
+    type: REGISTRATION_CHANGE_LAST_NAME,
     payload: lastName
 })
 
-export const changeRegistrationUserName = (userName) =>({
+export const changeRegistrationUserName = (userName) => ({
     type: types.REGISTRATION_CHANGE_USERNAME,
-    payload : userName
+    payload: userName
 })
 
-export const changeRegistrationEmail = (email) =>({
+export const changeRegistrationEmail = (email) => ({
     type: types.REGISTRATION_CHANGE_EMAIL,
     payload: email
 })
 
-export const changeRegistrationPassword = (password) =>({
+export const changeRegistrationPassword = (password) => ({
     type: types.REGISTRATION_CHANGE_PASSWORD,
     payload: password
 })
 
-export const changeRegistrationPasswordConfirmation = (password) =>({
+export const changeRegistrationPasswordConfirmation = (password) => ({
     type: types.REGISTRATION_CHANGE_PASSWORD_CONFIRMATION,
     payload: password
 })
 
-export const setRegistrationStep = (stepNumber) =>({
+export const setRegistrationStep = (stepNumber) => ({
     type: SET_REGISTRATION_STEP,
     payload: stepNumber
 })
@@ -326,6 +326,14 @@ export const finishRegistration = () => ({
     type: types.FINISH_REGISTRATION
 })
 
-export const returnToUsername = () =>({
+export const returnToUsername = () => ({
     type: types.RETURN_TO_USERNAME
+})
+
+// export const emailConfirmationRequired = () => ({
+//     type: types.EMAIL_CONFIRMATION_REQUIRED
+// })
+
+export const finishLogin = () =>({
+    type: types.FINISH_LOGIN
 })

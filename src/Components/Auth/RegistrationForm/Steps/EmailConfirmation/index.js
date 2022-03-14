@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import {TextField, Typography} from "@mui/material";
 import useStyle from "./style";
 import {useEffect, useState} from "react";
