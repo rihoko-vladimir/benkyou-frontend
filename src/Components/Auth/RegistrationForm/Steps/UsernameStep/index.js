@@ -60,6 +60,10 @@ const UsernameComponent = () => {
         dispatch(actions.checkEmail(email))
         dispatch(actions.checkUserName(userName))
     };
+    const close = ()=>{
+        dispatch(actions.finishRegistration())
+        navigate("/auth")
+    }
     useEffect(() => {
         if (isEmailSuccess.status === false) setEmailError(true);
         if (!isUserNameSuccess.status === false) setUsernameError(true);
@@ -121,7 +125,7 @@ const UsernameComponent = () => {
         />
         <div className={classes.buttons}>
             <Button startIcon={<CloseIcon/>} disabled={isLoading} variant={"outlined"}
-                    onClick={() => navigate("/auth")}>Cancel</Button>
+                    onClick={close}>Cancel</Button>
             <Button endIcon={<ArrowForwardIcon/>} disabled={isLoading} variant={"contained"}
                     onClick={next}>Next</Button>
         </div>

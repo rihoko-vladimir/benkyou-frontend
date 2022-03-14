@@ -298,6 +298,8 @@ const isUserNameSuccessReducer = (state = usernameRequestDefault, action) =>{
             return {status : false, message: action.payload};
         case type.FINISH_REGISTRATION:
             return usernameRequestDefault
+        case type.RETURN_TO_USERNAME:
+            return usernameRequestDefault;
     }
     return state;
 }
@@ -309,7 +311,7 @@ const isEmailSuccessReducer = (state = emailRequestDefault, action) =>{
         case type.CHECK_EMAIL_FAILURE:
             return {status : false, message: action.payload};
         case type.FINISH_REGISTRATION:
-            return emailRequestDefault
+            return emailRequestDefault;
     }
     return state;
 }
@@ -321,7 +323,9 @@ const isEmailCodeSuccessReducer = (state = emailCodeRequestDefault, action) =>{
         case type.SEND_EMAIL_CODE_FAILURE:
             return {status : false, message: action.payload};
         case type.FINISH_REGISTRATION:
-            return emailCodeRequestDefault
+            return emailCodeRequestDefault;
+        case type.RETURN_TO_USERNAME:
+            return emailCodeRequestDefault;
     }
     return state;
 }
@@ -354,6 +358,8 @@ const registrationReducer = (state = defaultRegistrationState, action) =>{
             return {...state, passwordConfirmation: action.payload}
         case type.SET_REGISTRATION_STEP:
             return {...state, step: action.payload}
+        case type.RETURN_TO_USERNAME:
+            return {...state, password: "", passwordConfirmation: ""};
         case type.FINISH_REGISTRATION:
             return defaultRegistrationState
     }

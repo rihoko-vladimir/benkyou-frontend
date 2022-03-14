@@ -1,3 +1,4 @@
+export const RETURN_TO_USERNAME = "registration/returnToUsernameStep";
 export const SEND_EMAIL_CODE = "account/checkEmailCode";
 export const SEND_EMAIL_CODE_FAILURE = "account/emailCodeFailure";
 export const SEND_EMAIL_CODE_SUCCESS = "account/emailCodeSuccess";

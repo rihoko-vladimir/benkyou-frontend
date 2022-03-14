@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
 import {useDispatch, useSelector} from "react-redux";
 import * as actions from "../../../../../Redux/actions";
-import {setRegistrationStep} from "../../../../../Redux/actions";
+import {returnToUsername, setRegistrationStep} from "../../../../../Redux/actions";
 
 const PasswordComponent = () => {
     const classes = useStyle();
@@ -33,6 +33,11 @@ const PasswordComponent = () => {
             return;
         }
         dispatch(setRegistrationStep(registrationStep+1))
+    }
+
+    const back = ()=>{
+        dispatch(returnToUsername());
+        dispatch(setRegistrationStep(registrationStep-1));
     }
 
     const onShowPasswordClick = () => {
@@ -88,7 +93,7 @@ const PasswordComponent = () => {
         />
         <div className={classes.buttons}>
             <Button startIcon={<ArrowBackIcon/>} variant={"outlined"}
-                    onClick={()=>dispatch(setRegistrationStep(registrationStep-1))}>Previous</Button>
+                    onClick={back}>Previous</Button>
             <Button endIcon={<ArrowForwardIcon/>} variant={"contained"} onClick={next}>Next</Button>
         </div>
     </div>

@@ -325,3 +325,7 @@ export const setRegistrationStep = (stepNumber) =>({
 export const finishRegistration = () => ({
     type: types.FINISH_REGISTRATION
 })
+
+export const returnToUsername = () =>({
+    type: types.RETURN_TO_USERNAME
+})
