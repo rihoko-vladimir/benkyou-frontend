@@ -337,3 +337,17 @@ export const returnToUsername = () => ({
 export const finishLogin = () =>({
     type: types.FINISH_LOGIN
 })
+
+export const getUserSets = ()=>({
+    type: types.GET_USER_SETS
+})
+
+export const setUserSetsSuccess = (userSetsResponse) => ({
+    type: types.GET_USER_SETS_SUCCESS,
+    payload: userSetsResponse
+})
+
+export const setUserSetsFailure = (errorMessage) => ({
+    type: types.GET_USER_SETS_FAILURE,
+    payload: errorMessage
+})

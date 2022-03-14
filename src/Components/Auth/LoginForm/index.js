@@ -26,9 +26,10 @@ const LoginComponent = () => {
     const checkResultStatus = useSelector(state => state.login);
     const register = () => navigate("/auth/registration");
     useEffect(() => {
-        if (checkResultStatus) {
+        if (checkResultStatus === true) {
+            setError(false)
             dispatch(finishLogin())
-        } else {
+        } else if (checkResultStatus === false) {
             setError(true);
         }
     }, [checkResultStatus])

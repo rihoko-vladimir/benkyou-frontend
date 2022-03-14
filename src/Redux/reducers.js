@@ -28,24 +28,26 @@ const dialogDummyState = {
 }
 
 const defaultRegistrationState = {
-    firstName:"",
-    lastName:"",
+    firstName: "",
+    lastName: "",
     userName: "",
-    email:"",
+    email: "",
     password: "",
-    passwordConfirmation:"",
-    step:0
+    passwordConfirmation: "",
+    step: 0
 }
 
-const usernameRequestDefault = {status : undefined, message: undefined};
+const usernameRequestDefault = {status: undefined, message: undefined};
 
 const registerRequestDefault = {success: undefined, message: undefined}
 
-const emailRequestDefault = {status : undefined, message: undefined};
+const emailRequestDefault = {status: undefined, message: undefined};
 
-const emailCodeRequestDefault = {status : undefined, message: undefined}
+const emailCodeRequestDefault = {status: undefined, message: undefined}
 
-const resultDefault = {success : false, message: undefined, value : undefined}
+const resultDefault = {success: false, message: undefined, value: undefined}
+
+const tokensDefaultState = {access: undefined, refresh: undefined};
 
 const dummyCardsState = [new Card(1, 1, "Default card", "This is my test description", "Me", [
     new Kanji("日1", ["ニチ1", "ジツ1", "ニ1"], ["ひ1", "は1"]),
@@ -149,6 +151,20 @@ const myCardsReducer = (state = dummyCardsState, action) => {
             }
             originalState[newIndex] = newCard;
             return originalState;
+        }
+        case type.GET_USER_SETS_SUCCESS: {
+            return action.payload.map(
+                unmappedSet =>
+                    new Card(unmappedSet.id, unmappedSet.authorId, unmappedSet.name, unmappedSet.description, "Me",
+                        unmappedSet.kanjiList.map(
+                            unmappedKanji =>
+                                new Kanji(unmappedKanji.kanji,
+                                    unmappedKanji.kunyoumiReadings.map(
+                                        unmappedKunyomi =>
+                                            unmappedKunyomi.reading),
+                                    unmappedKanji.onyoumiReadings.map(
+                                        unmappedOnyomi =>
+                                            unmappedOnyomi.reading)))));
         }
     }
     return state;
@@ -268,8 +284,8 @@ const snackbarReducer = (state = snackbarDummyState, action) => {
     return state;
 }
 
-const isLoadingReducer = (state = isLoading, action) =>{
-    switch (action.type){
+const isLoadingReducer = (state = isLoading, action) => {
+    switch (action.type) {
         case type.START_LOADING:
             return true;
         case type.FINISH_LOADING:
@@ -278,8 +294,8 @@ const isLoadingReducer = (state = isLoading, action) =>{
     return state;
 }
 
-const registerReducer = (state = registerRequestDefault, action) =>{
-    switch (action.type){
+const registerReducer = (state = registerRequestDefault, action) => {
+    switch (action.type) {
         case type.REGISTER_SUCCESS:
             return {success: true, payload: action.payload}
         case type.REGISTER_FAILURE:
@@ -290,12 +306,12 @@ const registerReducer = (state = registerRequestDefault, action) =>{
     return state;
 }
 
-const isUserNameSuccessReducer = (state = usernameRequestDefault, action) =>{
-    switch (action.type){
+const isUserNameSuccessReducer = (state = usernameRequestDefault, action) => {
+    switch (action.type) {
         case type.CHECK_USERNAME_SUCCESS:
-            return {status : true, message: undefined};
+            return {status: true, message: undefined};
         case type.CHECK_USERNAME_FAILURE:
-            return {status : false, message: action.payload};
+            return {status: false, message: action.payload};
         case type.FINISH_REGISTRATION:
             return usernameRequestDefault
         case type.RETURN_TO_USERNAME:
@@ -304,24 +320,24 @@ const isUserNameSuccessReducer = (state = usernameRequestDefault, action) =>{
     return state;
 }
 
-const isEmailSuccessReducer = (state = emailRequestDefault, action) =>{
-    switch (action.type){
+const isEmailSuccessReducer = (state = emailRequestDefault, action) => {
+    switch (action.type) {
         case type.CHECK_EMAIL_SUCCESS:
-            return {status : true, message: undefined};
+            return {status: true, message: undefined};
         case type.CHECK_EMAIL_FAILURE:
-            return {status : false, message: action.payload};
+            return {status: false, message: action.payload};
         case type.FINISH_REGISTRATION:
             return emailRequestDefault;
     }
     return state;
 }
 
-const isEmailCodeSuccessReducer = (state = emailCodeRequestDefault, action) =>{
-    switch (action.type){
+const isEmailCodeSuccessReducer = (state = emailCodeRequestDefault, action) => {
+    switch (action.type) {
         case type.SEND_EMAIL_CODE_SUCCESS:
-            return {status : true, message: undefined};
+            return {status: true, message: undefined};
         case type.SEND_EMAIL_CODE_FAILURE:
-            return {status : false, message: action.payload};
+            return {status: false, message: action.payload};
         case type.FINISH_REGISTRATION:
             return emailCodeRequestDefault;
         case type.RETURN_TO_USERNAME:
@@ -330,20 +346,20 @@ const isEmailCodeSuccessReducer = (state = emailCodeRequestDefault, action) =>{
     return state;
 }
 
-const resultReducer = (state = resultDefault ,action)=>{
-    switch (action.type){
+const resultReducer = (state = resultDefault, action) => {
+    switch (action.type) {
         case type.SEND_EMAIL_CODE_SUCCESS:
-            return {success : true, message: undefined, value: action.payload};
+            return {success: true, message: undefined, value: action.payload};
         case type.SEND_EMAIL_CODE_FAILURE:
-            return {success : false, message: action.payload, value: undefined};
+            return {success: false, message: action.payload, value: undefined};
         case type.FINISH_REGISTRATION:
             return resultDefault
     }
     return state;
 }
 
-const registrationReducer = (state = defaultRegistrationState, action) =>{
-    switch (action.type){
+const registrationReducer = (state = defaultRegistrationState, action) => {
+    switch (action.type) {
         case type.REGISTRATION_CHANGE_FIRST_NAME:
             return {...state, firstName: action.payload}
         case type.REGISTRATION_CHANGE_LAST_NAME:
@@ -366,8 +382,8 @@ const registrationReducer = (state = defaultRegistrationState, action) =>{
     return state;
 }
 
-const loginRequestReducer = (state = null, action) =>{
-    switch (action.type){
+const loginRequestReducer = (state = null, action) => {
+    switch (action.type) {
         case type.LOG_IN_SUCCESS:
             return true
         case type.LOG_IN_FAILURE:
@@ -378,14 +394,22 @@ const loginRequestReducer = (state = null, action) =>{
     return null;
 }
 
-const emailConfirmationResultReducer = (state = false, action) =>{
-    switch (action.type){
+const emailConfirmationResultReducer = (state = false, action) => {
+    switch (action.type) {
         case type.EMAIL_CONFIRMATION_REQUIRED:
             return true;
         case type.FINISH_REGISTRATION:
             return false;
     }
     return false;
+}
+
+const tokensReducer = (state = tokensDefaultState, action) => {
+    switch (action.type) {
+        case type.TOKEN_SUCCESS:
+            return {access: action.payload.accessToken, refresh: action.payload.refreshToken}
+    }
+    return state;
 }
 
 export default combineReducers({
@@ -399,13 +423,14 @@ export default combineReducers({
     dialog: dialogReducer,
     editCard: editedValuesReducer,
     snackbar: snackbarReducer,
-    isLoading : isLoadingReducer,
+    isLoading: isLoadingReducer,
     register: registerReducer,
-    isUserNameSuccess : isUserNameSuccessReducer,
+    isUserNameSuccess: isUserNameSuccessReducer,
     isEmailSuccess: isEmailSuccessReducer,
-    isEmailCodeSuccess : isEmailCodeSuccessReducer,
+    isEmailCodeSuccess: isEmailCodeSuccessReducer,
     result: resultReducer,
     registration: registrationReducer,
     emailConfirmation: emailConfirmationResultReducer,
-    login: loginRequestReducer
+    login: loginRequestReducer,
+    applicationTokens: tokensReducer
 });

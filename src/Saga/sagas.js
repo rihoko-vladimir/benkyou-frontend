@@ -1,10 +1,19 @@
-import {put, all, call, takeEvery, takeLatest} from "redux-saga/effects"
+import {put, all, call, takeEvery, select} from "redux-saga/effects"
 import * as type from "../Redux/types";
 import * as api from "../Api/api";
 import * as actions from "../Redux/actions";
 
+const getTokens = state => state.applicationTokens;
+
 export default function* rootSaga(){
-    yield all([loginWatcher(), registrationWatcher(), emailCheckWatcher(), usernameCheckWatcher(), emailCodeWatcher()])
+    yield all([
+        loginWatcher(),
+        registrationWatcher(),
+        emailCheckWatcher(),
+        usernameCheckWatcher(),
+        emailCodeWatcher(),
+        setsWatcher()
+    ])
 }
 
 function* loginWatcher(){
@@ -22,6 +31,10 @@ function* registrationWatcher(){
 
 function* emailCodeWatcher(){
     yield takeEvery(type.SEND_EMAIL_CODE, emailCodeWorker)
+}
+
+function* setsWatcher(){
+    yield takeEvery(type.GET_USER_SETS,setsWorker)
 }
 
 function* loginWorker(action){
@@ -84,6 +97,19 @@ function* emailCodeWorker(action){
         return;
     }
     yield put(actions.sendEmailCodeSuccess(result.payload));
+    yield put(actions.finishLoading());
+}
+
+function* setsWorker(){
+    yield put(actions.startLoading())
+    const tokens = yield select(getTokens);
+    const result = yield call(api.getUserSets, tokens.access);
+    if (result.isError) {
+        yield put(actions.setUserSetsFailure(result.payload.errorMessage));
+        yield put(actions.finishLoading());
+        return;
+    }
+    yield put(actions.setUserSetsSuccess(result.payload));
     yield put(actions.finishLoading());
 }
 

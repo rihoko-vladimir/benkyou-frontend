@@ -70,7 +70,7 @@ export const resetPasswordConfirm = async ({password, email, token}) =>{
 
 export const getUserSets = async (accessToken) =>{
     try {
-        const resultObject = await axios.get(`${baseUrl}/api/sets/my-sets`, config(accessToken))
+        const resultObject = await axios.get(`${baseUrl}/api/sets/my-collection`, config(accessToken))
         return result(false, resultObject.data)
     }catch (e){
         return result(true, e.response.data);

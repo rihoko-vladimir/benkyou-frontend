@@ -3,14 +3,18 @@ import {Button, Typography} from "@mui/material";
 import CardsStack from "../../../Components/CardsStack";
 import {AddOutlined} from "@mui/icons-material";
 import {useDispatch, useSelector} from "react-redux";
-import {openCreateDialog} from "../../../Redux/actions";
+import {getUserSets, openCreateDialog} from "../../../Redux/actions";
 import Card from "../../../Models/card";
 import {uid} from "uid";
 import Kanji from "../../../Models/kanji";
+import {useEffect} from "react";
 
 const MySetsPageContent = () => {
     const classes = useStyle();
     const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(getUserSets())
+    }, [])
     const cards = useSelector(state => state.myCards);
     const accountId = useSelector(state => state.account.accountId)
     const onCreateNewSet = () => {
