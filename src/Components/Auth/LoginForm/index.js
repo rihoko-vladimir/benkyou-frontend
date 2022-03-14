@@ -23,7 +23,7 @@ const LoginComponent = () => {
     const isLoading = useSelector(state => state.isLoading);
     const account = useSelector(state => state.account);
     const register = () => navigate("/auth/registration");
-    useEffect(() => () => {
+    useEffect(() => {
         if (account.isLoggedIn) navigate("/hub")
         },
         [account]

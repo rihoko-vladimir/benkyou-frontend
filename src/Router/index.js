@@ -19,9 +19,9 @@ import HubComponent from "../Components/Hub";
 const RoutingComponent = () => {
     return <Routes>
         <Route path={paths.ERROR_PATH}><Route path={paths.NOT_FOUND_PATH} element={<ErrorPage/>}/></Route>
-        <Route path={paths.AUTH_PATH}>
-            <Route path={paths.REGISTRATION_PATH} element={<AuthPage render={<Registration/>}/>}/>
-            <Route index element={<AuthPage render={<LoginComponent/>}/>}/>
+        <Route path={paths.AUTH_PATH} element={<AuthPage/>}>
+            <Route path={paths.REGISTRATION_PATH} element={<Registration/>}/>
+            <Route index element={<LoginComponent/>}/>
             <Route path={"*"} element={<Typography variant={"h4"}>Unknown route</Typography>}/>
         </Route>
         <Route path={paths.HUB_PATH} element={<HubComponent/>}>

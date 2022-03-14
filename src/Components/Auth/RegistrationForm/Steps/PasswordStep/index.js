@@ -5,18 +5,26 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import PropTypes from "prop-types";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
+import {useDispatch, useSelector} from "react-redux";
+import * as actions from "../../../../../Redux/actions";
+import {setRegistrationStep} from "../../../../../Redux/actions";
 
-const PasswordComponent = (props) => {
+const PasswordComponent = () => {
     const classes = useStyle();
+    const dispatch = useDispatch();
     const [isPasswordError, setPasswordError] = useState(false);
     const [isPasswordConfirmationError, setPasswordConfirmationError] = useState(false);
-    const [passwordConfirmation, setPasswordConfirmation] = useState("");
     const [isPasswordVisible, setPasswordVisible] = useState(false);
     const [isPasswordConfirmationVisible, setPasswordConfirmationVisible] = useState(false);
     const verifyPassword = (password) => password.match(/^[a-zA-Z0-9]{6,}$/)
-    const verifyPasswordConfirmation = (passwordConfirmation) => passwordConfirmation === props.password;
+    const verifyPasswordConfirmation = (passwordConfirmation) => passwordConfirmation === password;
+    const password = useSelector(state => state.registration.password);
+    const passwordConfirmation = useSelector(state => state.registration.passwordConfirmation);
+    const setPassword = (password) => dispatch(actions.changeRegistrationPassword(password));
+    const setPasswordConfirmation = (passwordConfirmation)=>dispatch(actions.changeRegistrationPasswordConfirmation(passwordConfirmation));
+    const registrationStep = useSelector(state => state.registration.step);
     const next = () => {
-        if (!verifyPassword(props.password)) {
+        if (!verifyPassword(password)) {
             setPasswordError(true);
             return;
         }
@@ -24,7 +32,7 @@ const PasswordComponent = (props) => {
             setPasswordConfirmationError(true);
             return;
         }
-        props.nextClickListener();
+        dispatch(setRegistrationStep(registrationStep+1))
     }
 
     const onShowPasswordClick = () => {
@@ -37,13 +45,13 @@ const PasswordComponent = (props) => {
     return <div className={classes.registrationForm}>
         <TextField fullWidth variant={"outlined"} label={"Password"}
                    placeholder={"Your very secure password"}
-                   value={props.password}
+                   value={password}
                    error={isPasswordError}
                    helperText={isPasswordError ? "Incorrect password" : undefined}
                    type={isPasswordVisible ? "text" : "password"}
                    onChange={(event) => {
                        if (isPasswordError) setPasswordError(false);
-                       props.passwordCallback(event.target.value);
+                       setPassword(event.target.value);
                    }
                    }
                    InputProps={{
@@ -80,17 +88,9 @@ const PasswordComponent = (props) => {
         />
         <div className={classes.buttons}>
             <Button startIcon={<ArrowBackIcon/>} variant={"outlined"}
-                    onClick={props.previousClickListener}>Previous</Button>
+                    onClick={()=>dispatch(setRegistrationStep(registrationStep-1))}>Previous</Button>
             <Button endIcon={<ArrowForwardIcon/>} variant={"contained"} onClick={next}>Next</Button>
         </div>
     </div>
-    //TODO also check on API
-}
-
-PasswordComponent.propTypes = {
-    passwordCallback: PropTypes.func.isRequired,
-    previousClickListener: PropTypes.func.isRequired,
-    nextClickListener: PropTypes.func.isRequired,
-    password: PropTypes.string.isRequired
 }
 export default PasswordComponent;

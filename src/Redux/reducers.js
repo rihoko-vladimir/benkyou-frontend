@@ -27,6 +27,26 @@ const dialogDummyState = {
     mode: dialogModes.create
 }
 
+const defaultRegistrationState = {
+    firstName:"",
+    lastName:"",
+    userName: "",
+    email:"",
+    password: "",
+    passwordConfirmation:"",
+    step:0
+}
+
+const usernameRequestDefault = {status : undefined, message: undefined};
+
+const registerRequestDefault = {success: undefined, message: undefined}
+
+const emailRequestDefault = {status : undefined, message: undefined};
+
+const emailCodeRequestDefault = {status : undefined, message: undefined}
+
+const resultDefault = {success : false, message: undefined, value : undefined}
+
 const dummyCardsState = [new Card(1, 1, "Default card", "This is my test description", "Me", [
     new Kanji("日1", ["ニチ1", "ジツ1", "ニ1"], ["ひ1", "は1"]),
     new Kanji("日2", ["ニチ2", "ジツ2", "ニ2"], ["ひ2", "は2"]),
@@ -258,52 +278,84 @@ const isLoadingReducer = (state = isLoading, action) =>{
     return state;
 }
 
-const registerReducer = (state = {success: false, payload: ""}, action) =>{
+const registerReducer = (state = registerRequestDefault, action) =>{
     switch (action.type){
         case type.REGISTER_SUCCESS:
             return {success: true, payload: action.payload}
         case type.REGISTER_FAILURE:
             return {success: false, payload: action.payload}
+        case type.FINISH_REGISTRATION:
+            return registerRequestDefault
     }
     return state;
 }
 
-const isUserNameSuccessReducer = (state = {status : false, message: undefined}, action) =>{
+const isUserNameSuccessReducer = (state = usernameRequestDefault, action) =>{
     switch (action.type){
         case type.CHECK_USERNAME_SUCCESS:
             return {status : true, message: undefined};
         case type.CHECK_USERNAME_FAILURE:
             return {status : false, message: action.payload};
+        case type.FINISH_REGISTRATION:
+            return usernameRequestDefault
     }
     return state;
 }
 
-const isEmailSuccessReducer = (state = {status : false, message: undefined}, action) =>{
+const isEmailSuccessReducer = (state = emailRequestDefault, action) =>{
     switch (action.type){
         case type.CHECK_EMAIL_SUCCESS:
             return {status : true, message: undefined};
         case type.CHECK_EMAIL_FAILURE:
             return {status : false, message: action.payload};
+        case type.FINISH_REGISTRATION:
+            return emailRequestDefault
     }
     return state;
 }
 
-const isEmailCodeSuccessReducer = (state = {status : false, message: undefined}, action) =>{
+const isEmailCodeSuccessReducer = (state = emailCodeRequestDefault, action) =>{
     switch (action.type){
         case type.SEND_EMAIL_CODE_SUCCESS:
             return {status : true, message: undefined};
         case type.SEND_EMAIL_CODE_FAILURE:
             return {status : false, message: action.payload};
+        case type.FINISH_REGISTRATION:
+            return emailCodeRequestDefault
     }
     return state;
 }
 
-const resultReducer = (state = {success : false, message: undefined, value : undefined} ,action)=>{
+const resultReducer = (state = resultDefault ,action)=>{
     switch (action.type){
         case type.SEND_EMAIL_CODE_SUCCESS:
             return {success : true, message: undefined, value: action.payload};
         case type.SEND_EMAIL_CODE_FAILURE:
             return {success : false, message: action.payload, value: undefined};
+        case type.FINISH_REGISTRATION:
+            return resultDefault
+    }
+    return state;
+}
+
+const registrationReducer = (state = defaultRegistrationState, action) =>{
+    switch (action.type){
+        case type.REGISTRATION_CHANGE_FIRST_NAME:
+            return {...state, firstName: action.payload}
+        case type.REGISTRATION_CHANGE_LAST_NAME:
+            return {...state, lastName: action.payload}
+        case type.REGISTRATION_CHANGE_USERNAME:
+            return {...state, userName: action.payload}
+        case type.REGISTRATION_CHANGE_EMAIL:
+            return {...state, email: action.payload}
+        case type.REGISTRATION_CHANGE_PASSWORD:
+            return {...state, password: action.payload}
+        case type.REGISTRATION_CHANGE_PASSWORD_CONFIRMATION:
+            return {...state, passwordConfirmation: action.payload}
+        case type.SET_REGISTRATION_STEP:
+            return {...state, step: action.payload}
+        case type.FINISH_REGISTRATION:
+            return defaultRegistrationState
     }
     return state;
 }
@@ -325,4 +377,5 @@ export default combineReducers({
     isEmailSuccess: isEmailSuccessReducer,
     isEmailCodeSuccess : isEmailCodeSuccessReducer,
     result: resultReducer,
+    registration: registrationReducer
 });

@@ -1,4 +1,5 @@
 import * as types from "./types";
+import {REGISTRATION_CHANGE_LAST_NAME, SET_REGISTRATION_STEP} from "./types";
 
 export const checkUserName = (userName) =>({
     type: types.CHECK_USERNAME,
@@ -284,4 +285,43 @@ export const deleteKanji = (index) => ({
 })
 export const addKanji = () => ({
     type: types.ADD_KANJI
+})
+
+export const changeRegistrationFirstName = (firstName) =>({
+    type: types.REGISTRATION_CHANGE_FIRST_NAME,
+    payload : firstName
+})
+
+export const changeRegistrationLastName = (lastName)=>({
+    type:REGISTRATION_CHANGE_LAST_NAME,
+    payload: lastName
+})
+
+export const changeRegistrationUserName = (userName) =>({
+    type: types.REGISTRATION_CHANGE_USERNAME,
+    payload : userName
+})
+
+export const changeRegistrationEmail = (email) =>({
+    type: types.REGISTRATION_CHANGE_EMAIL,
+    payload: email
+})
+
+export const changeRegistrationPassword = (password) =>({
+    type: types.REGISTRATION_CHANGE_PASSWORD,
+    payload: password
+})
+
+export const changeRegistrationPasswordConfirmation = (password) =>({
+    type: types.REGISTRATION_CHANGE_PASSWORD_CONFIRMATION,
+    payload: password
+})
+
+export const setRegistrationStep = (stepNumber) =>({
+    type: SET_REGISTRATION_STEP,
+    payload: stepNumber
+})
+
+export const finishRegistration = () => ({
+    type: types.FINISH_REGISTRATION
 })
