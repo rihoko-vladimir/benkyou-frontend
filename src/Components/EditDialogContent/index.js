@@ -16,10 +16,22 @@ const EditKanji = () => {
     }
     const classes = useStyle();
     return <div className={classes.container}>
-        <TextField variant={"outlined"} label={"Card name"} fullWidth value={cardName}
-                   onChange={(event) => setCardName(event.target.value)}/>
-        <TextField variant={"outlined"} label={"Card description"} fullWidth value={cardDescription}
-                   onChange={(event) => setCardDescription(event.target.value)}/>
+        <TextField variant={"outlined"}
+                   label={"Card name"}
+                   fullWidth
+                   value={cardName}
+                   onChange={(event) =>
+                       setCardName(event.target.value)}
+                   inputProps={{maxLength: 15}}
+        />
+        <TextField variant={"outlined"}
+                   label={"Card description"}
+                   fullWidth
+                   value={cardDescription}
+                   onChange={(event) =>
+                       setCardDescription(event.target.value)}
+                   inputProps={{maxLength: 90}}
+        />
         <EditKanjiList/>
     </div>
 }

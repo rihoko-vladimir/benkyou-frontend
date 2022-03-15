@@ -1,123 +1,181 @@
-import {put, all, call, takeEvery, select, takeLatest} from "redux-saga/effects"
+import {all, call, put, select, takeEvery, takeLatest} from "redux-saga/effects"
 import * as type from "../Redux/types";
 import * as api from "../Api/api";
 import * as actions from "../Redux/actions";
 
 const getTokens = state => state.applicationTokens;
 
-export default function* rootSaga(){
+export default function* rootSaga() {
     yield all([
         loginWatcher(),
         registrationWatcher(),
         emailCheckWatcher(),
         usernameCheckWatcher(),
         emailCodeWatcher(),
-        setsWatcher()
+        getSetsWatcher(),
+        saveSetWatcher(),
+        createSetWatcher()
     ])
 }
 
-function* loginWatcher(){
-    yield takeEvery(type.LOG_IN, loginWorker)
-}
-function* usernameCheckWatcher(){
-    yield takeEvery(type.CHECK_USERNAME, checkUserNameWorker)
-}
-function* emailCheckWatcher(){
-    yield takeEvery(type.CHECK_EMAIL, checkEmailWorker)
-}
-function* registrationWatcher(){
-    yield takeEvery(type.REGISTER, registerWorker)
+function* loginWatcher() {
+    yield takeLatest(type.LOG_IN, loginWorker)
 }
 
-function* emailCodeWatcher(){
+function* usernameCheckWatcher() {
+    yield takeEvery(type.CHECK_USERNAME, checkUserNameWorker)
+}
+
+function* emailCheckWatcher() {
+    yield takeEvery(type.CHECK_EMAIL, checkEmailWorker)
+}
+
+function* registrationWatcher() {
+    yield takeLatest(type.REGISTER, registerWorker)
+}
+
+function* emailCodeWatcher() {
     yield takeEvery(type.SEND_EMAIL_CODE, emailCodeWorker)
 }
 
-function* setsWatcher(){
-    yield takeEvery(type.GET_USER_SETS,setsWorker)
+function* getSetsWatcher() {
+    yield takeLatest(type.GET_USER_SETS, setsWorker)
 }
 
-function* tokensWatcher(){
-    yield takeLatest(type.GET_NEW_TOKENS, tokensWorker)
+function* saveSetWatcher(){
+    yield takeLatest(type.SAVE_SET, saveSetWorker)
 }
 
-function* tokensWorker(){
+function* createSetWatcher() {
+    yield takeLatest(type.CREATE_SET, createSetWorker)
+}
+
+function* createSetWorker(action){
+    yield put(actions.startLoading())
     let tokens = yield select(getTokens);
-    const result = yield call(api.refreshTokens, {refreshToken: tokens.refresh});
-    if (result.isError) {
-        yield put(actions.getNewTokensFailure(result.payload.data.errorMessage));
-        return;
+    const createdSet = action.payload;
+    const requestSet = {name: createdSet.name,
+        description:createdSet.description,
+        kanjiList: [...createdSet.kanjiList.map(kanji=>({
+            kanji: kanji.kanji,
+            kunyoumiReadings: kanji.kunyoumi.map(reading => ({reading})),
+            onyoumiReadings: kanji.onyoumi.map(reading => ({reading}))
+        }))]}
+    try {
+        yield call(api.createNewSet, {accessToken: tokens.access, ...requestSet});
+        yield put(actions.createSetSuccess(requestSet));
+    } catch (e) {
+        if (e.response.status === 401) {
+            yield tokensWorker()
+            tokens = yield select(getTokens);
+            try {
+                const result = yield call(api.getUserSets, {accessToken: tokens.access});
+                yield put(actions.createSetSuccess(requestSet));
+            }catch (e){
+                yield put(actions.createSetFailure(e.response.data.errorMessage))
+            }
+        } else {
+            yield put(actions.createSetFailure(e.response.data.errorMessage));
+        }
     }
-    yield put(actions.getNewTokensSuccess(result.payload.data))
+    yield put(actions.finishLoading());
 }
 
-function* loginWorker(action){
+function* saveSetWorker(action){
+
+}
+
+function* tokensWorker() {
+    let tokens = yield select(getTokens);
+    try {
+        const result = yield call(api.refreshTokens, {refreshToken: tokens.refresh});
+        yield put(actions.getNewTokensSuccess({access: result.data.accessToken, refresh: result.data.refreshToken}))
+    }catch (e){
+        yield put(actions.getNewTokensFailure(e.response.data.errorMessage));
+    }
+}
+
+function* loginWorker(action) {
     yield put(actions.startLoading())
     try {
-        const result = yield call(api.login, {login : action.payload.login, password : action.payload.password});
+        const result = yield call(api.login, {login: action.payload.login, password: action.payload.password});
         console.log(result)
-        const userInfo = yield call(api.getAccountInfo, {accessToken : result.data.accessToken})
+        const userInfo = yield call(api.getAccountInfo, {accessToken: result.data.accessToken})
         yield put(actions.tokenSuccess(result.data));
         yield put(actions.loginSuccess(userInfo.data))
-    }catch (e){
+    } catch (e) {
         yield put(actions.loginFailure(e.response.data.errorMessage));
     }
     yield put(actions.finishLoading())
 }
 
-function* checkUserNameWorker(action){
+function* checkUserNameWorker(action) {
     yield put(actions.startLoading())
     try {
-        yield call(api.checkUserName, {userName : action.payload})
+        yield call(api.checkUserName, {userName: action.payload})
         yield put(actions.checkUserNameSuccess())
-    }catch (e){
+    } catch (e) {
         yield put(actions.checkUserNameFailure(e.response.data.errorMessage));
     }
     yield put(actions.finishLoading());
 }
 
-function* checkEmailWorker(action){
+function* checkEmailWorker(action) {
     yield put(actions.startLoading())
     try {
-        yield call(api.checkEmail, {email : action.payload})
+        yield call(api.checkEmail, {email: action.payload})
         yield put(actions.checkEmailSuccess())
-    }catch (e){
+    } catch (e) {
         yield put(actions.checkEmailFailure(e.response.data.errorMessage));
     }
     yield put(actions.finishLoading());
 }
 
-function* registerWorker(action){
+function* registerWorker(action) {
     yield put(actions.startLoading())
     try {
         const result = yield call(api.register, {...action.payload});
         yield put(actions.registerSuccess(result.data));
-    }catch (e){
+    } catch (e) {
         yield put(actions.registerFailure(e.response.data.errorMessage));
     }
     yield put(actions.finishLoading());
 }
 
-function* emailCodeWorker(action){
+function* emailCodeWorker(action) {
     yield put(actions.startLoading())
     try {
-        const result = yield call(api.sendEmailCode, {emailCode : action.payload.emailCode, userId: action.payload.userId});
+        const result = yield call(api.sendEmailCode, {
+            emailCode: action.payload.emailCode,
+            userId: action.payload.userId
+        });
         yield put(actions.sendEmailCodeSuccess(result.data));
-    }catch (e){
+    } catch (e) {
         console.log(e)
         yield put(actions.sendEmailCodeFailure());
     }
     yield put(actions.finishLoading());
 }
 
-function* setsWorker(){
+function* setsWorker() {
     yield put(actions.startLoading())
+    let tokens = yield select(getTokens);
     try {
-        let tokens = yield select(getTokens);
         const result = yield call(api.getUserSets, {accessToken: tokens.access});
         yield put(actions.setUserSetsSuccess(result.data));
-    }catch (e){
-        yield put(actions.setUserSetsFailure(e.response.data.errorMessage));
+    } catch (e) {
+        if (e.response.status === 401) {
+            yield tokensWorker()
+            tokens = yield select(getTokens);
+            try {
+                const result = yield call(api.getUserSets, {accessToken: tokens.access});
+                yield put(actions.setUserSetsSuccess(result.data));
+            }catch (e){
+                yield put(actions.setUserSetsFailure(e.response.data.errorMessage))
+            }
+        } else {
+            yield put(actions.setUserSetsFailure(e.response.data.errorMessage));
+        }
     }
     yield put(actions.finishLoading());
 }

@@ -34,7 +34,6 @@ export const getUserSets = async ({accessToken}) =>
 export const createNewSet = async ({accessToken, name, description, kanjiList}) =>
     await axios.put(`${baseUrl}/api/sets/create-set`, {name, description, kanjiList}, config(accessToken))
 
-
 export const deleteSet = async ({accessToken, setId}) =>
     await axios.put(`${baseUrl}/api/sets/delete-set`, {setId}, config(accessToken))
 
@@ -45,7 +44,14 @@ export const getAccountInfo = async ({accessToken}) =>
     await axios.get(`${baseUrl}/api/account/`, config(accessToken))
 
 export const updateUserInfo = async ({accessToken, userName, firstName, lastName, birthday, about, avatarUrl}) =>
-    await axios.put(`${baseUrl}/api/account/modify`,{userName, firstName, lastName, birthday, about, avatarUrl}, config(accessToken))
+    await axios.put(`${baseUrl}/api/account/modify`, {
+        userName,
+        firstName,
+        lastName,
+        birthday,
+        about,
+        avatarUrl
+    }, config(accessToken))
 
 export const checkEmail = async ({email}) =>
     await axios.get(`${baseUrl}/api/auth/check-email?email=${email}`);

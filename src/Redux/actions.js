@@ -256,18 +256,40 @@ export const setNewOnyoumi = (newReadingsArray, index) => ({
 })
 
 export const setNewCardName = (newCardName) => ({
-    type: types.SET_NEW_CARD_NAME,
+    type: types.SET_NEW_SET_NAME,
     payload: newCardName
 })
 
 export const setNewCardDescription = (newCardDescription) => ({
-    type: types.SET_NEW_CARD_DESCRIPTION,
+    type: types.SET_NEW_SET_DESCRIPTION,
     payload: newCardDescription,
 })
 
-export const saveCard = (newCard) => ({
-    type: types.SAVE_CARD,
+export const saveSet = (newCard) => ({
+    type: types.SAVE_SET,
     payload: newCard
+})
+
+export const saveSetSuccess = (savedSet) => ({
+    type: types.SAVE_SET_SUCCESS,
+    payload: savedSet
+})
+
+export const saveSetFailure = ()=>({
+    type: types.SAVE_SET_FAILURE
+})
+
+export const createSet = ()=>({
+    type: types.CREATE_SET
+})
+
+export const createSetSuccess = (createdSet)=>({
+    type: types.CREATE_SET_SUCCESS,
+    payload: createdSet
+})
+
+export const createSetFailure = () =>({
+    type: types.CREATE_SET_FAILURE
 })
 
 export const showSnackbar = (message) => ({
@@ -353,13 +375,18 @@ export const setUserSetsFailure = (errorMessage) => ({
 })
 
 export const getNewTokensSuccess = (tokens) =>({
-    type: types.GET_NEW_TOKENS_SUCCESS
+    type: types.GET_NEW_TOKENS_SUCCESS,
+    payload: {
+        access: tokens.access,
+        refresh: tokens.refresh
+    }
 })
 
 export const getNewTokensFailure = ()=>({
     type: types.GET_NEW_TOKENS_FAILURE
 })
 
-export const getNewTokens = ()=>({
-    type: types.GET_NEW_TOKENS
+export const getNewTokens = (refreshToken)=>({
+    type: types.GET_NEW_TOKENS,
+    payload: refreshToken
 })

@@ -122,7 +122,7 @@ const myCardsReducer = (state = dummyCardsState, action) => {
             return [...state, action.payload]
         case type.REMOVE_CARD:
             return [...state.filter((card) => card.id !== action.payload)]
-        case type.SAVE_CARD: {
+        case type.SAVE_SET_SUCCESS: {
             const newCard = action.payload;
             let newIndex = -1;
             for (const index in state) {
@@ -216,7 +216,7 @@ const dialogReducer = (state = dialogDummyState, action) => {
             return {isOpened: true, mode: dialogModes.create}
         case type.CLOSE_DIALOG:
             return {...state, isOpened: false};
-        case type.SAVE_CARD:
+        case type.SAVE_SET:
             return {...state, isOpened: false};
     }
     return state;
@@ -242,10 +242,10 @@ const editedValuesReducer = (state = editCardDummyState, action) => {
             kanjiList[action.payload.index].onyoumi = action.payload.newReadingsArray
             return {...state, kanjiList}
         }
-        case type.SET_NEW_CARD_NAME:
+        case type.SET_NEW_SET_NAME:
             return {...state, name: action.payload}
 
-        case type.SET_NEW_CARD_DESCRIPTION:
+        case type.SET_NEW_SET_DESCRIPTION:
             return {...state, description: action.payload}
 
         case type.REMOVE_KANJI: {
@@ -399,7 +399,7 @@ const tokensReducer = (state = tokensDefaultState, action) => {
         case type.TOKEN_FAILURE:
             return tokensDefaultState;
         case type.GET_NEW_TOKENS_SUCCESS:
-            return {access: action.payload.accessToken, refresh: action.payload.refreshToken}
+            return {access: action.payload.access, refresh: action.payload.refresh}
         case type.GET_NEW_TOKENS_FAILURE:
             return tokensDefaultState;
     }
