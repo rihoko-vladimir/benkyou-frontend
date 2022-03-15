@@ -17,6 +17,7 @@ const MySetsPageContent = () => {
     }, [])
     const cards = useSelector(state => state.myCards);
     const accountId = useSelector(state => state.account.accountId)
+    const isLoading = useSelector(state => state.isLoading);
     const onCreateNewSet = () => {
         dispatch(openCreateDialog(new Card(uid(4), accountId, "", "", "Me", [
             new Kanji("", [], []),
@@ -36,6 +37,7 @@ const MySetsPageContent = () => {
                     variant={"contained"}
                     size={"large"}
                     onClick={onCreateNewSet}
+                    disabled={isLoading}
                     endIcon={<AddOutlined/>}>
                     Add new set
                 </Button>

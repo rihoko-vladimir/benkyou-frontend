@@ -4,15 +4,15 @@ import Card from "../Models/card";
 import Kanji from "../Models/kanji";
 
 const dummyAccountState = {
-    accountId: 0,
-    firstName: "test",
-    lastName: "test",
-    birthday: "2021-12-13",
-    aboutAccount: "test",
-    accountImageUrl: "https://lh3.googleusercontent.com/a-/AOh14GineJdMiu0253KCDxizNsvnYdwMFjTDXL3fjgC1vQ=s288-p-rw-no",
-    isLoggedIn: false,
-    login: "rihoko",
-    email: "vovakozlouskiy@gmail.com",
+    accountId: undefined,
+    login: undefined,
+    firstName: undefined,
+    lastName: undefined,
+    birthday: undefined,
+    aboutAccount: undefined,
+    accountImageUrl: undefined,
+    email: undefined,
+    isLoggedIn: false
 }
 
 export const isLoading = false;
@@ -109,25 +109,9 @@ const accountReducer = (state = dummyAccountState, action) => {
                 isLoggedIn: true
             }
         case type.LOG_OUT:
-            return {
-                accountId: undefined,
-                login: undefined,
-                firstName: undefined,
-                lastName: undefined,
-                birthday: undefined,
-                aboutAccount: undefined,
-                accountImageUrl: undefined,
-                email: undefined,
-                isLoggedIn: false
-            }
-        case type.LOGIN_TEST:
-            return {
-                ...state, isLoggedIn: true,
-            }
-        case type.LOGOUT_TEST:
-            return {
-                ...state, isLoggedIn: false,
-            }
+            return dummyAccountState
+        case type.GET_NEW_TOKENS_FAILURE:
+            return dummyAccountState
     }
     return state;
 }
@@ -166,6 +150,10 @@ const myCardsReducer = (state = dummyCardsState, action) => {
                                         unmappedOnyomi =>
                                             unmappedOnyomi.reading)))));
         }
+        case type.GET_USER_SETS_FAILURE:
+            return []
+        case type.GET_NEW_TOKENS_FAILURE:
+            return []
     }
     return state;
 }
@@ -408,6 +396,12 @@ const tokensReducer = (state = tokensDefaultState, action) => {
     switch (action.type) {
         case type.TOKEN_SUCCESS:
             return {access: action.payload.accessToken, refresh: action.payload.refreshToken}
+        case type.TOKEN_FAILURE:
+            return tokensDefaultState;
+        case type.GET_NEW_TOKENS_SUCCESS:
+            return {access: action.payload.accessToken, refresh: action.payload.refreshToken}
+        case type.GET_NEW_TOKENS_FAILURE:
+            return tokensDefaultState;
     }
     return state;
 }

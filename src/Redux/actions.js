@@ -351,3 +351,15 @@ export const setUserSetsFailure = (errorMessage) => ({
     type: types.GET_USER_SETS_FAILURE,
     payload: errorMessage
 })
+
+export const getNewTokensSuccess = (tokens) =>({
+    type: types.GET_NEW_TOKENS_SUCCESS
+})
+
+export const getNewTokensFailure = ()=>({
+    type: types.GET_NEW_TOKENS_FAILURE
+})
+
+export const getNewTokens = ()=>({
+    type: types.GET_NEW_TOKENS
+})

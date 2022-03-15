@@ -4,7 +4,7 @@ import {useNavigate} from "react-router";
 import {useEffect, useState} from "react";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
 import {useDispatch, useSelector} from "react-redux";
-import {finishLogin, login} from "../../../Redux/actions";
+import {finishLogin, finishRegistration, login} from "../../../Redux/actions";
 import LoadingButton from '@mui/lab/LoadingButton';
 
 const LoginComponent = () => {
@@ -38,6 +38,9 @@ const LoginComponent = () => {
         },
         [isLoggedIn]
     )
+    useEffect(()=>{
+        dispatch(finishRegistration())
+    },[])
     return (
         <div>
             <Typography variant={"h4"}>Hey there!</Typography>

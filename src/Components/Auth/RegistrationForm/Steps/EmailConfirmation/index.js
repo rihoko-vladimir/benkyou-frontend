@@ -26,7 +26,6 @@ const EmailConfirmationComponent = (props) => {
     useEffect(()=>{
         if (isEmailSuccess.status === true) {
             clearTimeout(timeout)
-            dispatch(finishRegistration())
             navigate("/auth");
         }else if (isEmailSuccess.status === false){
             setFailure(true);

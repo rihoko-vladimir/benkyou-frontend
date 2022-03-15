@@ -1,4 +1,4 @@
-import {put, all, call, takeEvery, select} from "redux-saga/effects"
+import {put, all, call, takeEvery, select, takeLatest} from "redux-saga/effects"
 import * as type from "../Redux/types";
 import * as api from "../Api/api";
 import * as actions from "../Redux/actions";
@@ -37,79 +37,88 @@ function* setsWatcher(){
     yield takeEvery(type.GET_USER_SETS,setsWorker)
 }
 
-function* loginWorker(action){
-    yield put(actions.startLoading())
-    const result = yield call(api.login, {login : action.payload.login, password : action.payload.password});
+function* tokensWatcher(){
+    yield takeLatest(type.GET_NEW_TOKENS, tokensWorker)
+}
+
+function* tokensWorker(){
+    let tokens = yield select(getTokens);
+    const result = yield call(api.refreshTokens, {refreshToken: tokens.refresh});
     if (result.isError) {
-        yield put(actions.loginFailure(result.payload.errorMessage));
-        yield put(actions.finishLoading())
+        yield put(actions.getNewTokensFailure(result.payload.data.errorMessage));
         return;
     }
-    console.log(result)
-    const userInfo = yield call(api.getAccountInfo, result.payload.accessToken)
-    yield put(actions.tokenSuccess(result.payload));
-    yield put(actions.loginSuccess(userInfo.payload))
+    yield put(actions.getNewTokensSuccess(result.payload.data))
+}
+
+function* loginWorker(action){
+    yield put(actions.startLoading())
+    try {
+        const result = yield call(api.login, {login : action.payload.login, password : action.payload.password});
+        console.log(result)
+        const userInfo = yield call(api.getAccountInfo, {accessToken : result.data.accessToken})
+        yield put(actions.tokenSuccess(result.data));
+        yield put(actions.loginSuccess(userInfo.data))
+    }catch (e){
+        yield put(actions.loginFailure(e.response.data.errorMessage));
+    }
     yield put(actions.finishLoading())
 }
 
 function* checkUserNameWorker(action){
     yield put(actions.startLoading())
-    const result = yield call(api.checkUserName, {userName : action.payload})
-    if (result.isError) {
-        yield put(actions.checkUserNameFailure(result.payload.errorMessage));
-        yield put(actions.finishLoading())
-        return;
+    try {
+        yield call(api.checkUserName, {userName : action.payload})
+        yield put(actions.checkUserNameSuccess())
+    }catch (e){
+        yield put(actions.checkUserNameFailure(e.response.data.errorMessage));
     }
-    yield put(actions.checkUserNameSuccess())
     yield put(actions.finishLoading());
 }
 
 function* checkEmailWorker(action){
     yield put(actions.startLoading())
-    const result = yield call(api.checkEmail, {email : action.payload})
-    if (result.isError) {
-        yield put(actions.checkEmailFailure(result.payload.errorMessage));
-        yield put(actions.finishLoading())
-        return;
+    try {
+        yield call(api.checkEmail, {email : action.payload})
+        yield put(actions.checkEmailSuccess())
+    }catch (e){
+        yield put(actions.checkEmailFailure(e.response.data.errorMessage));
     }
-    yield put(actions.checkEmailSuccess())
     yield put(actions.finishLoading());
 }
 
 function* registerWorker(action){
     yield put(actions.startLoading())
-    const result = yield call(api.register, action.payload);
-    if (result.isError) {
-        yield put(actions.registerFailure(result.payload.errorMessage));
-        yield put(actions.finishLoading());
-        return;
+    try {
+        const result = yield call(api.register, {...action.payload});
+        yield put(actions.registerSuccess(result.data));
+    }catch (e){
+        yield put(actions.registerFailure(e.response.data.errorMessage));
     }
-    yield put(actions.registerSuccess(result.payload));
     yield put(actions.finishLoading());
 }
 
 function* emailCodeWorker(action){
     yield put(actions.startLoading())
-    const result = yield call(api.sendEmailCode, action.payload);
-    if (result.isError) {
-        yield put(actions.sendEmailCodeFailure(result.payload.errorMessage));
-        yield put(actions.finishLoading());
-        return;
+    try {
+        const result = yield call(api.sendEmailCode, {emailCode : action.payload.emailCode, userId: action.payload.userId});
+        yield put(actions.sendEmailCodeSuccess(result.data));
+    }catch (e){
+        console.log(e)
+        yield put(actions.sendEmailCodeFailure());
     }
-    yield put(actions.sendEmailCodeSuccess(result.payload));
     yield put(actions.finishLoading());
 }
 
 function* setsWorker(){
     yield put(actions.startLoading())
-    const tokens = yield select(getTokens);
-    const result = yield call(api.getUserSets, tokens.access);
-    if (result.isError) {
-        yield put(actions.setUserSetsFailure(result.payload.errorMessage));
-        yield put(actions.finishLoading());
-        return;
+    try {
+        let tokens = yield select(getTokens);
+        const result = yield call(api.getUserSets, {accessToken: tokens.access});
+        yield put(actions.setUserSetsSuccess(result.data));
+    }catch (e){
+        yield put(actions.setUserSetsFailure(e.response.data.errorMessage));
     }
-    yield put(actions.setUserSetsSuccess(result.payload));
     yield put(actions.finishLoading());
 }
 

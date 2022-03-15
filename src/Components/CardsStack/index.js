@@ -21,22 +21,23 @@ const CardsStack = (props) => {
         setCurrentPage(value);
     }
     return (
-        info.length !== 0
-            ? <div className={classes.mainContainer}>
-                <div className={classes.cardsContainer}>
-                    {(isPaginateAble ? currentCards : info).map(card =>
-                        <Card card={card} key={card.id}/>
-                    )}
-                </div>
-                {/*{isPaginateAble*/}
-                {/*    ? <Pagination count={pages}*/}
-                {/*                  size={"large"}*/}
-                {/*                  color={"primary"}*/}
-                {/*                  page={currentPage}*/}
-                {/*                  onChange={onNavigationClicked}/>*/}
-                {/*    : null}*/}
-            </div>
-            : isLoading? <CircularProgress/> :<Typography variant={"h6"}>It's kinda empty here...</Typography>
+        isLoading ? <CircularProgress/> :
+            info.length !== 0
+                ? <div className={classes.mainContainer}>
+                    <div className={classes.cardsContainer}>
+                        {(isPaginateAble ? currentCards : info).map(card =>
+                            <Card card={card} key={card.id}/>
+                        )}
+                    </div>
+                    {/*{isPaginateAble*/}
+                    {/*    ? <Pagination count={pages}*/}
+                    {/*                  size={"large"}*/}
+                    {/*                  color={"primary"}*/}
+                    {/*                  page={currentPage}*/}
+                    {/*                  onChange={onNavigationClicked}/>*/}
+                    {/*    : null}*/}
+                </div> :
+                <Typography variant={"h6"}>It's kinda empty here...</Typography>
     )
 }
 
