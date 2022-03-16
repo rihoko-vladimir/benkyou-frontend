@@ -279,8 +279,9 @@ export const saveSetFailure = ()=>({
     type: types.SAVE_SET_FAILURE
 })
 
-export const createSet = ()=>({
-    type: types.CREATE_SET
+export const createSet = (set)=>({
+    type: types.CREATE_SET,
+    payload: set
 })
 
 export const createSetSuccess = (createdSet)=>({

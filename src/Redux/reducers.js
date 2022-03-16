@@ -2,6 +2,7 @@ import * as type from "./types";
 import {combineReducers} from "redux";
 import Card from "../Models/card";
 import Kanji from "../Models/kanji";
+import {convertSetFromRequestToApplication} from "../Api/converters";
 
 const dummyAccountState = {
     accountId: undefined,
@@ -118,7 +119,7 @@ const accountReducer = (state = dummyAccountState, action) => {
 
 const myCardsReducer = (state = dummyCardsState, action) => {
     switch (action.type) {
-        case type.ADD_NEW_CARD:
+        case type.CREATE_SET_SUCCESS:
             return [...state, action.payload]
         case type.REMOVE_CARD:
             return [...state.filter((card) => card.id !== action.payload)]
@@ -136,20 +137,8 @@ const myCardsReducer = (state = dummyCardsState, action) => {
             originalState[newIndex] = newCard;
             return originalState;
         }
-        case type.GET_USER_SETS_SUCCESS: {
-            return action.payload.map(
-                unmappedSet =>
-                    new Card(unmappedSet.id, unmappedSet.authorId, unmappedSet.name, unmappedSet.description, "Me",
-                        unmappedSet.kanjiList.map(
-                            unmappedKanji =>
-                                new Kanji(unmappedKanji.kanji,
-                                    unmappedKanji.kunyoumiReadings.map(
-                                        unmappedKunyomi =>
-                                            unmappedKunyomi.reading),
-                                    unmappedKanji.onyoumiReadings.map(
-                                        unmappedOnyomi =>
-                                            unmappedOnyomi.reading)))));
-        }
+        case type.GET_USER_SETS_SUCCESS:
+            return action.payload
         case type.GET_USER_SETS_FAILURE:
             return []
         case type.GET_NEW_TOKENS_FAILURE:
@@ -215,9 +204,11 @@ const dialogReducer = (state = dialogDummyState, action) => {
         case type.OPEN_CREATE_NEW_SET_DIALOG:
             return {isOpened: true, mode: dialogModes.create}
         case type.CLOSE_DIALOG:
-            return {...state, isOpened: false};
+            return dialogDummyState;
         case type.SAVE_SET:
-            return {...state, isOpened: false};
+            return dialogDummyState;
+        case type.CREATE_SET_SUCCESS:
+            return dialogDummyState
     }
     return state;
 }

@@ -2,6 +2,7 @@ import {all, call, put, select, takeEvery, takeLatest} from "redux-saga/effects"
 import * as type from "../Redux/types";
 import * as api from "../Api/api";
 import * as actions from "../Redux/actions";
+import {convertSetFromApplicationToRequest, convertSetFromRequestToApplication} from "../Api/converters";
 
 const getTokens = state => state.applicationTokens;
 
@@ -54,23 +55,18 @@ function* createSetWorker(action){
     yield put(actions.startLoading())
     let tokens = yield select(getTokens);
     const createdSet = action.payload;
-    const requestSet = {name: createdSet.name,
-        description:createdSet.description,
-        kanjiList: [...createdSet.kanjiList.map(kanji=>({
-            kanji: kanji.kanji,
-            kunyoumiReadings: kanji.kunyoumi.map(reading => ({reading})),
-            onyoumiReadings: kanji.onyoumi.map(reading => ({reading}))
-        }))]}
+    const requestSet = convertSetFromApplicationToRequest(createdSet);
     try {
-        yield call(api.createNewSet, {accessToken: tokens.access, ...requestSet});
-        yield put(actions.createSetSuccess(requestSet));
+        const result = yield call(api.createNewSet, {accessToken: tokens.access, ...requestSet});
+        console.log(result)
+        yield put(actions.createSetSuccess(convertSetFromRequestToApplication(result.data)));
     } catch (e) {
         if (e.response.status === 401) {
             yield tokensWorker()
             tokens = yield select(getTokens);
             try {
-                const result = yield call(api.getUserSets, {accessToken: tokens.access});
-                yield put(actions.createSetSuccess(requestSet));
+                const result = yield call(api.createNewSet, {accessToken: tokens.access, ...requestSet});
+                yield put(actions.createSetSuccess(convertSetFromRequestToApplication(result.data)));
             }catch (e){
                 yield put(actions.createSetFailure(e.response.data.errorMessage))
             }
@@ -162,14 +158,16 @@ function* setsWorker() {
     let tokens = yield select(getTokens);
     try {
         const result = yield call(api.getUserSets, {accessToken: tokens.access});
-        yield put(actions.setUserSetsSuccess(result.data));
+        yield put(actions.setUserSetsSuccess(result.data.map(
+            unmappedSet => convertSetFromRequestToApplication(unmappedSet))));
     } catch (e) {
         if (e.response.status === 401) {
             yield tokensWorker()
             tokens = yield select(getTokens);
             try {
                 const result = yield call(api.getUserSets, {accessToken: tokens.access});
-                yield put(actions.setUserSetsSuccess(result.data));
+                yield put(actions.setUserSetsSuccess(result.data.map(
+                    unmappedSet => convertSetFromRequestToApplication(unmappedSet))));
             }catch (e){
                 yield put(actions.setUserSetsFailure(e.response.data.errorMessage))
             }
