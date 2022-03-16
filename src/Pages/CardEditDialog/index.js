@@ -1,6 +1,6 @@
 import {Button, Dialog, DialogActions, DialogContent, DialogTitle} from "@mui/material";
 import {useDispatch, useSelector, useStore} from "react-redux";
-import {closeDialog, createSet, saveSet} from "../../Redux/actions";
+import {closeDialog, createSet, modifySet, saveSet} from "../../Redux/actions";
 import EditKanji from "../../Components/EditDialogContent";
 import {dialogModes} from "../../Redux/reducers";
 
@@ -14,7 +14,7 @@ const EditDialog = () => {
         if (!isLoading) dispatch(closeDialog())
     }
     const onSave = () => {
-        dispatch(saveSet(store.getState().editCard))
+        dispatch(modifySet(store.getState().editCard))
         console.log("save")
     }
     const onCreate = () =>{

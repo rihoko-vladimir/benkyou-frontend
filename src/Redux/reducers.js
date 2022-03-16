@@ -123,7 +123,7 @@ const myCardsReducer = (state = dummyCardsState, action) => {
             return [...state, action.payload]
         case type.REMOVE_SET_SUCCESS:
             return [...state.filter((card) => card.id !== action.payload)]
-        case type.SAVE_SET_SUCCESS: {
+        case type.EDIT_SET_SUCCESS: {
             const newCard = action.payload;
             let newIndex = -1;
             for (const index in state) {
@@ -206,6 +206,8 @@ const dialogReducer = (state = dialogDummyState, action) => {
         case type.SAVE_SET:
             return dialogDummyState;
         case type.CREATE_SET_SUCCESS:
+            return dialogDummyState
+        case type.EDIT_SET_SUCCESS:
             return dialogDummyState
     }
     return state;

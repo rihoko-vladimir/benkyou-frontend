@@ -1,3 +1,5 @@
+export const EDIT_SET_SUCCESS = "myCards/editSetSuccess";
+export const EDIT_SET_FAILURE = "myCards/editSetFailure";
 export const GET_NEW_TOKENS = "tokens/getTokens";
 export const GET_NEW_TOKENS_SUCCESS = "tokens/getNewTokensSuccess";
 export const GET_NEW_TOKENS_FAILURE = "tokens/getNewTokensFailure";
@@ -28,7 +30,7 @@ export const CHANGE_BIRTH_DATE = "account/changeBirthDate";
 export const CHANGE_ABOUT_INFO = "account/aboutChange";
 export const CHANGE_PICTURE = "account/pictureChange";
 export const ADD_NEW_CARD = "myCards/addNewCard";
-export const EDIT_CARD = "myCards/modifyCard";
+export const EDIT_SET = "myCards/editSet";
 export const LOG_IN = "account/login";
 export const LOG_OUT = "account/logout";
 export const LOGIN_TEST = "account/loginTest";

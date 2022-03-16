@@ -37,7 +37,7 @@ export const createNewSet = async ({accessToken, name, description, kanjiList}) 
 export const removeSet = async ({accessToken, setId}) =>
     await axios.delete(`${baseUrl}/api/sets/delete?setId=${setId}`, config(accessToken))
 
-export const updateSet = async ({accessToken, setId, name, description, kanjiList}) =>
+export const modifySet = async ({accessToken, setId, name, description, kanjiList}) =>
     await axios.put(`${baseUrl}/api/sets/modify`, {setId, name, description, kanjiList}, config(accessToken))
 
 export const getAccountInfo = async ({accessToken}) =>

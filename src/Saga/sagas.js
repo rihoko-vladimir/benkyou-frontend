@@ -16,7 +16,8 @@ export default function* rootSaga() {
         getSetsWatcher(),
         saveSetWatcher(),
         createSetWatcher(),
-        removeSetWatcher()
+        removeSetWatcher(),
+        modifySetWatcher()
     ])
 }
 
@@ -54,6 +55,35 @@ function* createSetWatcher() {
 
 function* removeSetWatcher() {
     yield takeLatest(type.REMOVE_SET, removeSetWorker)
+}
+
+function* modifySetWatcher() {
+    yield takeLatest(type.EDIT_SET, modifySetWorker)
+}
+
+function* modifySetWorker(action){
+    yield put(actions.startLoading())
+    let tokens = yield select(getTokens);
+    const modifiedSet = action.payload;
+    const requestSet = convertSetFromApplicationToRequest(modifiedSet);
+    try {
+        yield call(api.modifySet, {accessToken: tokens.access, setId: modifiedSet.id, ...requestSet});
+        yield put(actions.modifySetSuccess(modifiedSet));
+    } catch (e) {
+        if (e.response.status === 401) {
+            yield tokensWorker()
+            tokens = yield select(getTokens);
+            try {
+                yield call(api.modifySet, {accessToken: tokens.access, setId: modifiedSet.id, ...requestSet});
+                yield put(actions.modifySetSuccess(modifiedSet));
+            }catch (e){
+                yield put(actions.modifySetFailure(e.response.data.errorMessage))
+            }
+        } else {
+            yield put(actions.modifySetFailure(e.response.data.errorMessage));
+        }
+    }
+    yield put(actions.finishLoading());
 }
 
 function* removeSetWorker(action){

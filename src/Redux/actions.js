@@ -107,14 +107,25 @@ export const removeSetSuccess = (removedId) => ({
     payload: removedId
 })
 
-export const removeSetFailure = ()=>({
-    type: types.REMOVE_SET_FAILURE
+export const removeSetFailure = (errorMessage)=>({
+    type: types.REMOVE_SET_FAILURE,
+    payload: errorMessage
 })
 
-export const modifyCard = (modifiedCard) => ({
-    type: types.EDIT_CARD,
+export const modifySet = (modifiedCard) => ({
+    type: types.EDIT_SET,
     payload: modifiedCard,
 });
+
+export const modifySetSuccess = (modifiedSet) => ({
+    type: types.EDIT_SET_SUCCESS,
+    payload: modifiedSet
+})
+
+export const modifySetFailure = (errorMessage) => ({
+    type: types.EDIT_SET_FAILURE,
+    payload: errorMessage
+})
 
 export const login = (accountCredentials) => ({
     type: types.LOG_IN,
