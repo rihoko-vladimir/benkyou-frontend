@@ -2,7 +2,6 @@ import * as type from "./types";
 import {combineReducers} from "redux";
 import Card from "../Models/card";
 import Kanji from "../Models/kanji";
-import {convertSetFromRequestToApplication} from "../Api/converters";
 
 const dummyAccountState = {
     accountId: undefined,
@@ -78,7 +77,11 @@ const dummyLearnState = {
     isMatching: false
 }
 
-const editCardDummyState = {}
+const editCardDummyState = {
+    name: "",
+    description: "",
+    kanjiList: []
+}
 
 const snackbarDummyState = {
     isShown: false,
@@ -140,6 +143,8 @@ const myCardsReducer = (state = dummyCardsState, action) => {
         case type.GET_USER_SETS_SUCCESS:
             return action.payload
         case type.GET_NEW_TOKENS_FAILURE:
+            return []
+        case type.LOG_OUT:
             return []
     }
     return state;
@@ -249,6 +254,8 @@ const editedValuesReducer = (state = editCardDummyState, action) => {
             kanjiList.push(new Kanji("", [], []))
             return {...state, kanjiList};
         }
+        case type.LOG_OUT:
+            return editCardDummyState
     }
     return state;
 }
@@ -396,6 +403,8 @@ const tokensReducer = (state = tokensDefaultState, action) => {
         case type.GET_NEW_TOKENS_SUCCESS:
             return {access: action.payload.access, refresh: action.payload.refresh}
         case type.GET_NEW_TOKENS_FAILURE:
+            return tokensDefaultState;
+        case type.LOG_OUT:
             return tokensDefaultState;
     }
     return state;

@@ -48,7 +48,7 @@ const Card = (props) => {
                         Author: <Link
                         underline={"hover"}
                         rel={"noreferrer"}
-                        href={`${hostUrl}/${HUB_PATH}/${ACCOUNT_PATH}/id/${props.card.id}`}>
+                        href={`${hostUrl}${HUB_PATH}/${ACCOUNT_PATH}/id/${props.card.id}`}>
                         {props.card.author}
                     </Link>
                     </Typography>
