@@ -15,7 +15,8 @@ export default function* rootSaga() {
         emailCodeWatcher(),
         getSetsWatcher(),
         saveSetWatcher(),
-        createSetWatcher()
+        createSetWatcher(),
+        removeSetWatcher()
     ])
 }
 
@@ -51,6 +52,35 @@ function* createSetWatcher() {
     yield takeLatest(type.CREATE_SET, createSetWorker)
 }
 
+function* removeSetWatcher() {
+    yield takeLatest(type.REMOVE_SET, removeSetWorker)
+}
+
+function* removeSetWorker(action){
+    yield put(actions.startLoading())
+    let tokens = yield select(getTokens);
+    const setId = action.payload;
+    try {
+        const result = yield call(api.removeSet, {accessToken: tokens.access, setId: setId});
+        console.log(result);
+        yield put(actions.removeSetSuccess(setId));
+    } catch (e) {
+        if (e.response.status === 401) {
+            yield tokensWorker()
+            tokens = yield select(getTokens);
+            try {
+                yield call(api.removeSet, {accessToken: tokens.access, setId});
+                yield put(actions.removeSetSuccess(setId));
+            }catch (e){
+                yield put(actions.removeSetFailure(e.response.data.errorMessage))
+            }
+        } else {
+            yield put(actions.removeSetFailure(e.response.data.errorMessage));
+        }
+    }
+    yield put(actions.finishLoading());
+}
+
 function* createSetWorker(action){
     yield put(actions.startLoading())
     let tokens = yield select(getTokens);
@@ -58,7 +88,6 @@ function* createSetWorker(action){
     const requestSet = convertSetFromApplicationToRequest(createdSet);
     try {
         const result = yield call(api.createNewSet, {accessToken: tokens.access, ...requestSet});
-        console.log(result)
         yield put(actions.createSetSuccess(convertSetFromRequestToApplication(result.data)));
     } catch (e) {
         if (e.response.status === 401) {

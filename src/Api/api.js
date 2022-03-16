@@ -34,8 +34,8 @@ export const getUserSets = async ({accessToken}) =>
 export const createNewSet = async ({accessToken, name, description, kanjiList}) =>
     await axios.put(`${baseUrl}/api/sets/create`, {name, description, kanjiList}, config(accessToken))
 
-export const deleteSet = async ({accessToken, setId}) =>
-    await axios.put(`${baseUrl}/api/sets/delete`, {setId}, config(accessToken))
+export const removeSet = async ({accessToken, setId}) =>
+    await axios.delete(`${baseUrl}/api/sets/delete?setId=${setId}`, config(accessToken))
 
 export const updateSet = async ({accessToken, setId, name, description, kanjiList}) =>
     await axios.put(`${baseUrl}/api/sets/modify`, {setId, name, description, kanjiList}, config(accessToken))

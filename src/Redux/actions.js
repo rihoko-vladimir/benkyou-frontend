@@ -97,10 +97,19 @@ export const addNewCard = (newCard) => ({
     payload: newCard,
 });
 
-export const removeCard = (idToRemove) => ({
-    type: types.REMOVE_CARD,
+export const removeSet = (idToRemove) => ({
+    type: types.REMOVE_SET,
     payload: idToRemove,
 });
+
+export const removeSetSuccess = (removedId) => ({
+    type: types.REMOVE_SET_SUCCESS,
+    payload: removedId
+})
+
+export const removeSetFailure = ()=>({
+    type: types.REMOVE_SET_FAILURE
+})
 
 export const modifyCard = (modifiedCard) => ({
     type: types.EDIT_CARD,
@@ -275,21 +284,21 @@ export const saveSetSuccess = (savedSet) => ({
     payload: savedSet
 })
 
-export const saveSetFailure = ()=>({
+export const saveSetFailure = () => ({
     type: types.SAVE_SET_FAILURE
 })
 
-export const createSet = (set)=>({
+export const createSet = (set) => ({
     type: types.CREATE_SET,
     payload: set
 })
 
-export const createSetSuccess = (createdSet)=>({
+export const createSetSuccess = (createdSet) => ({
     type: types.CREATE_SET_SUCCESS,
     payload: createdSet
 })
 
-export const createSetFailure = () =>({
+export const createSetFailure = () => ({
     type: types.CREATE_SET_FAILURE
 })
 
@@ -357,11 +366,11 @@ export const returnToUsername = () => ({
 //     type: types.EMAIL_CONFIRMATION_REQUIRED
 // })
 
-export const finishLogin = () =>({
+export const finishLogin = () => ({
     type: types.FINISH_LOGIN
 })
 
-export const getUserSets = ()=>({
+export const getUserSets = () => ({
     type: types.GET_USER_SETS
 })
 
@@ -375,7 +384,7 @@ export const setUserSetsFailure = (errorMessage) => ({
     payload: errorMessage
 })
 
-export const getNewTokensSuccess = (tokens) =>({
+export const getNewTokensSuccess = (tokens) => ({
     type: types.GET_NEW_TOKENS_SUCCESS,
     payload: {
         access: tokens.access,
@@ -383,11 +392,11 @@ export const getNewTokensSuccess = (tokens) =>({
     }
 })
 
-export const getNewTokensFailure = ()=>({
+export const getNewTokensFailure = () => ({
     type: types.GET_NEW_TOKENS_FAILURE
 })
 
-export const getNewTokens = (refreshToken)=>({
+export const getNewTokens = (refreshToken) => ({
     type: types.GET_NEW_TOKENS,
     payload: refreshToken
 })

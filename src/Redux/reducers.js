@@ -121,7 +121,7 @@ const myCardsReducer = (state = dummyCardsState, action) => {
     switch (action.type) {
         case type.CREATE_SET_SUCCESS:
             return [...state, action.payload]
-        case type.REMOVE_CARD:
+        case type.REMOVE_SET_SUCCESS:
             return [...state.filter((card) => card.id !== action.payload)]
         case type.SAVE_SET_SUCCESS: {
             const newCard = action.payload;
@@ -139,8 +139,6 @@ const myCardsReducer = (state = dummyCardsState, action) => {
         }
         case type.GET_USER_SETS_SUCCESS:
             return action.payload
-        case type.GET_USER_SETS_FAILURE:
-            return []
         case type.GET_NEW_TOKENS_FAILURE:
             return []
     }
@@ -259,6 +257,10 @@ const snackbarReducer = (state = snackbarDummyState, action) => {
             return {isShown: true, message: action.payload}
         case type.HIDE_SNACKBAR:
             return {isShown: false, message: ""}
+        case type.REMOVE_SET_SUCCESS:
+            return {isShown: true, message: "Set removed"}
+        case type.CREATE_SET_SUCCESS:
+            return {isShown: true, message: "Set created"}
     }
     return state;
 }
