@@ -1,6 +1,6 @@
 import {Button, Dialog, DialogActions, DialogContent, DialogTitle} from "@mui/material";
 import {useDispatch, useSelector, useStore} from "react-redux";
-import {closeDialog, saveCard} from "../../Redux/actions";
+import {closeDialog, createSet, modifySet, saveSet} from "../../Redux/actions";
 import EditKanji from "../../Components/EditDialogContent";
 import {dialogModes} from "../../Redux/reducers";
 
@@ -9,12 +9,17 @@ const EditDialog = () => {
     const dispatch = useDispatch();
     const isOpen = useSelector(state => state.dialog.isOpened);
     const mode = useSelector(state => state.dialog.mode);
+    const isLoading = useSelector(state => state.isLoading);
     const onClose = () => {
-        dispatch(closeDialog())
+        if (!isLoading) dispatch(closeDialog())
     }
     const onSave = () => {
-        dispatch(saveCard(store.getState().editCard))
+        dispatch(modifySet(store.getState().editCard))
         console.log("save")
+    }
+    const onCreate = () =>{
+        dispatch(createSet(store.getState().editCard))
+        console.log("create")
     }
     return <Dialog
         scroll={"paper"}
@@ -25,8 +30,8 @@ const EditDialog = () => {
             <EditKanji/>
         </DialogContent>
         <DialogActions>
-            <Button onClick={onClose}>Cancel</Button>
-            <Button onClick={onSave}>Save</Button>
+            <Button onClick={onClose} disabled={isLoading}>Cancel</Button>
+            <Button onClick={mode === dialogModes.edit ? onSave : mode === dialogModes.create? onCreate: null} disabled={isLoading}>{mode === dialogModes.edit ? "Save" : mode === dialogModes.create? "Create": null}</Button>
         </DialogActions>
     </Dialog>
 }

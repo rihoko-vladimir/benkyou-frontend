@@ -5,7 +5,7 @@ import {Close, ExpandLessOutlined, ExpandMoreOutlined} from "@mui/icons-material
 import {useState} from "react";
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router";
-import {openEditDialog, removeCard, selectKanjiList, showSnackbar} from "../../Redux/actions";
+import {openEditDialog, removeSet, selectKanjiList, showSnackbar} from "../../Redux/actions";
 import KanjiInfo from "../KanjiInfo";
 import {hostUrl} from "../../applicationSettings";
 import {ACCOUNT_PATH, HUB_PATH} from "../../Router/paths";
@@ -28,8 +28,7 @@ const Card = (props) => {
     }
 
     const onDeleteClicked = () => {
-        dispatch(removeCard(props.card.id))
-        dispatch(showSnackbar("Card removed"))
+        dispatch(removeSet(props.card.id))
     }
 
     return (

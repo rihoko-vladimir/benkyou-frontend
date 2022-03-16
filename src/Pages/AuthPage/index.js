@@ -1,5 +1,5 @@
 import useStyle from "./style";
-import PropTypes from "prop-types";
+import {Outlet} from "react-router-dom";
 
 const AuthPage = (props) => {
     const classes = useStyle();
@@ -9,14 +9,10 @@ const AuthPage = (props) => {
         </div>
         <div className={classes.container}>
             <div className={classes.card}>
-                {props.render}
+                <Outlet/>
             </div>
         </div>
     </div>)
-}
-
-AuthPage.propTypes = {
-    render: PropTypes.element.isRequired
 }
 
 export default AuthPage;

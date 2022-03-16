@@ -29,7 +29,7 @@ import {
 import useDrawerStyles from "../style";
 import PropTypes from "prop-types";
 import {useDispatch} from "react-redux";
-import {logoutTest} from "../../../Redux/actions";
+import {logout} from "../../../Redux/actions";
 
 const applicationItems = [
     {
@@ -74,8 +74,7 @@ const NavigationDrawerContent = (props) => {
     };
 
     const onLogoutClicked = () => {
-        //TODO fix that later!
-        dispatch(logoutTest());
+        dispatch(logout());
         navigate("/");
     }
 

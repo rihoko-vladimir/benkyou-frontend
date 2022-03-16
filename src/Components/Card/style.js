@@ -25,6 +25,7 @@ const useStyle = makeStyles({
     cardTitle: {
         display: "flex",
         flexDirection: "column",
+        overflowX:"hidden"
     },
     actionButtons: {
         display: "flex",
@@ -59,7 +60,7 @@ const useStyle = makeStyles({
         display: "flex",
         flexDirection: "row",
         justifyContent:"space-between",
-        alignItems:"start"
-    }
+        alignItems:"start",
+    },
 });
 export default useStyle;

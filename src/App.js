@@ -13,6 +13,7 @@ import {PersistGate} from "redux-persist/integration/react";
 import createSagaMiddleware from "redux-saga"
 import {ThemeProvider} from "@mui/styles";
 import theme from "./theme";
+import rootSaga from "./Saga/sagas";
 
 
 function App() {
@@ -24,7 +25,7 @@ function App() {
     const reducer = persistReducer(persistConfig, rootReducer);
     const store = createStore(reducer, composeWithDevTools(applyMiddleware(loggingMiddleware, sagaMiddleware)));
     const persist = persistStore(store);
-    // sagaMiddleware.run()
+    sagaMiddleware.run(rootSaga)
     return (
         <Provider store={store}>
             <PersistGate loadint={null} persistor={persist}>

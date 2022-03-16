@@ -1,4 +1,48 @@
 import * as types from "./types";
+import {REGISTRATION_CHANGE_LAST_NAME, SET_REGISTRATION_STEP} from "./types";
+
+export const checkUserName = (userName) => ({
+    type: types.CHECK_USERNAME,
+    payload: userName
+})
+
+export const checkUserNameSuccess = () => ({
+    type: types.CHECK_USERNAME_SUCCESS
+})
+
+export const checkUserNameFailure = (errorMessage) => ({
+    type: types.CHECK_USERNAME_FAILURE,
+    payload: errorMessage
+})
+
+export const checkEmailSuccess = () => ({
+    type: types.CHECK_EMAIL_SUCCESS
+})
+
+export const checkEmailFailure = (errorMessage) => ({
+    type: types.CHECK_EMAIL_FAILURE,
+    payload: errorMessage
+})
+
+export const checkEmail = (email) => ({
+    type: types.CHECK_EMAIL,
+    payload: email
+})
+
+export const sendEmailCode = ({emailCode, userId}) => ({
+    type: types.SEND_EMAIL_CODE,
+    payload: {emailCode, userId}
+})
+
+export const sendEmailCodeSuccess = () => ({
+    type: types.SEND_EMAIL_CODE_SUCCESS,
+})
+
+export const sendEmailCodeFailure = (errorMessage) => ({
+    type: types.SEND_EMAIL_CODE_FAILURE,
+    payload: errorMessage
+})
+
 
 export const changeFirstName = (newName) => ({
     type: types.CHANGE_FIRST_NAME,
@@ -25,6 +69,21 @@ export const changePicture = (newPictureUrl) => ({
     payload: newPictureUrl,
 });
 
+export const changeEmail = (newEmail) => ({
+    type: types.CHANGE_EMAIL,
+    payload: newEmail
+});
+
+export const changePassword = (newPassword) => ({
+    type: types.CHANGE_PASSWORD,
+    payload: newPassword
+})
+
+export const changeLogin = (newLogin) => ({
+    type: types.CHANGE_LOGIN,
+    payload: newLogin
+})
+
 export const loginTest = () => ({
     type: types.LOGIN_TEST,
 })
@@ -38,24 +97,87 @@ export const addNewCard = (newCard) => ({
     payload: newCard,
 });
 
-export const removeCard = (idToRemove) => ({
-    type: types.REMOVE_CARD,
+export const removeSet = (idToRemove) => ({
+    type: types.REMOVE_SET,
     payload: idToRemove,
 });
 
-export const modifyCard = (modifiedCard) => ({
-    type: types.EDIT_CARD,
+export const removeSetSuccess = (removedId) => ({
+    type: types.REMOVE_SET_SUCCESS,
+    payload: removedId
+})
+
+export const removeSetFailure = (errorMessage)=>({
+    type: types.REMOVE_SET_FAILURE,
+    payload: errorMessage
+})
+
+export const modifySet = (modifiedCard) => ({
+    type: types.EDIT_SET,
     payload: modifiedCard,
 });
+
+export const modifySetSuccess = (modifiedSet) => ({
+    type: types.EDIT_SET_SUCCESS,
+    payload: modifiedSet
+})
+
+export const modifySetFailure = (errorMessage) => ({
+    type: types.EDIT_SET_FAILURE,
+    payload: errorMessage
+})
 
 export const login = (accountCredentials) => ({
     type: types.LOG_IN,
     payload: accountCredentials
 });
 
+export const loginSuccess = ({id, userName, firstName, lastName, birthday, about, avatarUrl, email}) => (
+    {
+        type: types.LOG_IN_SUCCESS,
+        payload: {
+            id,
+            userName,
+            firstName,
+            lastName,
+            birthday,
+            about,
+            avatarUrl,
+            email,
+        }
+    })
+
+export const startLoading = () => ({
+    type: types.START_LOADING
+})
+
+export const finishLoading = () => ({
+    type: types.FINISH_LOADING
+})
+
+export const tokenSuccess = (tokens) => ({
+    type: types.TOKEN_SUCCESS,
+    payload: tokens
+})
+
+export const loginFailure = (errorMessage) => ({
+    type: types.LOG_IN_FAILURE,
+    payload: errorMessage
+})
+
 export const register = (registrationCredentials) => ({
     type: types.REGISTER,
     payload: registrationCredentials
+})
+
+export const registerSuccess = (userId) => ({
+    type: types.REGISTER_SUCCESS,
+    payload: userId
+})
+
+export const registerFailure = (errorMessage) => ({
+    type: types.REGISTER_FAILURE,
+    payload: errorMessage
 })
 
 export const logout = () => ({
@@ -70,7 +192,6 @@ export const setRandomList = (kanjiList) => {
         type: types.SET_RANDOM_LIST, payload: randomedList,
     }
 }
-
 
 export const setCurrentKanjiIndex = (newIndex) => ({
     type: types.SET_CURRENT_KANJI_INDEX,
@@ -155,18 +276,41 @@ export const setNewOnyoumi = (newReadingsArray, index) => ({
 })
 
 export const setNewCardName = (newCardName) => ({
-    type: types.SET_NEW_CARD_NAME,
+    type: types.SET_NEW_SET_NAME,
     payload: newCardName
 })
 
 export const setNewCardDescription = (newCardDescription) => ({
-    type: types.SET_NEW_CARD_DESCRIPTION,
+    type: types.SET_NEW_SET_DESCRIPTION,
     payload: newCardDescription,
 })
 
-export const saveCard = (newCard) => ({
-    type: types.SAVE_CARD,
+export const saveSet = (newCard) => ({
+    type: types.SAVE_SET,
     payload: newCard
+})
+
+export const saveSetSuccess = (savedSet) => ({
+    type: types.SAVE_SET_SUCCESS,
+    payload: savedSet
+})
+
+export const saveSetFailure = () => ({
+    type: types.SAVE_SET_FAILURE
+})
+
+export const createSet = (set) => ({
+    type: types.CREATE_SET,
+    payload: set
+})
+
+export const createSetSuccess = (createdSet) => ({
+    type: types.CREATE_SET_SUCCESS,
+    payload: createdSet
+})
+
+export const createSetFailure = () => ({
+    type: types.CREATE_SET_FAILURE
 })
 
 export const showSnackbar = (message) => ({
@@ -184,4 +328,86 @@ export const deleteKanji = (index) => ({
 })
 export const addKanji = () => ({
     type: types.ADD_KANJI
+})
+
+export const changeRegistrationFirstName = (firstName) => ({
+    type: types.REGISTRATION_CHANGE_FIRST_NAME,
+    payload: firstName
+})
+
+export const changeRegistrationLastName = (lastName) => ({
+    type: REGISTRATION_CHANGE_LAST_NAME,
+    payload: lastName
+})
+
+export const changeRegistrationUserName = (userName) => ({
+    type: types.REGISTRATION_CHANGE_USERNAME,
+    payload: userName
+})
+
+export const changeRegistrationEmail = (email) => ({
+    type: types.REGISTRATION_CHANGE_EMAIL,
+    payload: email
+})
+
+export const changeRegistrationPassword = (password) => ({
+    type: types.REGISTRATION_CHANGE_PASSWORD,
+    payload: password
+})
+
+export const changeRegistrationPasswordConfirmation = (password) => ({
+    type: types.REGISTRATION_CHANGE_PASSWORD_CONFIRMATION,
+    payload: password
+})
+
+export const setRegistrationStep = (stepNumber) => ({
+    type: SET_REGISTRATION_STEP,
+    payload: stepNumber
+})
+
+export const finishRegistration = () => ({
+    type: types.FINISH_REGISTRATION
+})
+
+export const returnToUsername = () => ({
+    type: types.RETURN_TO_USERNAME
+})
+
+// export const emailConfirmationRequired = () => ({
+//     type: types.EMAIL_CONFIRMATION_REQUIRED
+// })
+
+export const finishLogin = () => ({
+    type: types.FINISH_LOGIN
+})
+
+export const getUserSets = () => ({
+    type: types.GET_USER_SETS
+})
+
+export const setUserSetsSuccess = (userSetsResponse) => ({
+    type: types.GET_USER_SETS_SUCCESS,
+    payload: userSetsResponse
+})
+
+export const setUserSetsFailure = (errorMessage) => ({
+    type: types.GET_USER_SETS_FAILURE,
+    payload: errorMessage
+})
+
+export const getNewTokensSuccess = (tokens) => ({
+    type: types.GET_NEW_TOKENS_SUCCESS,
+    payload: {
+        access: tokens.access,
+        refresh: tokens.refresh
+    }
+})
+
+export const getNewTokensFailure = () => ({
+    type: types.GET_NEW_TOKENS_FAILURE
+})
+
+export const getNewTokens = (refreshToken) => ({
+    type: types.GET_NEW_TOKENS,
+    payload: refreshToken
 })
