@@ -202,13 +202,13 @@ const dialogReducer = (state = dialogDummyState, action) => {
         case type.OPEN_CREATE_NEW_SET_DIALOG:
             return {isOpened: true, mode: dialogModes.create}
         case type.CLOSE_DIALOG:
-            return dialogDummyState;
+            return {...state, isOpened: false};
         case type.SAVE_SET:
-            return dialogDummyState;
+            return {...state, isOpened: false};
         case type.CREATE_SET_SUCCESS:
-            return dialogDummyState
+            return {...state, isOpened: false};
         case type.EDIT_SET_SUCCESS:
-            return dialogDummyState
+            return {...state, isOpened: false};
     }
     return state;
 }
