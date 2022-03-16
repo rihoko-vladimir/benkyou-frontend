@@ -102,7 +102,8 @@ const NavigationDrawerContent = (props) => {
                             selected={element.isSelected}
                             key={element.name}
                             classes={{
-                                container: classes.itemContainer
+                                container: classes.itemContainer,
+                                focusVisible: classes.focusVisible
                             }}
                             onClick={() => handleMenuClick(element.path)}>
                             <ListItemIcon>

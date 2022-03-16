@@ -23,6 +23,9 @@ const useDrawerStyles = makeStyles({
     },
     accountItems:{
         paddingLeft: `${16+12}px`
+    },
+    focusVisible:{
+
     }
 
 });

@@ -115,6 +115,7 @@ function* createSetWorker(action){
     yield put(actions.startLoading())
     let tokens = yield select(getTokens);
     const createdSet = action.payload;
+    console.log(createdSet)
     const requestSet = convertSetFromApplicationToRequest(createdSet);
     try {
         const result = yield call(api.createNewSet, {accessToken: tokens.access, ...requestSet});

@@ -17,7 +17,7 @@ const EditKanji = () => {
     const classes = useStyle();
     return <div className={classes.container}>
         <TextField variant={"outlined"}
-                   label={"Card name"}
+                   label={"Set name"}
                    fullWidth
                    value={cardName}
                    onChange={(event) =>
@@ -25,7 +25,7 @@ const EditKanji = () => {
                    inputProps={{maxLength: 15}}
         />
         <TextField variant={"outlined"}
-                   label={"Card description"}
+                   label={"Set description"}
                    fullWidth
                    value={cardDescription}
                    onChange={(event) =>

@@ -265,11 +265,13 @@ const snackbarReducer = (state = snackbarDummyState, action) => {
         case type.SHOW_SNACKBAR:
             return {isShown: true, message: action.payload}
         case type.HIDE_SNACKBAR:
-            return {isShown: false, message: ""}
+            return {...state, isShown: false}
         case type.REMOVE_SET_SUCCESS:
             return {isShown: true, message: "Set removed"}
         case type.CREATE_SET_SUCCESS:
             return {isShown: true, message: "Set created"}
+        case type.EDIT_SET_SUCCESS:
+            return {isShown: true, message: "Set edited"}
     }
     return state;
 }

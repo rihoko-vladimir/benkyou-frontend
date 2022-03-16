@@ -40,7 +40,14 @@ const Card = (props) => {
                         {props.card.name}
                     </Typography>
                     <Typography
-                        variant={"subtitle2"}>
+                        variant={"subtitle2"}
+                        sx={{
+                            display: '-webkit-box',
+                            overflow: 'hidden',
+                            WebkitBoxOrient: 'vertical',
+                            WebkitLineClamp: 2,
+                        }}
+                    >
                         {props.card.description}
                     </Typography>
                     <Typography

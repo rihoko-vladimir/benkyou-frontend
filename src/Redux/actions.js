@@ -290,15 +290,6 @@ export const saveSet = (newCard) => ({
     payload: newCard
 })
 
-export const saveSetSuccess = (savedSet) => ({
-    type: types.SAVE_SET_SUCCESS,
-    payload: savedSet
-})
-
-export const saveSetFailure = () => ({
-    type: types.SAVE_SET_FAILURE
-})
-
 export const createSet = (set) => ({
     type: types.CREATE_SET,
     payload: set

@@ -25,7 +25,7 @@ const useStyle = makeStyles({
     cardTitle: {
         display: "flex",
         flexDirection: "column",
-        overflowX:"hidden"
+        overflowX:"hidden",
     },
     actionButtons: {
         display: "flex",
@@ -45,9 +45,9 @@ const useStyle = makeStyles({
         justifyContent: "space-between",
     },
     lowerCardContent: {
-        rowGap: "16px",
         display: "flex",
         flexDirection: "column",
+        rowGap:"12px"
     },
     kanjiList: {
         display: "flex",

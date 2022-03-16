@@ -38,7 +38,7 @@ const EditKanjiElement = (props) => {
         dispatch(deleteKanji(props.index));
     }
     return <div className={classes.container}>
-        <TextField label={"Kanji"} className={classes.kanji} fullWidth variant={"outlined"} value={kanji}
+        <TextField label={"漢字"} className={classes.kanji} fullWidth variant={"outlined"} value={kanji}
                    onChange={(event) => setKanji(event.target.value)} inputProps={{maxLength: 1}}/>
         <div className={classes.readingsContainer}>
             <div className={classes.readings}>

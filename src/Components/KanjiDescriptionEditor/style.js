@@ -21,7 +21,7 @@ const useStyle = makeStyles({
     readingsContainer: {
         display: "flex",
         flexDirection: "column",
-        flex: "7",
+        flex: "6",
         rowGap: "12px",
         paddingTop: "12px",
         paddingBottom: "12px",

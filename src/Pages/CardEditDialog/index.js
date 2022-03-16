@@ -18,10 +18,6 @@ const EditDialog = () => {
             const onyomi = kanji.onyoumi;
             return (kunyomi.length === 0 && onyomi.length === 0) || char === ""
         }).find(bool => bool === true);
-        console.log(ok)
-        console.log(((editCard.kanjiList.length<3 ||
-            editCard.name.length === 0 ||
-            editCard.description.length === 0) || ok === true))
         return ((editCard.kanjiList.length<3 ||
             editCard.name.length === 0 ||
             editCard.description.length === 0) || ok === true);
@@ -41,7 +37,7 @@ const EditDialog = () => {
         scroll={"paper"}
         open={isOpen}
         onClose={onClose}>
-        <DialogTitle>{mode === dialogModes.edit ? "Edit card" : mode === dialogModes.create ? "Create card" : "?"}</DialogTitle>
+        <DialogTitle>{mode === dialogModes.edit ? "Edit set" : mode === dialogModes.create ? "Create set" : "?"}</DialogTitle>
         <DialogContent dividers={true}>
             <EditKanji/>
         </DialogContent>

@@ -18,7 +18,7 @@ const HubComponent = () => {
         <Outlet/>
         <Snackbar open={snackbarInfo.isShown}
                   message={snackbarInfo.message}
-                  autoHideDuration={4000}
+                  autoHideDuration={2500}
                   onClose={onClose}
                   TransitionComponent={Slide}/>
         <EditDialog/>
