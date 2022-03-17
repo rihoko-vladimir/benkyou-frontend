@@ -1,4 +1,4 @@
-import {Alert, AlertTitle, Button, Collapse, IconButton, Typography} from "@mui/material";
+import {Alert, AlertTitle, Backdrop, Button, CircularProgress, Collapse, IconButton, Typography} from "@mui/material";
 import useStyle from "./style";
 import {
     Timeline,
@@ -22,6 +22,7 @@ const HomePageContent = () => {
     const classes = useStyle();
     const dispatch = useDispatch();
     const userSets = useSelector(state => state.myCards);
+    const isLoading = useSelector(state => state.isLoading);
     const [open,setOpen] = useState(userSets.length===0);
     const addDefaultSets = () =>{
         starterSets.forEach(set => dispatch(createSet(set)))
@@ -33,6 +34,12 @@ const HomePageContent = () => {
                 variant={"h4"}>
                 Welcome to the 勉強！
             </Typography>
+            <Backdrop
+                open={isLoading}
+                sx={{ color: '#fff', zIndex: 999999 }}
+            >
+                <CircularProgress />
+            </Backdrop>
             <p>Easy and convenient service to learn kanji! Create your own sets, share it with friends, search for pre-made sets or public sets of other users</p>
             <Timeline position={"right"} sx={{
                 "& .MuiTimelineContent-root": {
