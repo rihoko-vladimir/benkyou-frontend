@@ -38,22 +38,22 @@ const EditKanjiElement = (props) => {
         dispatch(deleteKanji(props.index));
     }
     return <div className={classes.container}>
-        <TextField label={"Kanji"} className={classes.kanji} fullWidth variant={"outlined"} value={kanji}
+        <TextField label={"漢字"} className={classes.kanji} fullWidth variant={"outlined"} value={kanji}
                    onChange={(event) => setKanji(event.target.value)} inputProps={{maxLength: 1}}/>
         <div className={classes.readingsContainer}>
             <div className={classes.readings}>
                 <ChipInput fullWidth variant={"filled"} value={kunyoumi} allowDuplicates={false}
-                           label={"Kunyoumi"}
+                           label={"Kunyomi"}
                            onAdd={addKunyoumi} onDelete={deleteKunyoumi}/>
             </div>
             <div className={classes.readings}>
                 <ChipInput fullWidth variant={"filled"} value={onyoumi} allowDuplicates={false}
-                           label={"Onyoumi"}
+                           label={"Onyomi"}
                            onAdd={addOnyoumi} onDelete={deleteOnyoumi}/>
             </div>
         </div>
         <Tooltip title={"Remove this kanji"} placement={"right"} arrow TransitionComponent={Zoom}>
-            <IconButton onClick={removeKanji}>
+            <IconButton onClick={removeKanji} disabled={props.listLength<=3}>
                 <PlaylistRemove/>
             </IconButton>
         </Tooltip>
@@ -62,7 +62,8 @@ const EditKanjiElement = (props) => {
 
 EditKanjiElement.propTypes = {
     index: PropTypes.number.isRequired,
-    kanji: PropTypes.object.isRequired
+    kanji: PropTypes.object.isRequired,
+    listLength: PropTypes.number.isRequired
 };
 
 export default EditKanjiElement;

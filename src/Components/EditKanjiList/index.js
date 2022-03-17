@@ -11,7 +11,7 @@ const EditKanjiList = () => {
         dispatch(addKanji())
     }
     return <div>
-        {kanjiList.map((kanji, index) => <EditKanjiElement kanji={kanji} index={index} key={index}/>)}
+        {kanjiList.map((kanji, index) => <EditKanjiElement kanji={kanji} index={index} key={index} listLength={kanjiList.length}/>)}
         <Tooltip title={"Add new kanji"} placement={"bottom"} arrow TransitionComponent={Zoom}>
             <IconButton onClick={addNewKanji}>
                 <PlaylistAdd/>

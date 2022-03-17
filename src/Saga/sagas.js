@@ -17,7 +17,9 @@ export default function* rootSaga() {
         saveSetWatcher(),
         createSetWatcher(),
         removeSetWatcher(),
-        modifySetWatcher()
+        modifySetWatcher(),
+        sendResetTokenWatcher(),
+        resetSetPasswordWatcher()
     ])
 }
 
@@ -59,6 +61,37 @@ function* removeSetWatcher() {
 
 function* modifySetWatcher() {
     yield takeLatest(type.EDIT_SET, modifySetWorker)
+}
+
+function* sendResetTokenWatcher(){
+    yield takeLatest(type.RESET_PASSWORD_SEND, resetSendWorker)
+}
+
+function* resetSetPasswordWatcher(){
+    yield takeLatest(type.RESET_PASSWORD_SET, resetSetPasswordWorker)
+}
+
+function* resetSetPasswordWorker(action){
+    yield put(actions.startLoading())
+    const {password, email, token} = action.payload;
+    try {
+        yield call(api.resetPasswordConfirm, {password, email, token})
+        yield put(actions.resetSetNewPasswordSuccess())
+    }catch (e){
+        yield put(actions.resetSetNewPasswordFailure(e.response.data.errorMessage))
+    }
+    yield put(actions.finishLoading())
+}
+
+function* resetSendWorker(action){
+    yield put(actions.startLoading())
+    try {
+        yield call(api.resetPassword, {email: action.payload})
+        yield put(actions.resetPasswordSendSuccess())
+    }catch (e){
+        yield put(actions.resetPasswordSendFailure(e.response.data.errorMessage))
+    }
+    yield put(actions.finishLoading())
 }
 
 function* modifySetWorker(action){
@@ -115,6 +148,7 @@ function* createSetWorker(action){
     yield put(actions.startLoading())
     let tokens = yield select(getTokens);
     const createdSet = action.payload;
+    console.log(createdSet)
     const requestSet = convertSetFromApplicationToRequest(createdSet);
     try {
         const result = yield call(api.createNewSet, {accessToken: tokens.access, ...requestSet});
@@ -154,10 +188,12 @@ function* loginWorker(action) {
     yield put(actions.startLoading())
     try {
         const result = yield call(api.login, {login: action.payload.login, password: action.payload.password});
-        console.log(result)
         const userInfo = yield call(api.getAccountInfo, {accessToken: result.data.accessToken})
+        const setsResult = yield call(api.getUserSets, {accessToken: result.data.accessToken});
         yield put(actions.tokenSuccess(result.data));
-        yield put(actions.loginSuccess(userInfo.data))
+        yield put(actions.loginSuccess(userInfo.data));
+        yield put(actions.setUserSetsSuccess(setsResult.data.map(
+            unmappedSet => convertSetFromRequestToApplication(unmappedSet))));
     } catch (e) {
         yield put(actions.loginFailure(e.response.data.errorMessage));
     }

@@ -9,7 +9,6 @@ const CardsStack = (props) => {
     const info = props.cards;
     const classes = useStyle();
     const cardsPerPage = 8;
-    const isLoading = useSelector(state => state.isLoading);
     const [currentPage, setCurrentPage] = useState(1);
     const [currentCards, setCurrentCards] = useState(info.slice(0, 8 > info.length ? info.length : 8));
     const pages = Math.round(info.length / cardsPerPage) + (((info.length % cardsPerPage) > 0) ? 1 : 0);
@@ -21,7 +20,6 @@ const CardsStack = (props) => {
         setCurrentPage(value);
     }
     return (
-        isLoading ? <CircularProgress/> :
             info.length !== 0
                 ? <div className={classes.mainContainer}>
                     <div className={classes.cardsContainer}>

@@ -39,7 +39,7 @@ const MySetsPageContent = () => {
                     onClick={onCreateNewSet}
                     disabled={isLoading}
                     endIcon={<AddOutlined/>}>
-                    Add new set
+                    Create new set
                 </Button>
             </div>
             <CardsStack cards={cards}/>

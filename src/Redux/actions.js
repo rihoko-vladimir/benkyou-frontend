@@ -290,15 +290,6 @@ export const saveSet = (newCard) => ({
     payload: newCard
 })
 
-export const saveSetSuccess = (savedSet) => ({
-    type: types.SAVE_SET_SUCCESS,
-    payload: savedSet
-})
-
-export const saveSetFailure = () => ({
-    type: types.SAVE_SET_FAILURE
-})
-
 export const createSet = (set) => ({
     type: types.CREATE_SET,
     payload: set
@@ -410,4 +401,32 @@ export const getNewTokensFailure = () => ({
 export const getNewTokens = (refreshToken) => ({
     type: types.GET_NEW_TOKENS,
     payload: refreshToken
+})
+
+export const resetPasswordSend = (email) =>({
+    type: types.RESET_PASSWORD_SEND,
+    payload: email
+})
+
+export const resetPasswordSendSuccess = () =>({
+    type: types.RESET_PASSWORD_SEND_SUCCESS
+})
+
+export const resetPasswordSendFailure = (errorMessage) =>({
+    type: types.RESET_PASSWORD_SEND_FAILURE,
+    payload: errorMessage
+})
+
+export const resetSetNewPassword = ({password, email, token}) => ({
+    type: types.RESET_PASSWORD_SET,
+    payload: {password, email, token}
+})
+
+export const resetSetNewPasswordSuccess = () =>({
+    type : types.RESET_PASSWORD_SET_SUCCESS
+})
+
+export const resetSetNewPasswordFailure = (errorMessage) =>({
+    type: types.RESET_PASSWORD_SET_FAILURE,
+    payload: errorMessage
 })
