@@ -1,4 +1,4 @@
-import {Button, IconButton, InputAdornment, TextField, Typography} from "@mui/material";
+import {Button, IconButton, InputAdornment, Link, TextField, Typography} from "@mui/material";
 import useStyle from "./style";
 import {useNavigate} from "react-router";
 import {useEffect, useState} from "react";
@@ -14,7 +14,6 @@ const LoginComponent = () => {
     const [isPasswordVisible, setPasswordVisible] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [isError, setError] = useState(false);
     const onShowPasswordClick = () => {
         setPasswordVisible(!isPasswordVisible);
     };
@@ -25,12 +24,12 @@ const LoginComponent = () => {
     const isLoggedIn = useSelector(state => state.account.isLoggedIn);
     const checkResultStatus = useSelector(state => state.login);
     const register = () => navigate("/auth/registration");
+    const forgotPassword = ()=>{
+        if (!isLoading) navigate("forgot-password")
+    }
     useEffect(() => {
         if (checkResultStatus === true) {
-            setError(false)
             dispatch(finishLogin())
-        } else if (checkResultStatus === false) {
-            setError(true);
         }
     }, [checkResultStatus])
     useEffect(() => {
@@ -42,7 +41,7 @@ const LoginComponent = () => {
         dispatch(finishRegistration())
     },[])
     return (
-        <div>
+        <>
             <Typography variant={"h4"}>Hey there!</Typography>
             <Typography variant={"subtitle1"}>We need you to log in before
                 using 勉強！</Typography>
@@ -51,7 +50,6 @@ const LoginComponent = () => {
                            type={"email"}
                            value={email} onChange={event => {
                     setEmail(event.target.value)
-                    setError(false)
                 }}
                            disabled={isLoading}/>
                 <TextField fullWidth variant={"outlined"} label={"Password"}
@@ -60,7 +58,6 @@ const LoginComponent = () => {
                            value={password}
                            onChange={event => {
                                setPassword(event.target.value)
-                               setError(false)
                            }}
                            InputProps={{
                                endAdornment: <InputAdornment position={"end"}>
@@ -72,9 +69,9 @@ const LoginComponent = () => {
                            }
                            }
                            disabled={isLoading}
+
                 />
-                {isError ?
-                    <Typography variant={"subtitle1"} color={"red"}>Incorrect Email / Password</Typography> : null}
+                <Link onClick={forgotPassword} style={{cursor:"pointer", alignSelf:"start"}}>I forgot my password</Link>
             </div>
             <div className={classes.buttons}>
                 {isLoading ? <LoadingButton
@@ -94,7 +91,7 @@ const LoginComponent = () => {
                     Sign up
                 </Button>
             </div>
-        </div>)
+        </>)
 }
 
 export default LoginComponent;

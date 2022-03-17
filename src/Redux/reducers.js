@@ -45,9 +45,14 @@ const emailRequestDefault = {status: undefined, message: undefined};
 
 const emailCodeRequestDefault = {status: undefined, message: undefined}
 
-const resultDefault = {success: false, message: undefined, value: undefined}
+const resultDefault = {success: false, message: undefined}
 
 const tokensDefaultState = {access: undefined, refresh: undefined};
+
+const errorSnackBarDummyState = {isShown: false, message: undefined};
+
+const defaultReset = {status: undefined, message: undefined}
+
 
 const dummyCardsState = [new Card(1, 1, "Default card", "This is my test description", "Me", [
     new Kanji("日1", ["ニチ1", "ジツ1", "ニ1"], ["ひ1", "は1"]),
@@ -276,6 +281,28 @@ const snackbarReducer = (state = snackbarDummyState, action) => {
     return state;
 }
 
+const errorSnackBarReducer = (state = errorSnackBarDummyState, action) => {
+    switch (action.type){
+        case type.LOG_IN_FAILURE:
+            return {isShown: true, message: action.payload}
+        case type.CREATE_SET_FAILURE:
+            return {isShown: true, message: action.payload}
+        case type.EDIT_SET_FAILURE:
+            return {isShown: true, message: action.payload}
+        case type.REMOVE_SET_FAILURE:
+            return {isShown: true, message: action.payload}
+        case type.REGISTER_FAILURE:
+            return {isShown: true, message: action.payload}
+        case type.RESET_PASSWORD_SEND_FAILURE:
+            return {isShown: true, message: action.payload}
+        case type.RESET_PASSWORD_SET_FAILURE:
+            return {isShown: true, message: action.payload}
+        case type.HIDE_SNACKBAR:
+            return {...state, isShown: false}
+    }
+    return state;
+}
+
 const isLoadingReducer = (state = isLoading, action) => {
     switch (action.type) {
         case type.START_LOADING:
@@ -350,6 +377,18 @@ const resultReducer = (state = resultDefault, action) => {
     return state;
 }
 
+const resetPasswordResultReducer = (state = defaultReset, action) =>{
+    switch (action.type){
+        case type.RESET_PASSWORD_SEND_SUCCESS:
+            return {status: true, message: ""}
+        case type.RESET_PASSWORD_SEND_FAILURE:
+            return {status: false, message: action.payload}
+        case type.FINISH_REGISTRATION:
+            return defaultReset
+    }
+    return state;
+}
+
 const registrationReducer = (state = defaultRegistrationState, action) => {
     switch (action.type) {
         case type.REGISTRATION_CHANGE_FIRST_NAME:
@@ -396,6 +435,18 @@ const emailConfirmationResultReducer = (state = false, action) => {
     return false;
 }
 
+const resetPasswordSetReducer = (state = resultDefault, action) =>{
+    switch (action.type){
+        case type.RESET_PASSWORD_SET_SUCCESS:
+            return {success: true, message: undefined}
+        case type.RESET_PASSWORD_SET_FAILURE:
+            return {success: false, message: undefined}
+        case type.FINISH_REGISTRATION:
+            return resultDefault
+    }
+    return state;
+}
+
 const tokensReducer = (state = tokensDefaultState, action) => {
     switch (action.type) {
         case type.TOKEN_SUCCESS:
@@ -432,5 +483,8 @@ export default combineReducers({
     registration: registrationReducer,
     emailConfirmation: emailConfirmationResultReducer,
     login: loginRequestReducer,
-    applicationTokens: tokensReducer
+    applicationTokens: tokensReducer,
+    errorSnackbar: errorSnackBarReducer,
+    resetSend: resetPasswordResultReducer,
+    resetSetPassword: resetPasswordSetReducer
 });

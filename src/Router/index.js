@@ -15,12 +15,20 @@ import MatchResults from "../Components/Match/MatchResults";
 import MatchParent from "../Components/Match/MatchParent";
 import LearnContainer from "../Components/LearnContainer";
 import HubComponent from "../Components/Hub";
+import ForgotPasswordForm from "../Components/Auth/ForgotPasswordForm";
+import ResetLinkSent from "../Components/Auth/ResetLinkSent";
+import ResetPasswordForm from "../Components/Auth/ResetPasswordForm";
 
 const RoutingComponent = () => {
     return <Routes>
         <Route path={paths.ERROR_PATH}><Route path={paths.NOT_FOUND_PATH} element={<ErrorPage/>}/></Route>
         <Route path={paths.AUTH_PATH} element={<AuthPage/>}>
             <Route path={paths.REGISTRATION_PATH} element={<Registration/>}/>
+            <Route path={paths.FORGOT_PATH}>
+                <Route index element={<ForgotPasswordForm/>}/>
+                <Route path={paths.RESET_SENT} element={<ResetLinkSent/>}/>
+            </Route>
+            <Route path={paths.RESET_PASSWORD_CONFIRM} element={<ResetPasswordForm/>}/>
             <Route index element={<LoginComponent/>}/>
             <Route path={"*"} element={<Typography variant={"h4"}>Unknown route</Typography>}/>
         </Route>

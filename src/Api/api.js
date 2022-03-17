@@ -23,10 +23,10 @@ export const sendEmailCode = async ({emailCode, userId}) =>
     await axios.post(`${baseUrl}/api/auth/confirm-email`, {emailCode, userId})
 
 export const resetPassword = async ({email}) =>
-    await axios.post(`${baseUrl}/api/auth/verify-email`, {email})
+    await axios.post(`${baseUrl}/api/auth/reset-password`, {email})
 
 export const resetPasswordConfirm = async ({password, email, token}) =>
-    await axios.post(`${baseUrl}/api/auth/reset-password-confirm?email=${email}&token=${token}`, {password})
+    await axios.post(`${baseUrl}/api/auth/reset-password-confirm?email=${email}&token=${encodeURIComponent(token)}`, {password})
 
 export const getUserSets = async ({accessToken}) =>
     await axios.get(`${baseUrl}/api/sets/my-collection`, config(accessToken))

@@ -1,3 +1,6 @@
+export const RESET_PASSWORD_CONFIRM = "reset-password-confirm";
+export const RESET_SENT = "email-sent";
+export const FORGOT_PATH = "forgot-password";
 export const ERROR_PATH = "error";
 export const AUTH_PATH = "auth";
 export const REGISTRATION_PATH = "registration";

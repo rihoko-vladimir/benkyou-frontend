@@ -28,6 +28,7 @@ const EditKanji = () => {
                    label={"Set description"}
                    fullWidth
                    value={cardDescription}
+                   multiline
                    onChange={(event) =>
                        setCardDescription(event.target.value)}
                    inputProps={{maxLength: 90}}
