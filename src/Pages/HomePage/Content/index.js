@@ -1,14 +1,6 @@
 import {Alert, AlertTitle, Backdrop, Button, CircularProgress, Collapse, IconButton, Typography} from "@mui/material";
 import useStyle from "./style";
-import {
-    Timeline,
-    TimelineConnector,
-    TimelineContent,
-    TimelineDot,
-    TimelineItem,
-    TimelineOppositeContent,
-    TimelineSeparator
-} from "@mui/lab";
+import {Timeline, TimelineConnector, TimelineContent, TimelineDot, TimelineItem, TimelineSeparator} from "@mui/lab";
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import AddIcon from '@mui/icons-material/Add';
 import SchoolIcon from '@mui/icons-material/School';
@@ -23,8 +15,8 @@ const HomePageContent = () => {
     const dispatch = useDispatch();
     const userSets = useSelector(state => state.myCards);
     const isLoading = useSelector(state => state.isLoading);
-    const [open,setOpen] = useState(userSets.length===0);
-    const addDefaultSets = () =>{
+    const [open, setOpen] = useState(userSets.length === 0);
+    const addDefaultSets = () => {
         starterSets.forEach(set => dispatch(createSet(set)))
     }
     return (
@@ -36,11 +28,12 @@ const HomePageContent = () => {
             </Typography>
             <Backdrop
                 open={isLoading}
-                sx={{ color: '#fff', zIndex: 999999 }}
+                sx={{color: '#fff', zIndex: 999999}}
             >
-                <CircularProgress />
+                <CircularProgress/>
             </Backdrop>
-            <p>Easy and convenient service to learn kanji! Create your own sets, share it with friends, search for pre-made sets or public sets of other users</p>
+            <p>Easy and convenient service to learn kanji! Create your own sets, share it with friends, search for
+                pre-made sets or public sets of other users</p>
             <Timeline position={"right"} sx={{
                 "& .MuiTimelineContent-root": {
                     flex: 1000
@@ -49,9 +42,9 @@ const HomePageContent = () => {
                 <TimelineItem>
                     <TimelineSeparator>
                         <TimelineDot color={"success"}>
-                                <StarOutlineIcon/>
+                            <StarOutlineIcon/>
                         </TimelineDot>
-                        <TimelineConnector />
+                        <TimelineConnector/>
                     </TimelineSeparator>
                     <TimelineContent>Go to <a href={"#"}>My Sets</a> page</TimelineContent>
                 </TimelineItem>
@@ -60,7 +53,7 @@ const HomePageContent = () => {
                         <TimelineDot color={"info"}>
                             <AddIcon/>
                         </TimelineDot>
-                        <TimelineConnector />
+                        <TimelineConnector/>
                     </TimelineSeparator>
                     <TimelineContent>Create new set</TimelineContent>
                 </TimelineItem>
@@ -78,23 +71,23 @@ const HomePageContent = () => {
                     severity={"info"}
                     icon={<SchoolIcon/>}
                     action={
-                    <div>
-                        <Button
-                            size="small"
-                            onClick={() => {
-                                setOpen(false);
-                                addDefaultSets();
-                            }}>
-                            Add
-                        </Button>
-                        <IconButton
-                            size="small"
-                            onClick={() => {
-                                setOpen(false);
-                            }}>
-                            <CloseIcon/>
-                        </IconButton>
-                    </div>}>
+                        <div>
+                            <Button
+                                size="small"
+                                onClick={() => {
+                                    setOpen(false);
+                                    addDefaultSets();
+                                }}>
+                                Add
+                            </Button>
+                            <IconButton
+                                size="small"
+                                onClick={() => {
+                                    setOpen(false);
+                                }}>
+                                <CloseIcon/>
+                            </IconButton>
+                        </div>}>
                     <AlertTitle>Starter pack</AlertTitle>
                     We found that you don't have any sets yet. Do you want to add starter sets?
                 </Alert>
