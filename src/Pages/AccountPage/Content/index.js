@@ -1,16 +1,16 @@
 import {Avatar, Badge, Button, Divider, IconButton, TextField, Tooltip, Typography, Zoom} from "@mui/material";
 import useStyles from "../style";
 import PropTypes from "prop-types";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {useDispatch} from "react-redux";
 import {changePassword} from "../../../Redux/actions";
 import {CameraAltOutlined} from "@mui/icons-material";
-import {getBase64File, getBase64FromUserImage} from "../../../HelperMethods/imageHelpers";
+import {displayImage, getBase64FromImage, openSelector} from "../../../HelperMethods/imageHelpers";
 
 const AccountPageContent = (props) => {
     const classes = useStyles();
     const [isEditable, setEditable] = useState(false);
-    const [temporaryName, setTemporaryName] = useState(props.firstName);
+    const [temporaryName, setTemporaryFirstName] = useState(props.firstName);
     const [temporaryLastName, setTemporaryLastName] = useState(props.lastName);
     const [temporaryAbout, setTemporaryAbout] = useState(props.aboutAccount);
     const [temporaryBirthday, setTemporaryBirthday] = useState(props.birthday);
@@ -18,6 +18,7 @@ const AccountPageContent = (props) => {
     const [temporaryLogin, setTemporaryLogin] = useState(props.login);
     const [temporaryEmail, setTemporaryEmail] = useState(props.email);
     const [temporaryPassword, setTemporaryPassword] = useState("");
+    const [imageBase64, setImageBase64] = useState("");
     const dispatch = useDispatch();
 
     const editPage = () => {
@@ -25,6 +26,14 @@ const AccountPageContent = (props) => {
     };
 
     const onCancel = () => {
+        setTemporaryFirstName(props.firstName);
+        setTemporaryLastName(props.lastName);
+        setTemporaryLogin(props.login);
+        setTemporaryAccountImage(props.accountImage);
+        setTemporaryAbout(props.about);
+        setTemporaryBirthday(props.birthday);
+        setTemporaryAccountImage("");
+        setImageBase64("");
         setEditable(false);
     }
 
@@ -37,7 +46,12 @@ const AccountPageContent = (props) => {
 
     const onChangeAvatar = () => {
         console.log("Change clicked")
-        getBase64FromUserImage((base64)=>console.log(base64), (errorMessage) => console.log(errorMessage))
+        openSelector((file) => {
+            getBase64FromImage(file,
+                (base64) => setImageBase64(base64),
+                (errorMessage) => console.log(errorMessage))
+            displayImage(file, (image) => setTemporaryAccountImage(image))
+        })
     }
 
     return (
@@ -58,17 +72,18 @@ const AccountPageContent = (props) => {
                         </Typography>
                         <div
                             className={classes.topInfo}>
+
                             <Badge anchorOrigin={{
                                 vertical: 'bottom',
                                 horizontal: 'right',
                             }}
                                    overlap="circular"
-                                   badgeContent={<IconButton disabled={!isEditable}
-                                                             onClick={onChangeAvatar}
-                                                             style={
-                                                                 {backgroundColor: "white"}}>
+                                   badgeContent={<Zoom in={isEditable}><IconButton disabled={!isEditable}
+                                                                                   onClick={onChangeAvatar}
+                                                                                   style={
+                                                                                       {backgroundColor: "white"}}>
                                        <CameraAltOutlined/>
-                                   </IconButton>}>
+                                   </IconButton></Zoom>}>
                                 <Avatar
                                     src={temporaryAccountImage}
                                     classes={{
@@ -118,7 +133,7 @@ const AccountPageContent = (props) => {
                                         label="First Name"
                                         value={temporaryName}
                                         onChange={(event) =>
-                                            setTemporaryName(event.target.value)}
+                                            setTemporaryFirstName(event.target.value)}
                                         fullWidth
                                     />
                                     <TextField
