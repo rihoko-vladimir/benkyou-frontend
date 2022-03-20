@@ -463,6 +463,16 @@ const tokensReducer = (state = tokensDefaultState, action) => {
     return state;
 }
 
+const accountInfoResultReducer = (state = defaultReset, action) =>{
+    switch (action.type){
+        case type.CHANGE_USER_ACCOUNT_SUCCESS:
+            return {status: true}
+        case type.CHANGE_USER_ACCOUNT_FAILURE:
+            return {status: false, message: action.payload}
+    }
+    return state;
+}
+
 export default combineReducers({
     account: accountReducer,
     myCards: myCardsReducer,
@@ -486,5 +496,6 @@ export default combineReducers({
     applicationTokens: tokensReducer,
     errorSnackbar: errorSnackBarReducer,
     resetSend: resetPasswordResultReducer,
-    resetSetPassword: resetPasswordSetReducer
+    resetSetPassword: resetPasswordSetReducer,
+    changeAccountInfo : accountInfoResultReducer
 });

@@ -430,3 +430,17 @@ export const resetSetNewPasswordFailure = (errorMessage) =>({
     type: types.RESET_PASSWORD_SET_FAILURE,
     payload: errorMessage
 })
+
+export const changeUserAccountInfo = ({userName, firstName, lastName, birthday, about, avatarUrl}) => ({
+    type: types.CHANGE_USER_ACCOUNT,
+    payload: {userName, firstName, lastName, birthday, about, avatarUrl}
+})
+
+export const changeUserAccountInfoSuccess = ({userName, firstName, lastName, birthday, about, avatarUrl}) => ({
+    type: types.CHANGE_USER_ACCOUNT_SUCCESS
+})
+
+export const changeUserAccountInfoFailure = (errorMessage) => ({
+    type: types.CHANGE_USER_ACCOUNT_FAILURE,
+    payload: errorMessage
+})

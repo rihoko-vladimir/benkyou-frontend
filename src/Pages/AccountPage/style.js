@@ -55,9 +55,6 @@ const useStyles = makeStyles({
         flexDirection: "column",
         rowGap: "12px",
     },
-    editButton: {
-        alignSelf: "end",
-    },
     topInfo: {
         alignItems: "center",
         display: "flex",
@@ -70,6 +67,12 @@ const useStyles = makeStyles({
         flexDirection: "row",
         justifyContent: "space-around",
         alignItems: "center",
+    },
+    buttons:{
+        display:"flex",
+        flexDirection:"row",
+        alignSelf: "end",
+        columnGap:"12px"
     }
 });
 

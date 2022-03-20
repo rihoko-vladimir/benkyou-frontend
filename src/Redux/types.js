@@ -84,3 +84,6 @@ export const RESET_PASSWORD_SEND_FAILURE = "reset/resetPasswordSendFailure";
 export const RESET_PASSWORD_SET = "reset/setNewPassword";
 export const RESET_PASSWORD_SET_SUCCESS = "reset/setNewPasswordSuccess";
 export const RESET_PASSWORD_SET_FAILURE = "reset/setNewPasswordFailure";
+export const CHANGE_USER_ACCOUNT = "account/changeUserAccountInfo";
+export const CHANGE_USER_ACCOUNT_SUCCESS = "account/changeUserAccountSuccess";
+export const CHANGE_USER_ACCOUNT_FAILURE= "account/changeUserAccountFailure";
