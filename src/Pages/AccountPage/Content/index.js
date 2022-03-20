@@ -1,14 +1,26 @@
-import {Avatar, Badge, Button, Divider, IconButton, TextField, Tooltip, Typography, Zoom} from "@mui/material";
+import {
+    Avatar,
+    Backdrop,
+    Badge,
+    Button, CircularProgress,
+    Divider,
+    IconButton,
+    TextField,
+    Tooltip,
+    Typography,
+    Zoom
+} from "@mui/material";
 import useStyles from "../style";
 import PropTypes from "prop-types";
 import {useState} from "react";
-import {useDispatch} from "react-redux";
-import {changePassword} from "../../../Redux/actions";
+import {useDispatch, useSelector} from "react-redux";
+import {changeUserAccountInfo} from "../../../Redux/actions";
 import {CameraAltOutlined} from "@mui/icons-material";
 import {displayImage, getBase64FromImage, openSelector} from "../../../HelperMethods/imageHelpers";
 
 const AccountPageContent = (props) => {
     const classes = useStyles();
+    const dispatch = useDispatch();
     const [isEditable, setEditable] = useState(false);
     const [temporaryName, setTemporaryFirstName] = useState(props.firstName);
     const [temporaryLastName, setTemporaryLastName] = useState(props.lastName);
@@ -19,7 +31,7 @@ const AccountPageContent = (props) => {
     const [temporaryEmail, setTemporaryEmail] = useState(props.email);
     const [temporaryPassword, setTemporaryPassword] = useState("");
     const [imageBase64, setImageBase64] = useState("");
-    const dispatch = useDispatch();
+    const isLoading = useSelector(state => state.isLoading);
 
     const editPage = () => {
         setEditable(true);
@@ -40,7 +52,16 @@ const AccountPageContent = (props) => {
     const saveChanges = () => {
         setEditable(false);
         // validate if password is correct TODO
-        dispatch(changePassword(temporaryPassword));
+        dispatch(changeUserAccountInfo(
+            {
+                userName: temporaryLogin,
+                firstName: temporaryName,
+                lastName: temporaryLastName,
+                about: temporaryAbout,
+                birthday: temporaryBirthday,
+                avatar: imageBase64
+            }
+        ))
         //TODO Implement account image change
     };
 
@@ -57,6 +78,12 @@ const AccountPageContent = (props) => {
     return (
         <div
             className={classes.pageContainer}>
+            <Backdrop
+                open={isLoading}
+                sx={{color: '#fff', zIndex: 999999}}
+            >
+                <CircularProgress/>
+            </Backdrop>
             <Typography
                 variant={"h4"}>
                 Account

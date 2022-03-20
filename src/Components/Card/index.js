@@ -2,7 +2,7 @@ import useStyle from "./style";
 import {Button, Collapse, IconButton, Link, Tooltip, Typography, Zoom} from "@mui/material";
 import PropTypes from "prop-types";
 import {Close, ExpandLessOutlined, ExpandMoreOutlined} from "@mui/icons-material";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router";
 import {openEditDialog, removeSet, selectKanjiList, showSnackbar} from "../../Redux/actions";

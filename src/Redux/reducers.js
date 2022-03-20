@@ -117,6 +117,16 @@ const accountReducer = (state = dummyAccountState, action) => {
                 email: action.payload.email,
                 isLoggedIn: true
             }
+        case type.CHANGE_USER_ACCOUNT_SUCCESS:
+            return {
+                ...state,
+                firstName: action.payload.firstName,
+                lastName: action.payload.lastName,
+                birthday: action.payload.birthday,
+                aboutAccount: action.payload.about,
+                accountImageUrl: action.payload.avatarUrl,
+                login: action.payload.userName
+            }
         case type.LOG_OUT:
             return dummyAccountState
         case type.GET_NEW_TOKENS_FAILURE:
@@ -277,6 +287,11 @@ const snackbarReducer = (state = snackbarDummyState, action) => {
             return {isShown: true, message: "Set created"}
         case type.EDIT_SET_SUCCESS:
             return {isShown: true, message: "Set edited"}
+        case type.CHANGE_USER_ACCOUNT_SUCCESS:{
+            console.log(action.payload)
+            return {isShown: true, message: "Account updated"}
+        }
+
     }
     return state;
 }
@@ -296,6 +311,8 @@ const errorSnackBarReducer = (state = errorSnackBarDummyState, action) => {
         case type.RESET_PASSWORD_SEND_FAILURE:
             return {isShown: true, message: action.payload}
         case type.RESET_PASSWORD_SET_FAILURE:
+            return {isShown: true, message: action.payload}
+        case type.CHANGE_USER_ACCOUNT_FAILURE:
             return {isShown: true, message: action.payload}
         case type.HIDE_SNACKBAR:
             return {...state, isShown: false}
@@ -497,5 +514,5 @@ export default combineReducers({
     errorSnackbar: errorSnackBarReducer,
     resetSend: resetPasswordResultReducer,
     resetSetPassword: resetPasswordSetReducer,
-    changeAccountInfo : accountInfoResultReducer
+    changeAccountInfoResult : accountInfoResultReducer
 });
