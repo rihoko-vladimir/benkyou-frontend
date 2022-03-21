@@ -78,12 +78,11 @@ function* changeUserInfoWatcher() {
 
 function* changeUserInfoWorker(action) {
     yield put(actions.startLoading())
-    const {userName, firstName, lastName, birthday, about, avatar} = action.payload;
+    const {firstName, lastName, birthday, about, avatar} = action.payload;
     let tokens = yield select(getTokens);
     try {
         const response = yield call(api.updateUserInfo, {
             accessToken: tokens.access,
-            userName,
             firstName,
             lastName,
             birthday,
@@ -105,7 +104,6 @@ function* changeUserInfoWorker(action) {
             try {
                 const response = yield call(api.updateUserInfo, {
                     accessToken: tokens.access,
-                    userName,
                     firstName,
                     lastName,
                     birthday,

@@ -43,9 +43,8 @@ export const modifySet = async ({accessToken, setId, name, description, kanjiLis
 export const getAccountInfo = async ({accessToken}) =>
     await axios.get(`${baseUrl}/api/account/`, config(accessToken))
 
-export const updateUserInfo = async ({accessToken, userName, firstName, lastName, birthday, about, avatar}) =>
+export const updateUserInfo = async ({accessToken, firstName, lastName, birthday, about, avatar}) =>
     await axios.put(`${baseUrl}/api/account/modify`, {
-        userName,
         firstName,
         lastName,
         birthday,
