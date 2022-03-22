@@ -27,6 +27,7 @@ const PersonalTab = ({value, index}) => {
     const [isSaveAvailable, setSaveAvailable] = useState(false);
     const saveChanges = () =>{
         dispatch(changeUserAccountInfo({firstName, lastName, birthday, about, avatar}))
+        setSaveAvailable(false)
     }
     const onChange = () => {
         setSaveAvailable(true)

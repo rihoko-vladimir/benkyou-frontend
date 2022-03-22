@@ -1,4 +1,14 @@
-import {Alert, AlertTitle, Backdrop, Button, CircularProgress, Collapse, IconButton, Typography} from "@mui/material";
+import {
+    Alert,
+    AlertTitle,
+    Backdrop,
+    Button,
+    CircularProgress,
+    Collapse,
+    IconButton,
+    Link as MuiLink,
+    Typography
+} from "@mui/material";
 import useStyle from "./style";
 import {Timeline, TimelineConnector, TimelineContent, TimelineDot, TimelineItem, TimelineSeparator} from "@mui/lab";
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
@@ -9,6 +19,7 @@ import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {createSet} from "../../../Redux/actions";
 import {starterSets} from "../../../Data/defaultSetInfo";
+import {Link} from "react-router-dom";
 
 const HomePageContent = () => {
     const classes = useStyle();
@@ -46,7 +57,7 @@ const HomePageContent = () => {
                         </TimelineDot>
                         <TimelineConnector/>
                     </TimelineSeparator>
-                    <TimelineContent>Go to <a href={"#"}>My Sets</a> page</TimelineContent>
+                    <TimelineContent>Go to <MuiLink component={Link} to={"my-sets"}>My Sets</MuiLink> page</TimelineContent>
                 </TimelineItem>
                 <TimelineItem>
                     <TimelineSeparator>

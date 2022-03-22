@@ -35,7 +35,7 @@ const AccountPage = () => {
                               onChange={(e, value) => setValue(value)}>
                             <Tab label={"General"} value={"1"}/>
                             <Tab label={"Personal"} value={"2"}/>
-                            <Tab label={"Security"} value={"3"} disabled/>
+                            <Tab label={"Security (Coming soon)"} value={"3"} disabled/>
                         </Tabs>
                         <GeneralTab index={0} value="1"/>
                         <PersonalTab index={1} value="2"/>
