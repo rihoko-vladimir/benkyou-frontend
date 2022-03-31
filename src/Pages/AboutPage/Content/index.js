@@ -1,5 +1,16 @@
+import useStyle from "./style";
+import {Typography} from "@mui/material";
+
 const AboutPageContent = () => {
-    return (<p>about this site</p>)
+    const classes = useStyle();
+    return (
+        <div className={classes.pageContainer}>
+            <Typography
+                variant={"h4"}>
+                About
+            </Typography>
+        </div>
+    )
 };
 
 export default AboutPageContent;

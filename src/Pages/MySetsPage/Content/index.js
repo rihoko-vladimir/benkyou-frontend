@@ -42,7 +42,7 @@ const MySetsPageContent = () => {
                     Create new set
                 </Button>
             </div>
-            <CardsStack cards={cards}/>
+            <CardsStack cards={cards} manageAble={true}/>
         </div>);
 }
 

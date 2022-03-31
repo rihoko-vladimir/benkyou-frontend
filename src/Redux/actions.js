@@ -43,60 +43,6 @@ export const sendEmailCodeFailure = (errorMessage) => ({
     payload: errorMessage
 })
 
-
-export const changeFirstName = (newName) => ({
-    type: types.CHANGE_FIRST_NAME,
-    payload: newName,
-});
-
-export const changeLastName = (newLastName) => ({
-    type: types.CHANGE_LAST_NAME,
-    payload: newLastName,
-});
-
-export const changeBirthDate = (newBirthDate) => ({
-    type: types.CHANGE_BIRTH_DATE,
-    payload: newBirthDate,
-});
-
-export const changeAboutInfo = (newAboutInfo) => ({
-    type: types.CHANGE_ABOUT_INFO,
-    payload: newAboutInfo,
-});
-
-export const changePicture = (newPictureUrl) => ({
-    type: types.CHANGE_PICTURE,
-    payload: newPictureUrl,
-});
-
-export const changeEmail = (newEmail) => ({
-    type: types.CHANGE_EMAIL,
-    payload: newEmail
-});
-
-export const changePassword = (newPassword) => ({
-    type: types.CHANGE_PASSWORD,
-    payload: newPassword
-})
-
-export const changeLogin = (newLogin) => ({
-    type: types.CHANGE_LOGIN,
-    payload: newLogin
-})
-
-export const loginTest = () => ({
-    type: types.LOGIN_TEST,
-})
-
-export const logoutTest = () => ({
-    type: types.LOGOUT_TEST,
-})
-
-export const addNewCard = (newCard) => ({
-    type: types.ADD_NEW_CARD,
-    payload: newCard,
-});
-
 export const removeSet = (idToRemove) => ({
     type: types.REMOVE_SET,
     payload: idToRemove,
@@ -132,7 +78,7 @@ export const login = (accountCredentials) => ({
     payload: accountCredentials
 });
 
-export const loginSuccess = ({id, userName, firstName, lastName, birthday, about, avatarUrl, email}) => (
+export const loginSuccess = ({id, userName, firstName, lastName, birthday, about, avatarUrl, email, isPublic}) => (
     {
         type: types.LOG_IN_SUCCESS,
         payload: {
@@ -144,6 +90,7 @@ export const loginSuccess = ({id, userName, firstName, lastName, birthday, about
             about,
             avatarUrl,
             email,
+            isPublic
         }
     })
 
@@ -398,11 +345,6 @@ export const getNewTokensFailure = () => ({
     type: types.GET_NEW_TOKENS_FAILURE
 })
 
-export const getNewTokens = (refreshToken) => ({
-    type: types.GET_NEW_TOKENS,
-    payload: refreshToken
-})
-
 export const resetPasswordSend = (email) =>({
     type: types.RESET_PASSWORD_SEND,
     payload: email
@@ -428,5 +370,100 @@ export const resetSetNewPasswordSuccess = () =>({
 
 export const resetSetNewPasswordFailure = (errorMessage) =>({
     type: types.RESET_PASSWORD_SET_FAILURE,
+    payload: errorMessage
+})
+
+export const changeUserAccountInfo = ({firstName, lastName, birthday, about, avatar}) => ({
+    type: types.CHANGE_USER_ACCOUNT,
+    payload: {firstName, lastName, birthday, about, avatar}
+})
+
+export const changeUserAccountInfoSuccess = ({userName, firstName, lastName, birthday, about, avatarUrl}) => ({
+    type: types.CHANGE_USER_ACCOUNT_SUCCESS,
+    payload:{userName, firstName, lastName, birthday, about, avatarUrl}
+})
+
+export const changeUserAccountInfoFailure = (errorMessage) => ({
+    type: types.CHANGE_USER_ACCOUNT_FAILURE,
+    payload: errorMessage
+})
+
+export const changeFirstName = (firstName) =>({
+    type:types.CHANGE_USER_ACCOUNT_FIRST_NAME,
+    payload: firstName
+})
+
+export const changeLastName = (lastName) =>({
+    type:types.CHANGE_USER_ACCOUNT_LAST_NAME,
+    payload: lastName
+})
+
+export const changeUserName = (userName) =>({
+    type:types.CHANGE_USER_ACCOUNT_USER_NAME,
+    payload: userName
+})
+
+export const changeBirthday = (birthday) =>({
+    type:types.CHANGE_USER_ACCOUNT_BIRTHDAY,
+    payload: birthday
+})
+
+export const changeAbout = (about) =>({
+    type:types.CHANGE_USER_ACCOUNT_ABOUT,
+    payload: about
+})
+
+export const changeEmail = (email) =>({
+    type:types.CHANGE_USER_ACCOUNT_EMAIL,
+    payload: email
+})
+
+export const changePassword = (password) =>({
+    type:types.CHANGE_USER_ACCOUNT_PASSWORD,
+    payload: password
+})
+
+export const changeValue = (value) =>({
+    type: types.CHANGE_USER_ACCOUNT_VALUE,
+    payload: value
+})
+
+export const changeImage = (image) =>({
+    type: types.CHANGE_USER_ACCOUNT_IMAGE,
+    payload: image
+})
+
+export const changeBase64 = (base64) => ({
+    type: types.CHANGE_USER_ACCOUNT_BASE64,
+    payload: base64
+})
+
+export const getAllSets = (pageNumber) =>({
+    type: types.GET_ALL_SETS,
+    payload: pageNumber
+})
+
+export const getAllSetsSuccess = (setResponse) =>({
+    type: types.GET_ALL_SETS_SUCCESS,
+    payload: setResponse
+})
+
+export const getAllSetsFailure = (errorMessage) => ({
+    type: types.GET_ALL_SETS_FAILURE,
+    payload: errorMessage
+})
+
+export const changeVisibility = (isPublic) => ({
+    type: types.CHANGE_VISIBILITY,
+    payload: isPublic
+})
+
+export const changeVisibilitySuccess = (isPublic) => ({
+    type: types.CHANGE_VISIBILITY_SUCCESS,
+    payload: isPublic
+})
+
+export const changeVisibilityFailure = (errorMessage) => ({
+    type: types.CHANGE_VISIBILITY_FAILURE,
     payload: errorMessage
 })

@@ -20,7 +20,7 @@ import ResetLinkSent from "../Components/Auth/ResetLinkSent";
 import ResetPasswordForm from "../Components/Auth/ResetPasswordForm";
 
 const RoutingComponent = () => {
-    return <Routes>
+    return <Routes location={window.location} key={window.location.pathname}>
         <Route path={paths.ERROR_PATH}><Route path={paths.NOT_FOUND_PATH} element={<ErrorPage/>}/></Route>
         <Route path={paths.AUTH_PATH} element={<AuthPage/>}>
             <Route path={paths.REGISTRATION_PATH} element={<Registration/>}/>
@@ -53,6 +53,5 @@ const RoutingComponent = () => {
         <Route index element={<StartPage/>}/>
         {/*<Route path={"*"} element={<Navigate to={"/error/404"}/>}/>*/}
     </Routes>
-
 }
 export default RoutingComponent;

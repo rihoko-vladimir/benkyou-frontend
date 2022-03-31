@@ -1,24 +1,29 @@
 import useStyle from "./style";
-import {Alert, AlertTitle, TextField, Typography} from "@mui/material";
-import {useState} from "react";
+import {Backdrop, CircularProgress, Pagination, TextField, Typography} from "@mui/material";
+import {useEffect, useState} from "react";
+import CardsStack from "../../../Components/CardsStack";
+import {useDispatch, useSelector} from "react-redux";
+import {getAllSets} from "../../../Redux/actions";
 
 const AllSetsPageContent = () => {
     const classes = useStyle();
-    const info = [];
-    const [state, setState] = useState({
-        input: "",
-        filteredResults: info
-    });
-    const onTextInputChanged = (text) => {
-        setState({
-            input: text,
-            filteredResults: info.filter(element => element.title.includes(text))
-        })
-        console.log(text)
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(getAllSets(allSets.currentPage))
+    }, [])
+    const allSets = useSelector(state => state.allSets);
+    const isLoading = useSelector(state => state.isLoading);
+    const handlePageChange = (_, value) => {
+        dispatch(getAllSets(value))
     }
     return (
         <div
             className={classes.pageContainer}>
+            <Backdrop
+                open={isLoading}
+                sx={{zIndex: 1000, backgroundColor:"rgba(255,255,255,0.8)"}}>
+                <CircularProgress/>
+            </Backdrop>
             <Typography
                 variant={"h4"}>
                 All Sets
@@ -27,16 +32,25 @@ const AllSetsPageContent = () => {
                 className={classes.inputContainer}>
                 <TextField
                     variant={"outlined"} className={classes.searchBarClass}
-                    onChange={(event) =>
-                        onTextInputChanged(event.target.value)}
                     placeholder={"Search for new sets"}/>
             </div>
-            <Alert severity={"warning"}>
-                <AlertTitle>Work in progress</AlertTitle>
-                Currently this component won't work as expected - please stay tuned!
-            </Alert>
-            {/*<CardsStack*/}
-            {/*    info={state.filteredResults} cards={info}/>*/}
+            <CardsStack
+                cards={allSets.sets}
+                manageAble={false}/>
+            {allSets.pages > 1 ? <Pagination
+                count={allSets.pages}
+                page={allSets.currentPage}
+                onChange={handlePageChange}
+                variant={"outlined"}
+                size={"large"}
+                color={"primary"}
+                hidePrevButton
+                hideNextButton
+                sx={{
+                    paddingBottom:"32px",
+                    paddingTop:"32px"
+                }}
+            /> : null}
         </div>
     )
 }

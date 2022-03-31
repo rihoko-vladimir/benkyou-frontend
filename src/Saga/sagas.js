@@ -19,7 +19,10 @@ export default function* rootSaga() {
         removeSetWatcher(),
         modifySetWatcher(),
         sendResetTokenWatcher(),
-        resetSetPasswordWatcher()
+        resetSetPasswordWatcher(),
+        changeUserInfoWatcher(),
+        getAllSetsWatcher(),
+        changeVisibilityWatcher()
     ])
 }
 
@@ -47,7 +50,7 @@ function* getSetsWatcher() {
     yield takeLatest(type.GET_USER_SETS, setsWorker)
 }
 
-function* saveSetWatcher(){
+function* saveSetWatcher() {
     yield takeLatest(type.SAVE_SET, saveSetWorker)
 }
 
@@ -63,38 +66,154 @@ function* modifySetWatcher() {
     yield takeLatest(type.EDIT_SET, modifySetWorker)
 }
 
-function* sendResetTokenWatcher(){
+function* sendResetTokenWatcher() {
     yield takeLatest(type.RESET_PASSWORD_SEND, resetSendWorker)
 }
 
-function* resetSetPasswordWatcher(){
+function* resetSetPasswordWatcher() {
     yield takeLatest(type.RESET_PASSWORD_SET, resetSetPasswordWorker)
 }
 
-function* resetSetPasswordWorker(action){
+function* changeUserInfoWatcher() {
+    yield takeLatest(type.CHANGE_USER_ACCOUNT, changeUserInfoWorker)
+}
+
+function* getAllSetsWatcher(){
+    yield takeLatest(type.GET_ALL_SETS, getAllSetsWorker)
+}
+
+function* changeVisibilityWatcher(){
+    yield takeLatest(type.CHANGE_VISIBILITY, changeVisibilityWorker);
+}
+
+function* changeVisibilityWorker(action){
+    yield put(actions.startLoading())
+    const isPublic = action.payload;
+    let tokens = yield select(getTokens);
+    try {
+        yield call(api.changeVisibility, {accessToken: tokens.access, isPublic: isPublic});
+        yield put(actions.changeVisibilitySuccess(isPublic));
+    } catch (e) {
+        if (e.response.status === 401) {
+            yield tokensWorker()
+            tokens = yield select(getTokens);
+            try {
+                yield call(api.changeVisibility, {accessToken: tokens.access, isPublic: isPublic});
+                yield put(actions.changeVisibilitySuccess(isPublic));
+            } catch (e) {
+                yield put(actions.changeVisibilityFailure(e.response.data.errorMessage))
+            }
+        } else {
+            yield put(actions.changeVisibilityFailure(e.response.data.errorMessage));
+        }
+    }
+    yield put(actions.finishLoading());
+}
+
+function* getAllSetsWorker(action){
+    yield put(actions.startLoading())
+    const pageNumber = action.payload;
+    let tokens = yield select(getTokens);
+    try {
+        const response = yield call(api.getAllSets, {pageNumber, pageSize: 8, accessToken: tokens.access});
+        response.data.sets = response.data.sets.map(
+            unmappedSet => convertSetFromRequestToApplication(unmappedSet));
+        yield put(actions.getAllSetsSuccess(response.data));
+    } catch (e) {
+        if (e.response.status === 401) {
+            yield tokensWorker()
+            tokens = yield select(getTokens);
+            try {
+                const response = yield call(api.getAllSets, {pageNumber, pageSize: 8, accessToken: tokens.access});
+                response.data.sets = response.data.sets.map(
+                    unmappedSet => convertSetFromRequestToApplication(unmappedSet));
+                yield put(actions.getAllSetsSuccess(response.data));
+            } catch (e) {
+                yield put(actions.getAllSetsFailure(e.response.data.errorMessage))
+            }
+        } else {
+            yield put(actions.getAllSetsFailure(e.response.data.errorMessage));
+        }
+    }
+    yield put(actions.finishLoading());
+}
+
+function* changeUserInfoWorker(action) {
+    yield put(actions.startLoading())
+    const {firstName, lastName, birthday, about, avatar} = action.payload;
+    let tokens = yield select(getTokens);
+    try {
+        const response = yield call(api.updateUserInfo, {
+            accessToken: tokens.access,
+            firstName,
+            lastName,
+            birthday,
+            about,
+            avatar
+        });
+        yield put(actions.changeUserAccountInfoSuccess({
+            userName: response.data.userName,
+            firstName: response.data.firstName,
+            lastName: response.data.lastName,
+            birthday: response.data.birthday,
+            about: response.data.about,
+            avatarUrl: response.data.avatarUrl
+        }));
+    } catch (e) {
+        if (e.response.status === 401) {
+            yield tokensWorker()
+            tokens = yield select(getTokens);
+            try {
+                const response = yield call(api.updateUserInfo, {
+                    accessToken: tokens.access,
+                    firstName,
+                    lastName,
+                    birthday,
+                    about,
+                    avatar
+                });
+                yield put(actions.changeUserAccountInfoSuccess({
+                    userName: response.userName,
+                    firstName: response.firstName,
+                    lastName: response.lastName,
+                    birthday: response.birthday,
+                    about: response.about,
+                    avatarUrl: response.avatarUrl
+                }));
+            } catch (e) {
+                yield put(actions.changeUserAccountInfoFailure(e.response.data.errorMessage))
+            }
+        } else {
+            yield put(actions.changeUserAccountInfoFailure(e.response.data.errorMessage));
+        }
+    }
+    yield put(actions.finishLoading());
+}
+
+function* resetSetPasswordWorker(action) {
     yield put(actions.startLoading())
     const {password, email, token} = action.payload;
     try {
         yield call(api.resetPasswordConfirm, {password, email, token})
         yield put(actions.resetSetNewPasswordSuccess())
-    }catch (e){
+    } catch (e) {
         yield put(actions.resetSetNewPasswordFailure(e.response.data.errorMessage))
     }
     yield put(actions.finishLoading())
 }
 
-function* resetSendWorker(action){
+function* resetSendWorker(action) {
     yield put(actions.startLoading())
     try {
         yield call(api.resetPassword, {email: action.payload})
         yield put(actions.resetPasswordSendSuccess())
-    }catch (e){
+    } catch (e) {
         yield put(actions.resetPasswordSendFailure(e.response.data.errorMessage))
     }
     yield put(actions.finishLoading())
 }
 
-function* modifySetWorker(action){
+function* modifySetWorker(action) {
     yield put(actions.startLoading())
     let tokens = yield select(getTokens);
     const modifiedSet = action.payload;
@@ -109,7 +228,7 @@ function* modifySetWorker(action){
             try {
                 yield call(api.modifySet, {accessToken: tokens.access, setId: modifiedSet.id, ...requestSet});
                 yield put(actions.modifySetSuccess(modifiedSet));
-            }catch (e){
+            } catch (e) {
                 yield put(actions.modifySetFailure(e.response.data.errorMessage))
             }
         } else {
@@ -119,7 +238,7 @@ function* modifySetWorker(action){
     yield put(actions.finishLoading());
 }
 
-function* removeSetWorker(action){
+function* removeSetWorker(action) {
     yield put(actions.startLoading())
     let tokens = yield select(getTokens);
     const setId = action.payload;
@@ -134,7 +253,7 @@ function* removeSetWorker(action){
             try {
                 yield call(api.removeSet, {accessToken: tokens.access, setId});
                 yield put(actions.removeSetSuccess(setId));
-            }catch (e){
+            } catch (e) {
                 yield put(actions.removeSetFailure(e.response.data.errorMessage))
             }
         } else {
@@ -144,7 +263,7 @@ function* removeSetWorker(action){
     yield put(actions.finishLoading());
 }
 
-function* createSetWorker(action){
+function* createSetWorker(action) {
     yield put(actions.startLoading())
     let tokens = yield select(getTokens);
     const createdSet = action.payload;
@@ -160,7 +279,7 @@ function* createSetWorker(action){
             try {
                 const result = yield call(api.createNewSet, {accessToken: tokens.access, ...requestSet});
                 yield put(actions.createSetSuccess(convertSetFromRequestToApplication(result.data)));
-            }catch (e){
+            } catch (e) {
                 yield put(actions.createSetFailure(e.response.data.errorMessage))
             }
         } else {
@@ -170,7 +289,7 @@ function* createSetWorker(action){
     yield put(actions.finishLoading());
 }
 
-function* saveSetWorker(action){
+function* saveSetWorker(action) {
 
 }
 
@@ -179,7 +298,7 @@ function* tokensWorker() {
     try {
         const result = yield call(api.refreshTokens, {refreshToken: tokens.refresh});
         yield put(actions.getNewTokensSuccess({access: result.data.accessToken, refresh: result.data.refreshToken}))
-    }catch (e){
+    } catch (e) {
         yield put(actions.getNewTokensFailure(e.response.data.errorMessage));
     }
 }
@@ -263,7 +382,7 @@ function* setsWorker() {
                 const result = yield call(api.getUserSets, {accessToken: tokens.access});
                 yield put(actions.setUserSetsSuccess(result.data.map(
                     unmappedSet => convertSetFromRequestToApplication(unmappedSet))));
-            }catch (e){
+            } catch (e) {
                 yield put(actions.setUserSetsFailure(e.response.data.errorMessage))
             }
         } else {

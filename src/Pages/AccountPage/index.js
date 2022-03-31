@@ -1,22 +1,56 @@
-import {useSelector} from "react-redux";
-import AccountPageContent from "./Content";
+import {Backdrop, CircularProgress, Tab, Tabs, Typography} from "@mui/material";
+import useStyles from "./style";
+import SecurityTab from "./SecurityTab";
+import PersonalTab from "./PersonalTab";
+import GeneralTab from "./GeneralTab";
+import AccountOverview from "../../Components/AccountOverview";
+import {TabContext} from "@mui/lab";
+import {useDispatch, useSelector} from "react-redux";
+import {changeValue} from "../../Redux/actions";
 
 const AccountPage = () => {
-    const accountUserName = useSelector(state => state.account.firstName);
-    const accountLastName = useSelector(state => state.account.lastName);
-    const accountImage = useSelector(state => state.account.accountImageUrl);
-    const aboutAccount = useSelector(state => state.account.aboutAccount);
-    const accountBirthday = useSelector(state => state.account.birthday);
-    const accountLogin = useSelector(state => state.account.login);
-    const accountEmail = useSelector(state => state.account.email);
-    const accountPassword = useSelector(state => state.account.password);
-    const cardsCount = useSelector(state => state.myCards.length)
-    return <AccountPageContent alternativeName={"Unknown name :("} firstName={accountUserName}
-                               lastName={accountLastName}
-                               accountImage={accountImage}
-                               aboutAccount={aboutAccount}
-                               birthday={accountBirthday} cardsCount={cardsCount} email={accountEmail}
-                               login={accountLogin}/>;
+    const classes = useStyles();
+    const dispatch = useDispatch();
+    const tabValue = useSelector(state => state.accountPage.tabValue) || "1"
+    const isLoading = useSelector(state => state.isLoading);
+    const setValue = (value) => dispatch(changeValue(value))
+
+    return (
+        <div
+            className={classes.pageContainer}>
+            <Backdrop
+                open={isLoading}
+                sx={{zIndex: 1000, backgroundColor:"rgba(255,255,255,0.8)"}}>
+                <CircularProgress/>
+            </Backdrop>
+            <Typography
+                variant={"h4"}>
+                Account
+            </Typography>
+            <div
+                className={classes.accountMainContainer}>
+                <AccountOverview/>
+                <div
+                    className={classes.mainAccountContainer}>
+                    <Typography
+                        variant={"h5"}>
+                        Account
+                    </Typography>
+                    <TabContext value={tabValue}>
+                        <Tabs orientation={"horizontal"} className={classes.tabs} variant={"fullWidth"} value={tabValue}
+                              onChange={(e, value) => setValue(value)}>
+                            <Tab label={"General"} value={"1"}/>
+                            <Tab label={"Personal"} value={"2"}/>
+                            <Tab label={"Security (Coming soon)"} value={"3"} disabled/>
+                        </Tabs>
+                        <GeneralTab index={0} value="1"/>
+                        <PersonalTab index={1} value="2"/>
+                        <SecurityTab index={2} value="3"/>
+                    </TabContext>
+                </div>
+            </div>
+        </div>
+    );
 }
 
 export default AccountPage;

@@ -8,17 +8,6 @@ const useStyles = makeStyles({
         height: "100%",
         boxSizing: "border-box",
     },
-    accountInfoContainer: {
-        width: "300px",
-        display: "flex",
-        flexDirection: "column",
-        columnGap: "24px",
-        backgroundColor: "rgba(25, 118, 210, 0.07)",
-        borderRadius: "16px",
-        boxSizing: "border-box",
-        padding: "32px",
-        justifyContent: "space-between",
-    },
     nameAndSurname: {
         display: "flex",
         flexDirection: "row",
@@ -30,10 +19,6 @@ const useStyles = makeStyles({
         flexDirection: "row",
         columnGap: "16px",
     },
-    avatarClass: {
-        width: "128px",
-        height: "128px",
-    },
     accountMainContainer: {
         display: "flex",
         flexDirection: "row",
@@ -42,34 +27,22 @@ const useStyles = makeStyles({
         columnGap: "12px",
     },
     mainAccountContainer: {
-        backgroundColor: "rgba(25, 118, 210, 0.07)",
+        backgroundColor: "/*rgba(25, 118, 210, 0.07)*/white",
+        borderColor: "#81898a",
+        borderStyle: "solid",
+        borderWidth: "1px",
         flex: "1",
         borderRadius: "16px",
         padding: "32px",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
     },
-    mainAccountContent: {
-        display: "flex",
-        flexDirection: "column",
-        rowGap: "12px",
-    },
-    editButton: {
-        alignSelf: "end",
-    },
-    topInfo: {
-        alignItems: "center",
-        display: "flex",
-        flexDirection: "column",
-        rowGap: "28px",
-        marginTop: "48px",
-    },
-    bottomStatistics: {
+    buttons: {
         display: "flex",
         flexDirection: "row",
-        justifyContent: "space-around",
-        alignItems: "center",
+        alignSelf: "end",
+        columnGap: "12px"
+    },
+    tabs:{
+        marginTop:"12px",
     }
 });
 

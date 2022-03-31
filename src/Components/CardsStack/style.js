@@ -16,7 +16,6 @@ const useStyle = makeStyles({
         justifyContent: "space-between",
         alignItems: "start",
         rowGap: "24px",
-        paddingBottom: "24px",
     }
 })
 
