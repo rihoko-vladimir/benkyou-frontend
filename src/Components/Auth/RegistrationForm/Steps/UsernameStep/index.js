@@ -65,8 +65,14 @@ const UsernameComponent = () => {
         navigate("/auth")
     }
     useEffect(() => {
-        if (isEmailSuccess.status === false) setEmailError(true);
-        if (!isUserNameSuccess.status === false) setUsernameError(true);
+        if (isEmailSuccess.status === false) {
+            setEmailError(true);
+
+        }
+        if (!isUserNameSuccess.status === false) {
+            setUsernameError(true);
+
+        }
         if (!isEmailError && !isUsernameError && !isFirstNameError && !isLastNameError && isEmailSuccess.status && isUserNameSuccess.status)
             dispatch(actions.setRegistrationStep(registrationStep + 1))
     }, [isUserNameSuccess, isEmailSuccess])

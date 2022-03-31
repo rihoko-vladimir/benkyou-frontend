@@ -1,5 +1,5 @@
 import useStyle from "./style";
-import {FormControlLabel, FormGroup, Switch, Typography} from "@mui/material";
+import {FormControlLabel, FormGroup, FormHelperText, Switch, Typography} from "@mui/material";
 import PropTypes from "prop-types";
 import {TabPanel} from "@mui/lab";
 import {useDispatch, useSelector} from "react-redux";
@@ -16,7 +16,7 @@ const GeneralTab = ({index, value}) => {
         <div className={classes.container}>
             <FormGroup>
                 <FormControlLabel control={<Switch checked={isPublic} onClick={changeVisibility}/>} label={"Make my account public"} labelPlacement={"end"}/>
-                <Typography variant={"caption"} color={"gray"}>This will allow other users to view and save your sets</Typography>
+                <FormHelperText>This will allow other users to view and save your sets</FormHelperText>
             </FormGroup>
         </div>
     </TabPanel>

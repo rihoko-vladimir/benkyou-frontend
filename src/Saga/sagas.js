@@ -116,6 +116,8 @@ function* getAllSetsWorker(action){
     let tokens = yield select(getTokens);
     try {
         const response = yield call(api.getAllSets, {pageNumber, pageSize: 8, accessToken: tokens.access});
+        response.data.sets = response.data.sets.map(
+            unmappedSet => convertSetFromRequestToApplication(unmappedSet));
         yield put(actions.getAllSetsSuccess(response.data));
     } catch (e) {
         if (e.response.status === 401) {
@@ -123,6 +125,8 @@ function* getAllSetsWorker(action){
             tokens = yield select(getTokens);
             try {
                 const response = yield call(api.getAllSets, {pageNumber, pageSize: 8, accessToken: tokens.access});
+                response.data.sets = response.data.sets.map(
+                    unmappedSet => convertSetFromRequestToApplication(unmappedSet));
                 yield put(actions.getAllSetsSuccess(response.data));
             } catch (e) {
                 yield put(actions.getAllSetsFailure(e.response.data.errorMessage))

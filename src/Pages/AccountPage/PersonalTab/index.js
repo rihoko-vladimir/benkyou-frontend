@@ -1,6 +1,6 @@
 // noinspection RequiredAttributes
 
-import {Backdrop, Button, CircularProgress, TextField} from "@mui/material";
+import {Button, TextField} from "@mui/material";
 import useStyle from "./style";
 import PropTypes from "prop-types";
 import {DesktopDatePicker, LocalizationProvider, TabPanel} from "@mui/lab";
@@ -14,6 +14,7 @@ import {
 } from "../../../Redux/actions";
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import {useState} from "react";
+import enLocale from 'date-fns/locale/en-US';
 
 const PersonalTab = ({value, index}) => {
     const classes = useStyle();
@@ -24,7 +25,7 @@ const PersonalTab = ({value, index}) => {
     const about = useSelector(state => state.accountPage.about);
     const avatar = useSelector(state => state.accountPage.base64);
     const [isSaveAvailable, setSaveAvailable] = useState(false);
-    const saveChanges = () =>{
+    const saveChanges = () => {
         dispatch(changeUserAccountInfo({firstName, lastName, birthday, about, avatar}))
         setSaveAvailable(false)
     }
@@ -52,14 +53,19 @@ const PersonalTab = ({value, index}) => {
                     }}
                     fullWidth
                 />
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <LocalizationProvider dateAdapter={AdapterDateFns} locale={enLocale}>
                     <DesktopDatePicker
                         label="Birthday"
                         value={birthday}
-                        minDate={new Date('1900-01-01')}
                         onChange={(newValue) => {
                             onChange()
-                            dispatch(changeBirthday(newValue.toISOString().split('T')[0]));
+                            try {
+                                console.log(newValue)
+                                const value = newValue.toISOString().split('T')[0]
+                                dispatch(changeBirthday(value));
+                            } catch (e) {
+                                //ignored
+                            }
                         }}
                         renderInput={(params) => <TextField {...params} />}
                     />

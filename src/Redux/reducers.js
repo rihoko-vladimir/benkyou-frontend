@@ -89,6 +89,11 @@ const dummyCardsState = [new Card(1, 1, "Default card", "This is my test descrip
         new Kanji("日5", ["ニチ5", "ジツ5", "ニ5"], ["ひ5", "は5"]),
         new Kanji("日6", ["ニチ6", "ジツ6", "ニ6"], ["ひ6", "は6"]),])];
 
+const dummyAllSetsState = {
+    sets: [],
+    pages: 0,
+    currentPage: 1
+}
 
 const dummyLearnState = {
     currentKanjiIndex: 0,
@@ -175,10 +180,16 @@ const myCardsReducer = (state = dummyCardsState, action) => {
     }
 }
 
-export const allSetsReducer = (state = dummyCardsState, action) => {
-    switch (action.type){
+export const allSetsReducer = (state = dummyAllSetsState, action) => {
+    switch (action.type) {
         case type.GET_ALL_SETS_SUCCESS:
-
+            return {currentPage: action.payload.page, pages: action.payload.pages, sets: action.payload.sets};
+        case type.GET_ALL_SETS_FAILURE:
+            return dummyAllSetsState;
+        case type.LOG_OUT:
+            return dummyAllSetsState;
+        default:
+            return state;
     }
 }
 
@@ -187,6 +198,8 @@ const randomListReducer = (state = [], action) => {
         case type.SET_RANDOM_LIST:
             return [...action.payload]
         case type.FINISH_MATCH_LEARNING:
+            return []
+        case type.LOG_OUT:
             return []
         default:
             return state;
@@ -199,6 +212,8 @@ const readingsReducer = (state = [], action) => {
             return [...action.payload]
         case type.FINISH_MATCH_LEARNING:
             return [];
+        case type.LOG_OUT:
+            return []
         default:
             return state;
     }
@@ -209,6 +224,8 @@ const resultsReducer = (state = [], action) => {
         case type.ADD_MATCH_RESULT:
             return [...state, action.payload]
         case type.FINISH_MATCH_LEARNING:
+            return []
+        case type.LOG_OUT:
             return []
         default:
             return state;
@@ -223,6 +240,8 @@ const learnReducer = (state = dummyLearnState, action) => {
             return {...state, isMatching: true}
         case type.FINISH_MATCH_LEARNING:
             return dummyLearnState
+        case type.LOG_OUT:
+            return dummyLearnState
         default:
             return state;
     }
@@ -232,6 +251,8 @@ const selectedKanjiReducer = (state = [], action) => {
     switch (action.type) {
         case type.SELECT_CURRENT_KANJI_LIST:
             return action.payload
+        case type.LOG_OUT:
+            return []
         default:
             return state;
     }
@@ -251,6 +272,8 @@ const dialogReducer = (state = dialogDummyState, action) => {
             return {...state, isOpened: false};
         case type.EDIT_SET_SUCCESS:
             return {...state, isOpened: false};
+        case type.LOG_OUT:
+            return dialogDummyState
         default:
             return state;
     }
@@ -311,10 +334,12 @@ const snackbarReducer = (state = snackbarDummyState, action) => {
             return {isShown: true, message: "Set created"}
         case type.EDIT_SET_SUCCESS:
             return {isShown: true, message: "Set edited"}
-        case type.CHANGE_USER_ACCOUNT_SUCCESS: {
-            console.log(action.payload)
+        case type.CHANGE_USER_ACCOUNT_SUCCESS:
             return {isShown: true, message: "Account updated"}
-        }
+        case type.CHANGE_VISIBILITY_SUCCESS:
+            return {isShown: true, message: "Visibility changed"}
+        case type.LOG_OUT:
+            return snackbarDummyState
         default:
             return state;
     }
@@ -342,6 +367,8 @@ const errorSnackBarReducer = (state = errorSnackBarDummyState, action) => {
             return {isShown: true, message: action.payload}
         case type.HIDE_SNACKBAR:
             return {...state, isShown: false}
+        case type.LOG_OUT:
+            return errorSnackBarDummyState
         default:
             return state;
     }
@@ -353,6 +380,8 @@ const isLoadingReducer = (state = isLoading, action) => {
             return true;
         case type.FINISH_LOADING:
             return false;
+        case type.LOG_OUT:
+            return false
         default:
             return state;
     }
@@ -531,7 +560,7 @@ const accountInfoResultReducer = (state = defaultReset, action) => {
 }
 
 const accountPublicResultReducer = (state = defaultReset, action) => {
-    switch (action.type){
+    switch (action.type) {
         case type.CHANGE_VISIBILITY_SUCCESS:
             return {status: true}
         case type.CHANGE_VISIBILITY_FAILURE:
@@ -542,7 +571,7 @@ const accountPublicResultReducer = (state = defaultReset, action) => {
 }
 
 const getAllSetsResultReducer = (state = defaultReset, action) => {
-    switch (action.type){
+    switch (action.type) {
         case type.GET_ALL_SETS_SUCCESS:
             return {status: true}
         case type.GET_ALL_SETS_FAILURE:
@@ -634,5 +663,6 @@ export default combineReducers({
     changeAccountInfoResult: accountInfoResultReducer,
     accountPage: accountPageStateReducer,
     accountVisibilityResult: accountPublicResultReducer,
-    getAllSetsResult: getAllSetsResultReducer
+    getAllSetsResult: getAllSetsResultReducer,
+    allSets: allSetsReducer
 });

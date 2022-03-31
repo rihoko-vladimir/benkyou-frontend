@@ -1,14 +1,12 @@
 import useStyle from "./style";
-import {Button, Collapse, IconButton, Link, Tooltip, Typography, Zoom} from "@mui/material";
+import {Button, Collapse, IconButton, Tooltip, Typography, Zoom} from "@mui/material";
 import PropTypes from "prop-types";
 import {Close, ExpandLessOutlined, ExpandMoreOutlined} from "@mui/icons-material";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router";
-import {openEditDialog, removeSet, selectKanjiList, showSnackbar} from "../../Redux/actions";
+import {createSet, openEditDialog, removeSet, selectKanjiList} from "../../Redux/actions";
 import KanjiInfo from "../KanjiInfo";
-import {hostUrl} from "../../applicationSettings";
-import {ACCOUNT_PATH, HUB_PATH} from "../../Router/paths";
 
 const Card = (props) => {
     const [isOpenButtonPressed, setButtonPressed] = useState(false);
@@ -19,6 +17,10 @@ const Card = (props) => {
     const isLoading = useSelector(state => state.isLoading);
 
     const onOpenButtonPressed = () => setButtonPressed(!isOpenButtonPressed);
+
+    const onAddClicked = () => {
+        dispatch(createSet(props.card))
+    }
 
     const onBenkyouClicked = () => {
         dispatch(selectKanjiList(props.card.kanjiList));
@@ -36,8 +38,8 @@ const Card = (props) => {
 
     return (
         <div className={classes.card} style={isDeleteClicked ? {
-            backdropFilter:"brightness(0.9)"
-        }: {}}>
+            backdropFilter: "brightness(0.9)"
+        } : {}}>
             <div className={classes.topSection}>
                 <div className={classes.cardTitle}>
                     <Typography
@@ -55,23 +57,25 @@ const Card = (props) => {
                     >
                         {props.card.description}
                     </Typography>
-                    <Typography
-                        variant={"subtitle2"}>
-                        Author: <Link
-                        underline={"hover"}
-                        rel={"noreferrer"}
-                        href={`${hostUrl}${HUB_PATH}/${ACCOUNT_PATH}/id/${props.card.id}`}>
-                        {props.card.author}
-                    </Link>
-                    </Typography>
+                    {/*<Typography*/}
+                    {/*    variant={"subtitle2"}>*/}
+                    {/*    Author: <Link*/}
+                    {/*    underline={"hover"}*/}
+                    {/*    rel={"noreferrer"}*/}
+                    {/*    href={`${hostUrl}${HUB_PATH}/${ACCOUNT_PATH}/id/${props.card.id}`}>*/}
+                    {/*    {props.card.author}*/}
+                    {/*</Link>*/}
+                    {/*</Typography>*/}
                 </div>
-                <Tooltip title={"Remove set"} placement={"top"} arrow TransitionComponent={Zoom}>
+                {props.manageAble ? <Tooltip title={"Remove set"} placement={"top"} arrow TransitionComponent={Zoom}>
+                    <span>
                     <IconButton
                         disabled={isLoading}
                         onClick={onDeleteClicked}>
                         <Close/>
                     </IconButton>
-                </Tooltip>
+                        </span>
+                </Tooltip> : null}
             </div>
             <div
                 className={classes.lowerCardContent}>
@@ -88,23 +92,39 @@ const Card = (props) => {
                 <div
                     className={classes.buttons}>
                     <Tooltip title={"Expand / Hide"} placement={"bottom"} arrow TransitionComponent={Zoom}>
+                    <span>
                         <IconButton
                             disabled={isLoading}
                             onClick={() => onOpenButtonPressed()}>
                             {isOpenButtonPressed ? <ExpandMoreOutlined/> : <ExpandLessOutlined/>}
                         </IconButton>
+                        </span>
                     </Tooltip>
                     <div
                         className={classes.actionButtons}>
-                        <Button
-                            disabled={isLoading}
-                            variant={"outlined"}
-                            className={classes.button}
-                            onClick={onEditClicked}>
-                            Edit
+                        {props.manageAble ?
+                            <Button
+                                disabled={isLoading}
+                                variant={"outlined"}
+                                className={classes.button}
+                                onClick={onEditClicked}>
+                                Edit
+                            </Button> :
+                            <Tooltip title={"Add to my sets"} placement={"bottom"} arrow TransitionComponent={Zoom}
+                                     enterDelay={650}>
+                            <span>
+                            <Button
+                                disabled={isLoading}
+                                variant={"outlined"}
+                                className={classes.button}
+                                onClick={onAddClicked}>
+                            Add
                         </Button>
+                                </span>
+                            </Tooltip>}
                         <Tooltip title={"Learn!"} placement={"bottom"} arrow TransitionComponent={Zoom}
                                  enterDelay={650}>
+                        <span>
                             <Button
                                 disabled={isLoading}
                                 variant={"contained"}
@@ -112,6 +132,7 @@ const Card = (props) => {
                                 onClick={onBenkyouClicked}>
                                 勉強！
                             </Button>
+                            </span>
                         </Tooltip>
                     </div>
                 </div>
@@ -120,7 +141,8 @@ const Card = (props) => {
 }
 
 Card.propTypes = {
-    card: PropTypes.object.isRequired
+    card: PropTypes.object.isRequired,
+    manageAble: PropTypes.bool.isRequired
 }
 
 export default Card;
