@@ -1,4 +1,4 @@
-import {Tab, Tabs, Typography} from "@mui/material";
+import {Backdrop, CircularProgress, Tab, Tabs, Typography} from "@mui/material";
 import useStyles from "./style";
 import SecurityTab from "./SecurityTab";
 import PersonalTab from "./PersonalTab";
@@ -12,11 +12,17 @@ const AccountPage = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const tabValue = useSelector(state => state.accountPage.tabValue) || "1"
+    const isLoading = useSelector(state => state.isLoading);
     const setValue = (value) => dispatch(changeValue(value))
 
     return (
         <div
             className={classes.pageContainer}>
+            <Backdrop
+                open={isLoading}
+                sx={{zIndex: 1000, backgroundColor:"rgba(255,255,255,0.8)"}}>
+                <CircularProgress/>
+            </Backdrop>
             <Typography
                 variant={"h4"}>
                 Account

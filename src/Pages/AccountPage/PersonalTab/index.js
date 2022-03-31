@@ -23,7 +23,6 @@ const PersonalTab = ({value, index}) => {
     const birthday = useSelector(state => state.accountPage.birthday);
     const about = useSelector(state => state.accountPage.about);
     const avatar = useSelector(state => state.accountPage.base64);
-    const isLoading = useSelector(state => state.isLoading);
     const [isSaveAvailable, setSaveAvailable] = useState(false);
     const saveChanges = () =>{
         dispatch(changeUserAccountInfo({firstName, lastName, birthday, about, avatar}))
@@ -35,11 +34,6 @@ const PersonalTab = ({value, index}) => {
     return (
         <TabPanel value={value} tabIndex={index}>
             <div className={classes.container}>
-                <Backdrop
-                    open={isLoading}
-                    sx={{zIndex: 999999}}>
-                    <CircularProgress/>
-                </Backdrop>
                 <TextField
                     label="First Name"
                     value={firstName}

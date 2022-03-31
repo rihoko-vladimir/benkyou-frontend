@@ -76,6 +76,34 @@ function* changeUserInfoWatcher() {
     yield takeLatest(type.CHANGE_USER_ACCOUNT, changeUserInfoWorker)
 }
 
+function* getAllSetsWatcher(){
+    yield takeLatest(type.GET_ALL_SETS, getAllSetsWorker)
+}
+
+function* getAllSetsWorker(action){
+    yield put(actions.startLoading())
+    const pageNumber = action.payload;
+    let tokens = yield select(getTokens);
+    try {
+        const response = yield call(api.getAllSets, {pageNumber, pageSize: 8, accessToken: tokens.access});
+        yield put(actions.getAllSetsSuccess(response));
+    } catch (e) {
+        if (e.response.status === 401) {
+            yield tokensWorker()
+            tokens = yield select(getTokens);
+            try {
+                const response = yield call(api.getAllSets, {pageNumber, pageSize: 8, accessToken: tokens.access});
+                yield put(actions.getAllSetsSuccess(response));
+            } catch (e) {
+                yield put(actions.getAllSetsFailure(e.response.data.errorMessage))
+            }
+        } else {
+            yield put(actions.getAllSetsFailure(e.response.data.errorMessage));
+        }
+    }
+    yield put(actions.finishLoading());
+}
+
 function* changeUserInfoWorker(action) {
     yield put(actions.startLoading())
     const {firstName, lastName, birthday, about, avatar} = action.payload;

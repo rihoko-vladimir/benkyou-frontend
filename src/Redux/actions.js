@@ -436,3 +436,18 @@ export const changeBase64 = (base64) => ({
     type: types.CHANGE_USER_ACCOUNT_BASE64,
     payload: base64
 })
+
+export const getAllSets = (pageNumber) =>({
+    type: types.GET_ALL_SETS,
+    payload: pageNumber
+})
+
+export const getAllSetsSuccess = (setResponse) =>({
+    type: types.GET_ALL_SETS_SUCCESS,
+    payload: setResponse
+})
+
+export const getAllSetsFailure = (errorMessage) => ({
+    type: types.GET_ALL_SETS_FAILURE,
+    payload: errorMessage
+})

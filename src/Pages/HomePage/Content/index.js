@@ -39,8 +39,7 @@ const HomePageContent = () => {
             </Typography>
             <Backdrop
                 open={isLoading}
-                sx={{color: '#fff', zIndex: 999999}}
-            >
+                sx={{zIndex: 1000, backgroundColor:"rgba(255,255,255,0.8)"}}>
                 <CircularProgress/>
             </Backdrop>
             <p>Easy and convenient service to learn kanji! Create your own sets, share it with friends, search for

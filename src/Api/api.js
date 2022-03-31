@@ -40,6 +40,9 @@ export const removeSet = async ({accessToken, setId}) =>
 export const modifySet = async ({accessToken, setId, name, description, kanjiList}) =>
     await axios.put(`${baseUrl}/api/sets/modify`, {setId, name, description, kanjiList}, config(accessToken))
 
+export const getAllSets = async ({pageNumber, pageSize, accessToken}) =>
+    await axios.get(`${baseUrl}/api/sets/all?page=${pageNumber}&size=${pageSize}`, config(accessToken))
+
 export const getAccountInfo = async ({accessToken}) =>
     await axios.get(`${baseUrl}/api/account/`, config(accessToken))
 

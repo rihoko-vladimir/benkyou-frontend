@@ -65,7 +65,7 @@ const Card = (props) => {
                     </Link>
                     </Typography>
                 </div>
-                <Tooltip title={"Remove card"} placement={"top"} arrow TransitionComponent={Zoom}>
+                <Tooltip title={"Remove set"} placement={"top"} arrow TransitionComponent={Zoom}>
                     <IconButton
                         disabled={isLoading}
                         onClick={onDeleteClicked}>

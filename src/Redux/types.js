@@ -82,5 +82,9 @@ export const CHANGE_USER_ACCOUNT_PASSWORD = "accountPage/changePassword";
 export const CHANGE_USER_ACCOUNT_VALUE = "accountPage/changeValue";
 export const CHANGE_USER_ACCOUNT_IMAGE = "accountPage/changeImage";
 export const CHANGE_USER_ACCOUNT_BASE64 = "accountPage/changeBase64";
+export const GET_ALL_SETS = "allSetsPage/getAllSets";
+export const GET_ALL_SETS_SUCCESS = "allSetsPage/getAllSetsSuccess";
+export const GET_ALL_SETS_FAILURE = "allSetsPage/getAllSetsFailure";
+
 
 

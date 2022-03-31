@@ -169,6 +169,13 @@ const myCardsReducer = (state = dummyCardsState, action) => {
     }
 }
 
+export const allSetsReducer = (state = dummyCardsState, action) => {
+    switch (action.type){
+        case type.GET_ALL_SETS_SUCCESS:
+
+    }
+}
+
 const randomListReducer = (state = [], action) => {
     switch (action.type) {
         case type.SET_RANDOM_LIST:
@@ -324,6 +331,8 @@ const errorSnackBarReducer = (state = errorSnackBarDummyState, action) => {
         case type.RESET_PASSWORD_SET_FAILURE:
             return {isShown: true, message: action.payload}
         case type.CHANGE_USER_ACCOUNT_FAILURE:
+            return {isShown: true, message: action.payload}
+        case type.GET_ALL_SETS_FAILURE:
             return {isShown: true, message: action.payload}
         case type.HIDE_SNACKBAR:
             return {...state, isShown: false}
