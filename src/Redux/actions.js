@@ -78,7 +78,7 @@ export const login = (accountCredentials) => ({
     payload: accountCredentials
 });
 
-export const loginSuccess = ({id, userName, firstName, lastName, birthday, about, avatarUrl, email}) => (
+export const loginSuccess = ({id, userName, firstName, lastName, birthday, about, avatarUrl, email, isPublic}) => (
     {
         type: types.LOG_IN_SUCCESS,
         payload: {
@@ -90,6 +90,7 @@ export const loginSuccess = ({id, userName, firstName, lastName, birthday, about
             about,
             avatarUrl,
             email,
+            isPublic
         }
     })
 
@@ -449,5 +450,20 @@ export const getAllSetsSuccess = (setResponse) =>({
 
 export const getAllSetsFailure = (errorMessage) => ({
     type: types.GET_ALL_SETS_FAILURE,
+    payload: errorMessage
+})
+
+export const changeVisibility = (isPublic) => ({
+    type: types.CHANGE_VISIBILITY,
+    payload: isPublic
+})
+
+export const changeVisibilitySuccess = (isPublic) => ({
+    type: types.CHANGE_VISIBILITY_SUCCESS,
+    payload: isPublic
+})
+
+export const changeVisibilityFailure = (errorMessage) => ({
+    type: types.CHANGE_VISIBILITY_FAILURE,
     payload: errorMessage
 })

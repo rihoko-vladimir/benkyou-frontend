@@ -20,7 +20,9 @@ export default function* rootSaga() {
         modifySetWatcher(),
         sendResetTokenWatcher(),
         resetSetPasswordWatcher(),
-        changeUserInfoWatcher()
+        changeUserInfoWatcher(),
+        getAllSetsWatcher(),
+        changeVisibilityWatcher()
     ])
 }
 
@@ -80,20 +82,48 @@ function* getAllSetsWatcher(){
     yield takeLatest(type.GET_ALL_SETS, getAllSetsWorker)
 }
 
+function* changeVisibilityWatcher(){
+    yield takeLatest(type.CHANGE_VISIBILITY, changeVisibilityWorker);
+}
+
+function* changeVisibilityWorker(action){
+    yield put(actions.startLoading())
+    const isPublic = action.payload;
+    let tokens = yield select(getTokens);
+    try {
+        yield call(api.changeVisibility, {accessToken: tokens.access, isPublic: isPublic});
+        yield put(actions.changeVisibilitySuccess(isPublic));
+    } catch (e) {
+        if (e.response.status === 401) {
+            yield tokensWorker()
+            tokens = yield select(getTokens);
+            try {
+                yield call(api.changeVisibility, {accessToken: tokens.access, isPublic: isPublic});
+                yield put(actions.changeVisibilitySuccess(isPublic));
+            } catch (e) {
+                yield put(actions.changeVisibilityFailure(e.response.data.errorMessage))
+            }
+        } else {
+            yield put(actions.changeVisibilityFailure(e.response.data.errorMessage));
+        }
+    }
+    yield put(actions.finishLoading());
+}
+
 function* getAllSetsWorker(action){
     yield put(actions.startLoading())
     const pageNumber = action.payload;
     let tokens = yield select(getTokens);
     try {
         const response = yield call(api.getAllSets, {pageNumber, pageSize: 8, accessToken: tokens.access});
-        yield put(actions.getAllSetsSuccess(response));
+        yield put(actions.getAllSetsSuccess(response.data));
     } catch (e) {
         if (e.response.status === 401) {
             yield tokensWorker()
             tokens = yield select(getTokens);
             try {
                 const response = yield call(api.getAllSets, {pageNumber, pageSize: 8, accessToken: tokens.access});
-                yield put(actions.getAllSetsSuccess(response));
+                yield put(actions.getAllSetsSuccess(response.data));
             } catch (e) {
                 yield put(actions.getAllSetsFailure(e.response.data.errorMessage))
             }

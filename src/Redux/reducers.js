@@ -12,6 +12,7 @@ const dummyAccountState = {
     aboutAccount: undefined,
     accountImageUrl: undefined,
     email: undefined,
+    isPublic: false,
     isLoggedIn: false
 }
 
@@ -117,6 +118,7 @@ const accountReducer = (state = dummyAccountState, action) => {
                 aboutAccount: action.payload.about,
                 accountImageUrl: action.payload.avatarUrl,
                 email: action.payload.email,
+                isPublic: action.payload.isPublic,
                 isLoggedIn: true
             }
         case type.CHANGE_USER_ACCOUNT_SUCCESS:
@@ -128,6 +130,10 @@ const accountReducer = (state = dummyAccountState, action) => {
                 aboutAccount: action.payload.about,
                 accountImageUrl: action.payload.avatarUrl,
                 login: action.payload.userName
+            }
+        case type.CHANGE_VISIBILITY_SUCCESS:
+            return {
+                ...state, isPublic: action.payload
             }
         case type.LOG_OUT:
             return dummyAccountState
@@ -524,6 +530,28 @@ const accountInfoResultReducer = (state = defaultReset, action) => {
     }
 }
 
+const accountPublicResultReducer = (state = defaultReset, action) => {
+    switch (action.type){
+        case type.CHANGE_VISIBILITY_SUCCESS:
+            return {status: true}
+        case type.CHANGE_VISIBILITY_FAILURE:
+            return {status: false, message: action.payload}
+        default:
+            return state;
+    }
+}
+
+const getAllSetsResultReducer = (state = defaultReset, action) => {
+    switch (action.type){
+        case type.GET_ALL_SETS_SUCCESS:
+            return {status: true}
+        case type.GET_ALL_SETS_FAILURE:
+            return {status: false, message: action.payload}
+        default:
+            return state
+    }
+}
+
 const accountPageStateReducer = (state = defaultAccountPageState, action) => {
     switch (action.type) {
         case type.LOG_IN_SUCCESS:
@@ -604,5 +632,7 @@ export default combineReducers({
     resetSend: resetPasswordResultReducer,
     resetSetPassword: resetPasswordSetReducer,
     changeAccountInfoResult: accountInfoResultReducer,
-    accountPage: accountPageStateReducer
+    accountPage: accountPageStateReducer,
+    accountVisibilityResult: accountPublicResultReducer,
+    getAllSetsResult: getAllSetsResultReducer
 });

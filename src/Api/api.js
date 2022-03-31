@@ -43,6 +43,9 @@ export const modifySet = async ({accessToken, setId, name, description, kanjiLis
 export const getAllSets = async ({pageNumber, pageSize, accessToken}) =>
     await axios.get(`${baseUrl}/api/sets/all?page=${pageNumber}&size=${pageSize}`, config(accessToken))
 
+export const changeVisibility = async ({accessToken, isPublic}) =>
+    await axios.patch(`${baseUrl}/api/account/change-visibility?isPublic=${isPublic}`,undefined, config(accessToken))
+
 export const getAccountInfo = async ({accessToken}) =>
     await axios.get(`${baseUrl}/api/account/`, config(accessToken))
 

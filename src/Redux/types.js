@@ -85,6 +85,9 @@ export const CHANGE_USER_ACCOUNT_BASE64 = "accountPage/changeBase64";
 export const GET_ALL_SETS = "allSetsPage/getAllSets";
 export const GET_ALL_SETS_SUCCESS = "allSetsPage/getAllSetsSuccess";
 export const GET_ALL_SETS_FAILURE = "allSetsPage/getAllSetsFailure";
+export const CHANGE_VISIBILITY = "account/changeVisibilityPublic";
+export const CHANGE_VISIBILITY_SUCCESS = "account/changeVisibilitySuccess";
+export const CHANGE_VISIBILITY_FAILURE = "account/changeVisibilityFailure";
 
 
 
