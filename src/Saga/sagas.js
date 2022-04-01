@@ -22,7 +22,8 @@ export default function* rootSaga() {
         resetSetPasswordWatcher(),
         changeUserInfoWatcher(),
         getAllSetsWatcher(),
-        changeVisibilityWatcher()
+        changeVisibilityWatcher(),
+        getAllSetsByQueryWatcher()
     ])
 }
 
@@ -84,6 +85,38 @@ function* getAllSetsWatcher(){
 
 function* changeVisibilityWatcher(){
     yield takeLatest(type.CHANGE_VISIBILITY, changeVisibilityWorker);
+}
+
+function* getAllSetsByQueryWatcher(){
+    yield takeLatest(type.GET_ALL_SETS_BY_QUERY, getAllSetsByQueryWorker)
+}
+
+function* getAllSetsByQueryWorker(action){
+    yield put(actions.startLoading())
+    const {searchQuery, pageNumber} = action.payload;
+    let tokens = yield select(getTokens);
+    try {
+        const response = yield call(api.getAllSetsByQuery, {pageNumber, pageSize: 8, accessToken: tokens.access, query: searchQuery});
+        response.data.sets = response.data.sets.map(
+            unmappedSet => convertSetFromRequestToApplication(unmappedSet));
+        yield put(actions.getAllSetsByQuerySuccess(response.data));
+    } catch (e) {
+        if (e.response.status === 401) {
+            yield tokensWorker()
+            tokens = yield select(getTokens);
+            try {
+                const response = yield call(api.getAllSetsByQuery, {pageNumber, pageSize: 8, accessToken: tokens.access, query: searchQuery});
+                response.data.sets = response.data.sets.map(
+                    unmappedSet => convertSetFromRequestToApplication(unmappedSet));
+                yield put(actions.getAllSetsByQuerySuccess(response.data));
+            } catch (e) {
+                yield put(actions.getAllSetsByQueryFailure(e.response.data.errorMessage))
+            }
+        } else {
+            yield put(actions.getAllSetsByQueryFailure(e.response.data.errorMessage));
+        }
+    }
+    yield put(actions.finishLoading());
 }
 
 function* changeVisibilityWorker(action){

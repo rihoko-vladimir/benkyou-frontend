@@ -467,3 +467,18 @@ export const changeVisibilityFailure = (errorMessage) => ({
     type: types.CHANGE_VISIBILITY_FAILURE,
     payload: errorMessage
 })
+
+export const getAllSetsByQuery = (searchQuery, pageNumber) => ({
+    type: types.GET_ALL_SETS_BY_QUERY,
+    payload: {searchQuery, pageNumber}
+})
+
+export const getAllSetsByQuerySuccess = (response) => ({
+    type: types.GET_ALL_SETS_BY_QUERY_SUCCESS,
+    payload: response
+})
+
+export const getAllSetsByQueryFailure = (errorMessage) => ({
+    type: types.GET_ALL_SETS_BY_QUERY_FAILURE,
+    payload: errorMessage
+})

@@ -88,6 +88,9 @@ export const GET_ALL_SETS_FAILURE = "allSetsPage/getAllSetsFailure";
 export const CHANGE_VISIBILITY = "account/changeVisibilityPublic";
 export const CHANGE_VISIBILITY_SUCCESS = "account/changeVisibilitySuccess";
 export const CHANGE_VISIBILITY_FAILURE = "account/changeVisibilityFailure";
+export const GET_ALL_SETS_BY_QUERY = "allSetsPage/getAllSetsByQuery";
+export const GET_ALL_SETS_BY_QUERY_SUCCESS = "allSetsPage/getAllSetsByQuerySuccess";
+export const GET_ALL_SETS_BY_QUERY_FAILURE = "allSetsPage/getAllSetsByQueryFailure";
 
 
 

@@ -365,6 +365,8 @@ const errorSnackBarReducer = (state = errorSnackBarDummyState, action) => {
             return {isShown: true, message: action.payload}
         case type.GET_ALL_SETS_FAILURE:
             return {isShown: true, message: action.payload}
+        case type.GET_ALL_SETS_BY_QUERY_FAILURE:
+            return {isShown: true, message: action.payload}
         case type.HIDE_SNACKBAR:
             return {...state, isShown: false}
         case type.LOG_OUT:

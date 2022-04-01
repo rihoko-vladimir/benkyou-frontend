@@ -1,9 +1,19 @@
 import useStyle from "./style";
-import {Backdrop, CircularProgress, Pagination, TextField, Typography} from "@mui/material";
+import {
+    Backdrop,
+    Button,
+    CircularProgress,
+    IconButton,
+    InputAdornment,
+    Pagination,
+    TextField,
+    Typography
+} from "@mui/material";
 import {useEffect, useState} from "react";
 import CardsStack from "../../../Components/CardsStack";
 import {useDispatch, useSelector} from "react-redux";
 import {getAllSets} from "../../../Redux/actions";
+import {SearchOutlined} from "@mui/icons-material";
 
 const AllSetsPageContent = () => {
     const classes = useStyle();
@@ -31,8 +41,18 @@ const AllSetsPageContent = () => {
             <div
                 className={classes.inputContainer}>
                 <TextField
+                    disabled
                     variant={"outlined"} className={classes.searchBarClass}
-                    placeholder={"Search for new sets"}/>
+                    placeholder={"Search for new sets"}
+                    endAdornment={
+                        <InputAdornment position="end">
+                            <IconButton
+                                edge="end">
+                                <SearchOutlined/>
+                            </IconButton>
+                        </InputAdornment>
+                    }
+                />
             </div>
             <CardsStack
                 cards={allSets.sets}
