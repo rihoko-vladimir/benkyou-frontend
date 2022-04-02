@@ -184,6 +184,8 @@ export const allSetsReducer = (state = dummyAllSetsState, action) => {
     switch (action.type) {
         case type.GET_ALL_SETS_SUCCESS:
             return {currentPage: action.payload.page, pages: action.payload.pages, sets: action.payload.sets};
+        case type.GET_ALL_SETS_BY_QUERY_SUCCESS:
+            return {currentPage: action.payload.page, pages: action.payload.pages, sets: action.payload.sets};
         case type.GET_ALL_SETS_FAILURE:
             return dummyAllSetsState;
         case type.LOG_OUT:

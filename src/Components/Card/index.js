@@ -91,7 +91,6 @@ const Card = (props) => {
                 </Collapse>
                 <div
                     className={classes.buttons}>
-                    <Tooltip title={"Expand / Hide"} placement={"bottom"} arrow TransitionComponent={Zoom}>
                     <span>
                         <IconButton
                             disabled={isLoading}
@@ -99,7 +98,6 @@ const Card = (props) => {
                             {isOpenButtonPressed ? <ExpandMoreOutlined/> : <ExpandLessOutlined/>}
                         </IconButton>
                         </span>
-                    </Tooltip>
                     <div
                         className={classes.actionButtons}>
                         {props.manageAble ?

@@ -6,6 +6,7 @@ import {setNewCardDescription, setNewCardName} from "../../Redux/actions";
 
 const EditKanji = () => {
     const dispatch = useDispatch();
+    const classes = useStyle();
     const cardName = useSelector(state => state.editCard.name);
     const cardDescription = useSelector(state => state.editCard.description);
     const setCardName = (newCardName) => {
@@ -14,7 +15,6 @@ const EditKanji = () => {
     const setCardDescription = (newCardDescription) => {
         dispatch(setNewCardDescription(newCardDescription))
     }
-    const classes = useStyle();
     return <div className={classes.container}>
         <TextField variant={"outlined"}
                    label={"Set name"}
