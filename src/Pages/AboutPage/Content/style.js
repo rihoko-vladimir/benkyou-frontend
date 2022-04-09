@@ -9,6 +9,12 @@ const useStyle = makeStyles({
         height: "100%",
         boxSizing: "border-box",
     },
+    contentContainer: {
+        display: "flex",
+        flexDirection: "column",
+        paddingTop: "32px",
+        paddingBottom: "32px"
+    }
 })
 
 export default useStyle;

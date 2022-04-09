@@ -47,11 +47,11 @@ const applicationItems = [
         icon: <StarOutlineOutlined/>,
         path: "/hub/all-sets"
     },
-    {
-        name: "About",
-        icon: <InfoOutlined/>,
-        path: "/hub/about"
-    }
+    // {
+    //     name: "About",
+    //     icon: <InfoOutlined/>,
+    //     path: "/hub/about"
+    // }
 ];
 
 const NavigationDrawerContent = (props) => {
