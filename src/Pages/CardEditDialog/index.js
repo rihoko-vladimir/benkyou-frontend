@@ -27,11 +27,9 @@ const EditDialog = () => {
     }
     const onSave = () => {
         dispatch(modifySet(store.getState().editCard))
-        console.log("save")
     }
     const onCreate = () =>{
         dispatch(createSet(store.getState().editCard))
-        console.log("create")
     }
     return <Dialog
         scroll={"paper"}

@@ -9,6 +9,9 @@ const AboutPageContent = () => {
                 variant={"h4"}>
                 About
             </Typography>
+            <div className={classes.contentContainer}>
+
+            </div>
         </div>
     )
 };

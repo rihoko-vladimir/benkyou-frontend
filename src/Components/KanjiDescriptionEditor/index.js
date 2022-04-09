@@ -42,67 +42,11 @@ const EditKanjiElement = (props) => {
                    onChange={(event) => setKanji(event.target.value)} inputProps={{maxLength: 1}}/>
         <div className={classes.readingsContainer}>
             <div className={classes.readings}>
-                {/*<Autocomplete
-                    multiple
-                    options={[]}
-                    defaultValue={kunyoumi}
-                    freeSolo
-                    renderTags={(
-                        value,
-                        getTagProps
-                    ) =>
-                        value.map((option, index) => {
-                            setKunyoumi(value);
-                            return (
-                                <Chip
-                                    key={index}
-                                    variant="outlined"
-                                    label={option}
-                                    {...getTagProps({ index })}
-                                />
-                            );
-                        })
-                    }
-                    renderInput={(params) => (
-                        <TextField
-                            {...params}
-                            label="Kunyomi"
-                        />
-                    )}
-                />*/}
                 <ChipInput fullWidth variant={"filled"} value={kunyoumi} allowDuplicates={false}
                            label={"Kunyomi"}
                            onAdd={addKunyoumi} onDelete={deleteKunyoumi}/>
             </div>
             <div className={classes.readings}>
-                {/*<Autocomplete
-                    multiple
-                    options={[]}
-                    defaultValue={kunyoumi}
-                    freeSolo
-                    renderTags={(
-                        value,
-                        getTagProps
-                    ) =>
-                        value.map((option, index) => {
-                            setKunyoumi(value);
-                            return (
-                                <Chip
-                                    key={index}
-                                    variant="outlined"
-                                    label={option}
-                                    {...getTagProps({ index })}
-                                />
-                            );
-                        })
-                    }
-                    renderInput={(params) => (
-                        <TextField
-                            {...params}
-                            label="Kunyomi"
-                        />
-                    )}
-                />*/}
                 <ChipInput fullWidth variant={"filled"} value={onyoumi} allowDuplicates={false}
                            label={"Onyomi"}
                            onAdd={addOnyoumi} onDelete={deleteOnyoumi}/>
