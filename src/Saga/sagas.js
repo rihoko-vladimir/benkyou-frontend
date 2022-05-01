@@ -1,10 +1,8 @@
-import {all, call, put, select, takeEvery, takeLatest} from "redux-saga/effects"
+import {all, call, put, takeEvery, takeLatest} from "redux-saga/effects"
 import * as type from "../Redux/types";
 import * as api from "../Api/api";
 import * as actions from "../Redux/actions";
 import {convertSetFromApplicationToRequest, convertSetFromRequestToApplication} from "../Api/converters";
-
-const getTokens = state => state.applicationTokens;
 
 export default function* rootSaga() {
     yield all([
@@ -14,7 +12,6 @@ export default function* rootSaga() {
         usernameCheckWatcher(),
         emailCodeWatcher(),
         getSetsWatcher(),
-        saveSetWatcher(),
         createSetWatcher(),
         removeSetWatcher(),
         modifySetWatcher(),
@@ -51,10 +48,6 @@ function* getSetsWatcher() {
     yield takeLatest(type.GET_USER_SETS, setsWorker)
 }
 
-function* saveSetWatcher() {
-    yield takeLatest(type.SAVE_SET, saveSetWorker)
-}
-
 function* createSetWatcher() {
     yield takeLatest(type.CREATE_SET, createSetWorker)
 }
@@ -79,349 +72,198 @@ function* changeUserInfoWatcher() {
     yield takeLatest(type.CHANGE_USER_ACCOUNT, changeUserInfoWorker)
 }
 
-function* getAllSetsWatcher(){
+function* getAllSetsWatcher() {
     yield takeLatest(type.GET_ALL_SETS, getAllSetsWorker)
 }
 
-function* changeVisibilityWatcher(){
+function* changeVisibilityWatcher() {
     yield takeLatest(type.CHANGE_VISIBILITY, changeVisibilityWorker);
 }
 
-function* getAllSetsByQueryWatcher(){
+function* getAllSetsByQueryWatcher() {
     yield takeLatest(type.GET_ALL_SETS_BY_QUERY, getAllSetsByQueryWorker)
 }
 
-function* getAllSetsByQueryWorker(action){
-    yield put(actions.startLoading())
+function* getAllSetsByQueryWorker(action) {
     const {searchQuery, pageNumber} = action.payload;
-    let tokens = yield select(getTokens);
-    try {
-        const response = yield call(api.getAllSetsByQuery, {pageNumber, pageSize: 8, accessToken: tokens.access, query: searchQuery});
-        response.data.sets = response.data.sets.map(
-            unmappedSet => convertSetFromRequestToApplication(unmappedSet));
-        yield put(actions.getAllSetsByQuerySuccess(response.data));
-    } catch (e) {
-        if (e.response.status === 401) {
-            yield tokensWorker()
-            tokens = yield select(getTokens);
-            try {
-                const response = yield call(api.getAllSetsByQuery, {pageNumber, pageSize: 8, accessToken: tokens.access, query: searchQuery});
-                response.data.sets = response.data.sets.map(
-                    unmappedSet => convertSetFromRequestToApplication(unmappedSet));
-                yield put(actions.getAllSetsByQuerySuccess(response.data));
-            } catch (e) {
-                yield put(actions.getAllSetsByQueryFailure(e.response.data.errorMessage))
-            }
-        } else {
-            yield put(actions.getAllSetsByQueryFailure(e.response.data.errorMessage));
-        }
-    }
-    yield put(actions.finishLoading());
+    yield requestWorker(
+        () => call(api.getAllSetsByQuery, {pageNumber, pageSize: 8, query: searchQuery}),
+        data => {
+            data.sets = data.sets.map(
+                unmappedSet => convertSetFromRequestToApplication(unmappedSet));
+            return put(actions.getAllSetsByQuerySuccess(data))
+        },
+        errorMessage => put(actions.getAllSetsByQueryFailure(errorMessage))
+    )
 }
 
-function* changeVisibilityWorker(action){
-    yield put(actions.startLoading())
+function* changeVisibilityWorker(action) {
     const isPublic = action.payload;
-    let tokens = yield select(getTokens);
-    try {
-        yield call(api.changeVisibility, {accessToken: tokens.access, isPublic: isPublic});
-        yield put(actions.changeVisibilitySuccess(isPublic));
-    } catch (e) {
-        if (e.response.status === 401) {
-            yield tokensWorker()
-            tokens = yield select(getTokens);
-            try {
-                yield call(api.changeVisibility, {accessToken: tokens.access, isPublic: isPublic});
-                yield put(actions.changeVisibilitySuccess(isPublic));
-            } catch (e) {
-                yield put(actions.changeVisibilityFailure(e.response.data.errorMessage))
-            }
-        } else {
-            yield put(actions.changeVisibilityFailure(e.response.data.errorMessage));
-        }
-    }
-    yield put(actions.finishLoading());
+    yield requestWorker(
+        () => call(api.changeVisibility, {isPublic}),
+        _ => put(actions.changeVisibilitySuccess(isPublic)),
+        errorMessage => put(actions.changeVisibilityFailure(errorMessage))
+    )
 }
 
-function* getAllSetsWorker(action){
-    yield put(actions.startLoading())
+function* getAllSetsWorker(action) {
     const pageNumber = action.payload;
-    let tokens = yield select(getTokens);
-    try {
-        const response = yield call(api.getAllSets, {pageNumber, pageSize: 8, accessToken: tokens.access});
-        response.data.sets = response.data.sets.map(
-            unmappedSet => convertSetFromRequestToApplication(unmappedSet));
-        yield put(actions.getAllSetsSuccess(response.data));
-    } catch (e) {
-        if (e.response.status === 401) {
-            yield tokensWorker()
-            tokens = yield select(getTokens);
-            try {
-                const response = yield call(api.getAllSets, {pageNumber, pageSize: 8, accessToken: tokens.access});
-                response.data.sets = response.data.sets.map(
-                    unmappedSet => convertSetFromRequestToApplication(unmappedSet));
-                yield put(actions.getAllSetsSuccess(response.data));
-            } catch (e) {
-                yield put(actions.getAllSetsFailure(e.response.data.errorMessage))
-            }
-        } else {
-            yield put(actions.getAllSetsFailure(e.response.data.errorMessage));
-        }
-    }
-    yield put(actions.finishLoading());
+    yield requestWorker(
+        () => call(api.getAllSets, {pageNumber, pageSize: 8}),
+        data => {
+            data.sets = data.sets.map(
+                unmappedSet => convertSetFromRequestToApplication(unmappedSet));
+            return put(actions.getAllSetsSuccess(data))
+        },
+        errorMessage => put(actions.getAllSetsFailure(errorMessage))
+    )
 }
 
 function* changeUserInfoWorker(action) {
-    yield put(actions.startLoading())
     const {firstName, lastName, birthday, about, avatar} = action.payload;
-    let tokens = yield select(getTokens);
-    try {
-        const response = yield call(api.updateUserInfo, {
-            accessToken: tokens.access,
+    yield requestWorker(
+        () => call(api.updateUserInfo, {
             firstName,
             lastName,
             birthday,
             about,
             avatar
-        });
-        yield put(actions.changeUserAccountInfoSuccess({
-            userName: response.data.userName,
-            firstName: response.data.firstName,
-            lastName: response.data.lastName,
-            birthday: response.data.birthday,
-            about: response.data.about,
-            avatarUrl: response.data.avatarUrl
-        }));
-    } catch (e) {
-        if (e.response.status === 401) {
-            yield tokensWorker()
-            tokens = yield select(getTokens);
-            try {
-                const response = yield call(api.updateUserInfo, {
-                    accessToken: tokens.access,
-                    firstName,
-                    lastName,
-                    birthday,
-                    about,
-                    avatar
-                });
-                yield put(actions.changeUserAccountInfoSuccess({
-                    userName: response.userName,
-                    firstName: response.firstName,
-                    lastName: response.lastName,
-                    birthday: response.birthday,
-                    about: response.about,
-                    avatarUrl: response.avatarUrl
-                }));
-            } catch (e) {
-                yield put(actions.changeUserAccountInfoFailure(e.response.data.errorMessage))
-            }
-        } else {
-            yield put(actions.changeUserAccountInfoFailure(e.response.data.errorMessage));
-        }
-    }
-    yield put(actions.finishLoading());
+        }),
+        data => put(actions.changeUserAccountInfoSuccess({
+            userName: data.userName,
+            firstName: data.firstName,
+            lastName: data.lastName,
+            birthday: data.birthday,
+            about: data.about,
+            avatarUrl: data.avatarUrl
+        })),
+        errorMessage => put(actions.changeUserAccountInfoFailure(errorMessage))
+    )
 }
 
 function* resetSetPasswordWorker(action) {
-    yield put(actions.startLoading())
     const {password, email, token} = action.payload;
-    try {
-        yield call(api.resetPasswordConfirm, {password, email, token})
-        yield put(actions.resetSetNewPasswordSuccess())
-    } catch (e) {
-        yield put(actions.resetSetNewPasswordFailure(e.response.data.errorMessage))
-    }
-    yield put(actions.finishLoading())
+    yield requestWorker(
+        () => call(api.resetPasswordConfirm, {password, email, token}),
+        _ => put(actions.resetSetNewPasswordSuccess()),
+        errorMessage => put(actions.resetSetNewPasswordFailure(errorMessage))
+    )
 }
 
 function* resetSendWorker(action) {
-    yield put(actions.startLoading())
-    try {
-        yield call(api.resetPassword, {email: action.payload})
-        yield put(actions.resetPasswordSendSuccess())
-    } catch (e) {
-        yield put(actions.resetPasswordSendFailure(e.response.data.errorMessage))
-    }
-    yield put(actions.finishLoading())
+    yield requestWorker(
+        () => call(api.resetPassword, {email: action.payload}),
+        _ => put(actions.resetPasswordSendSuccess()),
+        errorMessage => put(actions.resetPasswordSendFailure(errorMessage))
+    )
 }
 
 function* modifySetWorker(action) {
-    yield put(actions.startLoading())
-    let tokens = yield select(getTokens);
-    const modifiedSet = action.payload;
-    const requestSet = convertSetFromApplicationToRequest(modifiedSet);
-    try {
-        yield call(api.modifySet, {accessToken: tokens.access, setId: modifiedSet.id, ...requestSet});
-        yield put(actions.modifySetSuccess(modifiedSet));
-    } catch (e) {
-        if (e.response.status === 401) {
-            yield tokensWorker()
-            tokens = yield select(getTokens);
-            try {
-                yield call(api.modifySet, {accessToken: tokens.access, setId: modifiedSet.id, ...requestSet});
-                yield put(actions.modifySetSuccess(modifiedSet));
-            } catch (e) {
-                yield put(actions.modifySetFailure(e.response.data.errorMessage))
-            }
-        } else {
-            yield put(actions.modifySetFailure(e.response.data.errorMessage));
-        }
-    }
-    yield put(actions.finishLoading());
+    yield requestWorker(
+        () => call(api.modifySet, {setId: action.payload.id, ...convertSetFromApplicationToRequest(action.payload)}),
+        _ => put(actions.modifySetSuccess(action.payload)),
+        errorMessage => put(actions.modifySetFailure(errorMessage))
+    )
 }
 
 function* removeSetWorker(action) {
-    yield put(actions.startLoading())
-    let tokens = yield select(getTokens);
-    const setId = action.payload;
-    try {
-        const result = yield call(api.removeSet, {accessToken: tokens.access, setId: setId});
-        console.log(result);
-        yield put(actions.removeSetSuccess(setId));
-    } catch (e) {
-        if (e.response.status === 401) {
-            yield tokensWorker()
-            tokens = yield select(getTokens);
-            try {
-                yield call(api.removeSet, {accessToken: tokens.access, setId});
-                yield put(actions.removeSetSuccess(setId));
-            } catch (e) {
-                yield put(actions.removeSetFailure(e.response.data.errorMessage))
-            }
-        } else {
-            yield put(actions.removeSetFailure(e.response.data.errorMessage));
-        }
-    }
-    yield put(actions.finishLoading());
+    yield requestWorker(
+        () => call(api.removeSet, {setId: action.payload}),
+        _ => put(actions.removeSetSuccess(action.payload)),
+        errorMessage => put(actions.removeSetFailure(errorMessage))
+    )
 }
 
 function* createSetWorker(action) {
-    yield put(actions.startLoading())
-    let tokens = yield select(getTokens);
-    const createdSet = action.payload;
-    console.log(createdSet)
-    const requestSet = convertSetFromApplicationToRequest(createdSet);
-    try {
-        const result = yield call(api.createNewSet, {accessToken: tokens.access, ...requestSet});
-        yield put(actions.createSetSuccess(convertSetFromRequestToApplication(result.data)));
-    } catch (e) {
-        if (e.response.status === 401) {
-            yield tokensWorker()
-            tokens = yield select(getTokens);
-            try {
-                const result = yield call(api.createNewSet, {accessToken: tokens.access, ...requestSet});
-                yield put(actions.createSetSuccess(convertSetFromRequestToApplication(result.data)));
-            } catch (e) {
-                yield put(actions.createSetFailure(e.response.data.errorMessage))
-            }
-        } else {
-            yield put(actions.createSetFailure(e.response.data.errorMessage));
-        }
-    }
-    yield put(actions.finishLoading());
-}
-
-function* saveSetWorker(action) {
-
-}
-
-function* tokensWorker() {
-    let tokens = yield select(getTokens);
-    try {
-        const result = yield call(api.refreshTokens, {refreshToken: tokens.refresh});
-        yield put(actions.getNewTokensSuccess({access: result.data.accessToken, refresh: result.data.refreshToken}))
-    } catch (e) {
-        yield put(actions.getNewTokensFailure(e.response.data.errorMessage));
-    }
+    yield requestWorker(
+        () => {
+            const requestSet = convertSetFromApplicationToRequest(action.payload);
+            return call(api.createNewSet, {...requestSet})
+        },
+        data => put(actions.createSetSuccess(convertSetFromRequestToApplication(data))),
+        errorMessage => put(actions.createSetFailure(errorMessage))
+    )
 }
 
 function* loginWorker(action) {
-    yield put(actions.startLoading())
-    try {
-        const result = yield call(api.login, {login: action.payload.login, password: action.payload.password});
-        const userInfo = yield call(api.getAccountInfo, {accessToken: result.data.accessToken})
-        const setsResult = yield call(api.getUserSets, {accessToken: result.data.accessToken});
-        yield put(actions.tokenSuccess(result.data));
-        yield put(actions.loginSuccess(userInfo.data));
-        yield put(actions.setUserSetsSuccess(setsResult.data.map(
-            unmappedSet => convertSetFromRequestToApplication(unmappedSet))));
-    } catch (e) {
-        yield put(actions.loginFailure(e.response.data.errorMessage));
-    }
-    yield put(actions.finishLoading())
+    yield requestWorker(
+        () => call(api.login, {login: action.payload.login, password: action.payload.password}),
+        function* (_) {
+            const userInfo = yield call(api.getAccountInfo)
+            const setsResult = yield call(api.getUserSets);
+            yield put(actions.loginSuccess(userInfo.data));
+            yield put(actions.setUserSetsSuccess(setsResult.data.map(
+                unmappedSet => convertSetFromRequestToApplication(unmappedSet))));
+        },
+        errorMessage => put(actions.loginFailure(errorMessage))
+    )
 }
 
 function* checkUserNameWorker(action) {
-    yield put(actions.startLoading())
-    try {
-        yield call(api.checkUserName, {userName: action.payload})
-        yield put(actions.checkUserNameSuccess())
-    } catch (e) {
-        yield put(actions.checkUserNameFailure(e.response.data.errorMessage));
-    }
-    yield put(actions.finishLoading());
+    yield requestWorker(
+        () => call(api.checkUserName, {userName: action.payload}),
+        _ => put(actions.checkUserNameSuccess()),
+        errorMessage => put(actions.checkUserNameFailure(errorMessage))
+    )
 }
 
 function* checkEmailWorker(action) {
-    yield put(actions.startLoading())
-    try {
-        yield call(api.checkEmail, {email: action.payload})
-        yield put(actions.checkEmailSuccess())
-    } catch (e) {
-        yield put(actions.checkEmailFailure(e.response.data.errorMessage));
-    }
-    yield put(actions.finishLoading());
+    yield requestWorker(
+        () => call(api.checkEmail, {email: action.payload}),
+        _ => put(actions.checkEmailSuccess()),
+        errorMessage => put(actions.checkEmailFailure(errorMessage)))
 }
 
 function* registerWorker(action) {
-    yield put(actions.startLoading())
-    try {
-        const result = yield call(api.register, {...action.payload});
-        yield put(actions.registerSuccess(result.data));
-    } catch (e) {
-        yield put(actions.registerFailure(e.response.data.errorMessage));
-    }
-    yield put(actions.finishLoading());
+    yield requestWorker(
+        () => call(api.register, {...action.payload}),
+        data => put(actions.registerSuccess(data)),
+        errorMessage => put(actions.registerFailure(errorMessage)))
 }
 
 function* emailCodeWorker(action) {
+    yield requestWorker(
+        () => call(api.sendEmailCode, {emailCode: action.payload.emailCode, userId: action.payload.userId}),
+        code => put(actions.sendEmailCodeSuccess(code)),
+        _ => put(actions.sendEmailCodeFailure()))
+}
+
+function* setsWorker() {
+    yield requestWorker(
+        () => call(api.getUserSets),
+        data => put(actions.setUserSetsSuccess(data.map(
+            unmappedSet => convertSetFromRequestToApplication(unmappedSet)))),
+        errorMessage => put(actions.setUserSetsFailure(errorMessage)))
+}
+
+function* requestWorker(apiCallFunction, onSuccess, onFailure) {
     yield put(actions.startLoading())
     try {
-        const result = yield call(api.sendEmailCode, {
-            emailCode: action.payload.emailCode,
-            userId: action.payload.userId
-        });
-        yield put(actions.sendEmailCodeSuccess(result.data));
+        const result = yield apiCallFunction();
+        yield onSuccess(result?.data);
     } catch (e) {
-        console.log(e)
-        yield put(actions.sendEmailCodeFailure());
+        if (e.response.status === 401) {
+            yield tokensWorker()
+            try {
+                const result = yield apiCallFunction();
+                yield onSuccess(result?.data);
+            } catch (e) {
+                yield onFailure(e.response?.data?.errorMessage)
+            }
+        } else {
+            yield onFailure(e.response?.data?.errorMessage)
+        }
     }
     yield put(actions.finishLoading());
 }
 
-function* setsWorker() {
-    yield put(actions.startLoading())
-    let tokens = yield select(getTokens);
+function* tokensWorker() {
     try {
-        const result = yield call(api.getUserSets, {accessToken: tokens.access});
-        yield put(actions.setUserSetsSuccess(result.data.map(
-            unmappedSet => convertSetFromRequestToApplication(unmappedSet))));
+        yield call(api.refreshTokens);
+        yield put(actions.getNewTokensSuccess())
     } catch (e) {
-        if (e.response.status === 401) {
-            yield tokensWorker()
-            tokens = yield select(getTokens);
-            try {
-                const result = yield call(api.getUserSets, {accessToken: tokens.access});
-                yield put(actions.setUserSetsSuccess(result.data.map(
-                    unmappedSet => convertSetFromRequestToApplication(unmappedSet))));
-            } catch (e) {
-                yield put(actions.setUserSetsFailure(e.response.data.errorMessage))
-            }
-        } else {
-            yield put(actions.setUserSetsFailure(e.response.data.errorMessage));
-        }
+        console.log(e)
+        yield put(actions.getNewTokensFailure(e.response.data.errorMessage));
     }
-    yield put(actions.finishLoading());
 }
 

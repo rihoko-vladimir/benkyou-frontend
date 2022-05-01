@@ -102,11 +102,6 @@ export const finishLoading = () => ({
     type: types.FINISH_LOADING
 })
 
-export const tokenSuccess = (tokens) => ({
-    type: types.TOKEN_SUCCESS,
-    payload: tokens
-})
-
 export const loginFailure = (errorMessage) => ({
     type: types.LOG_IN_FAILURE,
     payload: errorMessage
@@ -251,11 +246,6 @@ export const createSetFailure = () => ({
     type: types.CREATE_SET_FAILURE
 })
 
-export const showSnackbar = (message) => ({
-    type: types.SHOW_SNACKBAR,
-    payload: message
-})
-
 export const hideSnackbar = () => ({
     type: types.HIDE_SNACKBAR
 })
@@ -311,10 +301,6 @@ export const returnToUsername = () => ({
     type: types.RETURN_TO_USERNAME
 })
 
-// export const emailConfirmationRequired = () => ({
-//     type: types.EMAIL_CONFIRMATION_REQUIRED
-// })
-
 export const finishLogin = () => ({
     type: types.FINISH_LOGIN
 })
@@ -333,12 +319,8 @@ export const setUserSetsFailure = (errorMessage) => ({
     payload: errorMessage
 })
 
-export const getNewTokensSuccess = (tokens) => ({
-    type: types.GET_NEW_TOKENS_SUCCESS,
-    payload: {
-        access: tokens.access,
-        refresh: tokens.refresh
-    }
+export const getNewTokensSuccess = () => ({
+    type: types.GET_NEW_TOKENS_SUCCESS
 })
 
 export const getNewTokensFailure = () => ({
@@ -398,11 +380,6 @@ export const changeLastName = (lastName) =>({
     payload: lastName
 })
 
-export const changeUserName = (userName) =>({
-    type:types.CHANGE_USER_ACCOUNT_USER_NAME,
-    payload: userName
-})
-
 export const changeBirthday = (birthday) =>({
     type:types.CHANGE_USER_ACCOUNT_BIRTHDAY,
     payload: birthday
@@ -411,16 +388,6 @@ export const changeBirthday = (birthday) =>({
 export const changeAbout = (about) =>({
     type:types.CHANGE_USER_ACCOUNT_ABOUT,
     payload: about
-})
-
-export const changeEmail = (email) =>({
-    type:types.CHANGE_USER_ACCOUNT_EMAIL,
-    payload: email
-})
-
-export const changePassword = (password) =>({
-    type:types.CHANGE_USER_ACCOUNT_PASSWORD,
-    payload: password
 })
 
 export const changeValue = (value) =>({

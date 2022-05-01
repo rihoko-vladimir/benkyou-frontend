@@ -1,6 +1,5 @@
 import * as type from "./types";
 import {combineReducers} from "redux";
-import Card from "../Models/card";
 import Kanji from "../Models/kanji";
 
 const dummyAccountState = {
@@ -48,8 +47,6 @@ const emailCodeRequestDefault = {status: undefined, message: undefined}
 
 const resultDefault = {success: false, message: undefined}
 
-const tokensDefaultState = {access: undefined, refresh: undefined};
-
 const errorSnackBarDummyState = {isShown: false, message: undefined};
 
 const defaultReset = {status: undefined, message: undefined}
@@ -66,28 +63,6 @@ const defaultAccountPageState = {
     tabValue: "1",
     base64: ""
 };
-
-const dummyCardsState = [new Card(1, 1, "Default card", "This is my test description", "Me", [
-    new Kanji("日1", ["ニチ1", "ジツ1", "ニ1"], ["ひ1", "は1"]),
-    new Kanji("日2", ["ニチ2", "ジツ2", "ニ2"], ["ひ2", "は2"]),
-    new Kanji("日3", ["ニチ3", "ジツ3", "ニ3"], ["ひ3", "は3"]),
-    new Kanji("日4", ["ニチ4", "ジツ4", "ニ4"], ["ひ4", "は4"]),
-    new Kanji("日5", ["ニチ5", "ジツ5", "ニ5"], ["ひ5", "は5"]),
-    new Kanji("日6", ["ニチ6", "ジツ6", "ニ6"], ["ひ6", "は6"]),]),
-    new Card(2, 1, "Default card", "This is my test description", "Me", [
-        new Kanji("日1", ["ニチ1", "ジツ1", "ニ1"], ["ひ1", "は1"]),
-        new Kanji("日2", ["ニチ2", "ジツ2", "ニ2"], ["ひ2", "は2"]),
-        new Kanji("日3", ["ニチ3", "ジツ3", "ニ3"], ["ひ3", "は3"]),
-        new Kanji("日4", ["ニチ4", "ジツ4", "ニ4"], ["ひ4", "は4"]),
-        new Kanji("日5", ["ニチ5", "ジツ5", "ニ5"], ["ひ5", "は5"]),
-        new Kanji("日6", ["ニチ6", "ジツ6", "ニ6"], ["ひ6", "は6"]),]),
-    new Card(3, 1, "Default card", "This is my test description", "Me", [
-        new Kanji("日1", ["ニチ1", "ジツ1", "ニ1"], ["ひ1", "は1"]),
-        new Kanji("日2", ["ニチ2", "ジツ2", "ニ2"], ["ひ2", "は2"]),
-        new Kanji("日3", ["ニチ3", "ジツ3", "ニ3"], ["ひ3", "は3"]),
-        new Kanji("日4", ["ニチ4", "ジツ4", "ニ4"], ["ひ4", "は4"]),
-        new Kanji("日5", ["ニチ5", "ジツ5", "ニ5"], ["ひ5", "は5"]),
-        new Kanji("日6", ["ニチ6", "ジツ6", "ニ6"], ["ひ6", "は6"]),])];
 
 const dummyAllSetsState = {
     sets: [],
@@ -149,7 +124,7 @@ const accountReducer = (state = dummyAccountState, action) => {
     }
 }
 
-const myCardsReducer = (state = dummyCardsState, action) => {
+const myCardsReducer = (state = [], action) => {
     switch (action.type) {
         case type.CREATE_SET_SUCCESS:
             return [...state, action.payload]
@@ -535,23 +510,6 @@ const resetPasswordSetReducer = (state = resultDefault, action) => {
     }
 }
 
-const tokensReducer = (state = tokensDefaultState, action) => {
-    switch (action.type) {
-        case type.TOKEN_SUCCESS:
-            return {access: action.payload.accessToken, refresh: action.payload.refreshToken}
-        case type.TOKEN_FAILURE:
-            return tokensDefaultState;
-        case type.GET_NEW_TOKENS_SUCCESS:
-            return {access: action.payload.access, refresh: action.payload.refresh}
-        case type.GET_NEW_TOKENS_FAILURE:
-            return tokensDefaultState;
-        case type.LOG_OUT:
-            return tokensDefaultState;
-        default:
-            return state;
-    }
-}
-
 const accountInfoResultReducer = (state = defaultReset, action) => {
     switch (action.type) {
         case type.CHANGE_USER_ACCOUNT_SUCCESS:
@@ -639,7 +597,6 @@ const accountPageStateReducer = (state = defaultAccountPageState, action) => {
             return state;
     }
 }
-
 export default combineReducers({
     account: accountReducer,
     myCards: myCardsReducer,
@@ -660,7 +617,6 @@ export default combineReducers({
     registration: registrationReducer,
     emailConfirmation: emailConfirmationResultReducer,
     login: loginRequestReducer,
-    applicationTokens: tokensReducer,
     errorSnackbar: errorSnackBarReducer,
     resetSend: resetPasswordResultReducer,
     resetSetPassword: resetPasswordSetReducer,
