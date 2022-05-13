@@ -1,3 +1,4 @@
+export const ADMINISTRATOR_PATH = "administrator";
 export const RESET_PASSWORD_CONFIRM = "reset-password-confirm";
 export const RESET_SENT = "email-sent";
 export const FORGOT_PATH = "forgot-password";

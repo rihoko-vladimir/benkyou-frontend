@@ -78,7 +78,7 @@ export const login = (accountCredentials) => ({
     payload: accountCredentials
 });
 
-export const loginSuccess = ({id, userName, firstName, lastName, birthday, about, avatarUrl, email, isPublic}) => (
+export const loginSuccess = ({id, userName, firstName, lastName, birthday, about, avatarUrl, email, isPublic, role}) => (
     {
         type: types.LOG_IN_SUCCESS,
         payload: {
@@ -90,7 +90,8 @@ export const loginSuccess = ({id, userName, firstName, lastName, birthday, about
             about,
             avatarUrl,
             email,
-            isPublic
+            isPublic,
+            role
         }
     })
 

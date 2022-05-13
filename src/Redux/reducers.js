@@ -1,6 +1,7 @@
 import * as type from "./types";
 import {combineReducers} from "redux";
 import Kanji from "../Models/kanji";
+import userRoles from "../Models/userRoles";
 
 const dummyAccountState = {
     accountId: undefined,
@@ -12,7 +13,8 @@ const dummyAccountState = {
     accountImageUrl: undefined,
     email: undefined,
     isPublic: false,
-    isLoggedIn: false
+    isLoggedIn: false,
+    userRole: userRoles.user
 }
 
 export const isLoading = false;
@@ -99,7 +101,8 @@ const accountReducer = (state = dummyAccountState, action) => {
                 accountImageUrl: action.payload.avatarUrl,
                 email: action.payload.email,
                 isPublic: action.payload.isPublic,
-                isLoggedIn: true
+                isLoggedIn: true,
+                userRole: action.payload.role
             }
         case type.CHANGE_USER_ACCOUNT_SUCCESS:
             return {

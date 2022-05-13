@@ -16,12 +16,11 @@ import {
 import {useLocation, useNavigate} from "react-router";
 import {useState} from "react";
 import {
-    AccountCircleOutlined,
+    AccountCircleOutlined, AdminPanelSettingsOutlined,
     ArrowBackOutlined,
     ExpandLessOutlined,
     ExpandMoreOutlined,
     HomeOutlined,
-    InfoOutlined,
     SettingsOutlined,
     StarOutlined,
     StarOutlineOutlined
@@ -30,6 +29,7 @@ import useDrawerStyles from "../style";
 import PropTypes from "prop-types";
 import {useDispatch} from "react-redux";
 import {logout} from "../../../Redux/actions";
+import userRoles from "../../../Models/userRoles";
 
 const applicationItems = [
     {
@@ -80,6 +80,9 @@ const NavigationDrawerContent = (props) => {
 
     const navigateToAccountSettings =
         () => navigate("/hub/account");
+
+    const navigateToAdminPage =
+        () => navigate("/hub/administrator")
 
     return (
         <Drawer variant={"permanent"}
@@ -160,6 +163,16 @@ const NavigationDrawerContent = (props) => {
                             <ListItemText
                                 primary={"Account preferences"}/>
                         </ListItemButton>
+                        {props.userRole === userRoles.admin ?
+                            <ListItemButton
+                                className={classes.accountItems}
+                                onClick={navigateToAdminPage}>
+                                <ListItemIcon>
+                                    <AdminPanelSettingsOutlined/>
+                                </ListItemIcon>
+                                <ListItemText
+                                    primary={"Administrator page"}/>
+                            </ListItemButton> : null}
                         <ListItemButton
                             onClick={onLogoutClicked}
                             className={classes.accountItems}>
@@ -180,6 +193,7 @@ NavigationDrawerContent.propTypes = {
     accountFirstName: PropTypes.string.isRequired,
     accountLastName: PropTypes.string.isRequired,
     accountImage: PropTypes.string.isRequired,
+    userRole: PropTypes.string.isRequired
 }
 
 export default NavigationDrawerContent;

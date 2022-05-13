@@ -18,6 +18,7 @@ import HubComponent from "../Components/Hub";
 import ForgotPasswordForm from "../Components/Auth/ForgotPasswordForm";
 import ResetLinkSent from "../Components/Auth/ResetLinkSent";
 import ResetPasswordForm from "../Components/Auth/ResetPasswordForm";
+import AdminPage from "../Pages/AdminPage";
 
 const RoutingComponent = () => {
     return <Routes location={window.location} key={window.location.pathname}>
@@ -42,6 +43,8 @@ const RoutingComponent = () => {
                    element={<AboutPageContent/>}/>
             <Route path={paths.ACCOUNT_PATH}
                    element={<AccountPage/>}/>
+            <Route path={paths.ADMINISTRATOR_PATH}
+                   element={<AdminPage/>}/>
         </Route>
         <Route path={paths.STUDY_PATH}>
             {/*<Route index element={<StudyPage/>}/>*/}
