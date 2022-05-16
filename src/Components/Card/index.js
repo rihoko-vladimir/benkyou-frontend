@@ -1,11 +1,11 @@
 import useStyle from "./style";
 import {Button, Collapse, IconButton, Tooltip, Typography, Zoom} from "@mui/material";
 import PropTypes from "prop-types";
-import {Close, ExpandLessOutlined, ExpandMoreOutlined} from "@mui/icons-material";
+import {Close, ExpandLessOutlined, ExpandMoreOutlined, FlagOutlined} from "@mui/icons-material";
 import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router";
-import {createSet, openEditDialog, removeSet, selectKanjiList} from "../../Redux/actions";
+import {createSet, openEditDialog, removeSet, reportSet, selectKanjiList} from "../../Redux/actions";
 import KanjiInfo from "../KanjiInfo";
 
 const Card = (props) => {
@@ -34,6 +34,10 @@ const Card = (props) => {
     const onDeleteClicked = () => {
         setDeleteClicked(true);
         dispatch(removeSet(props.card.id))
+    }
+
+    const onReportClicked = () => {
+        dispatch(reportSet(props.card.id));
     }
 
     return (
@@ -67,7 +71,9 @@ const Card = (props) => {
                     {/*</Link>*/}
                     {/*</Typography>*/}
                 </div>
-                {props.manageAble ? <Tooltip title={"Remove set"} placement={"top"} arrow TransitionComponent={Zoom}>
+                <div className={classes.topButtons}>
+                    {props.manageAble ?
+                        <Tooltip title={"Remove set"} placement={"top"} arrow TransitionComponent={Zoom}>
                     <span>
                     <IconButton
                         disabled={isLoading}
@@ -75,7 +81,18 @@ const Card = (props) => {
                         <Close/>
                     </IconButton>
                         </span>
-                </Tooltip> : null}
+                        </Tooltip> : null}
+                    {!props.manageAble ?
+                        <Tooltip title={"Report set"} placement={"right"} arrow TransitionComponent={Zoom}>
+                    <span>
+                    <IconButton
+                        disabled={isLoading}
+                        onClick={onReportClicked}>
+                        <FlagOutlined/>
+                    </IconButton>
+                        </span>
+                        </Tooltip> : null}
+                </div>
             </div>
             <div
                 className={classes.lowerCardContent}>

@@ -1,3 +1,4 @@
+export const REPORT_SET = "allCards/reportSet";
 export const EDIT_SET_SUCCESS = "myCards/editSetSuccess";
 export const EDIT_SET_FAILURE = "myCards/editSetFailure";
 export const GET_NEW_TOKENS_SUCCESS = "tokens/getNewTokensSuccess";
@@ -89,6 +90,8 @@ export const CHANGE_VISIBILITY_FAILURE = "account/changeVisibilityFailure";
 export const GET_ALL_SETS_BY_QUERY = "allSetsPage/getAllSetsByQuery";
 export const GET_ALL_SETS_BY_QUERY_SUCCESS = "allSetsPage/getAllSetsByQuerySuccess";
 export const GET_ALL_SETS_BY_QUERY_FAILURE = "allSetsPage/getAllSetsByQueryFailure";
-
+export const ADMIN_GET_ALL_SETS_COUNT = "admin/gerAllSetsCount";
+export const ADMIN_GET_ALL_SETS_COUNT_SUCCESS = "admin/gerAllSetsCountSuccess";
+export const ADMIN_GET_ALL_SETS_COUNT_FAILURE = "admin/gerAllSetsCountFailure";
 
 

@@ -20,7 +20,8 @@ export default function* rootSaga() {
         changeUserInfoWatcher(),
         getAllSetsWatcher(),
         changeVisibilityWatcher(),
-        getAllSetsByQueryWatcher()
+        getAllSetsByQueryWatcher(),
+        getAdminAllSetsCountWatcher()
     ])
 }
 
@@ -82,6 +83,20 @@ function* changeVisibilityWatcher() {
 
 function* getAllSetsByQueryWatcher() {
     yield takeLatest(type.GET_ALL_SETS_BY_QUERY, getAllSetsByQueryWorker)
+}
+
+function* getAdminAllSetsCountWatcher() {
+    yield takeLatest(type.ADMIN_GET_ALL_SETS_COUNT, getAdminAllSetsCountWorker)
+}
+
+function* getAdminAllSetsCountWorker() {
+    yield requestWorker(
+        () => call(api.getSetsCount()),
+        data => {
+            return put(actions.getAdminAllSetsCountSuccess(data.count))
+        },
+        errorMessage => put(actions.getAdminAllSetsCountFailure(errorMessage))
+    )
 }
 
 function* getAllSetsByQueryWorker(action) {
@@ -248,10 +263,10 @@ function* requestWorker(apiCallFunction, onSuccess, onFailure) {
                 const result = yield apiCallFunction();
                 yield onSuccess(result?.data);
             } catch (e) {
-                yield onFailure(e.response?.data?.errorMessage)
+                yield onFailure(e?.response?.data?.errorMessage)
             }
         } else {
-            yield onFailure(e.response?.data?.errorMessage)
+            yield onFailure(e?.response?.data?.errorMessage)
         }
     }
     yield put(actions.finishLoading());

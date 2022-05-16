@@ -62,5 +62,9 @@ const useStyle = makeStyles({
         justifyContent:"space-between",
         alignItems:"start",
     },
+    topButtons:{
+        display:"flex",
+        flexDirection: "column"
+    }
 });
 export default useStyle;

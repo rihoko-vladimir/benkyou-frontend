@@ -61,3 +61,9 @@ export const checkEmail = async ({email}) =>
 
 export const checkUserName = async ({userName}) =>
     await axios.get(`${baseUrl}/api/auth/check-username?userName=${userName}`);
+
+export const getUserCount = async () =>
+    await axios.get(`${baseUrl}/api/admin/usersCount`, config);
+
+export const getSetsCount = async () =>
+    await axios.get(`${baseUrl}/api/admin/setsCount`, config);

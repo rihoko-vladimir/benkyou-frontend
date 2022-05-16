@@ -88,6 +88,14 @@ const snackbarDummyState = {
     message: "",
 };
 
+const adminDummyState = {
+    setsCount : 0,
+    reportsCount : 0,
+    usersCount: 0,
+    users: [],
+    sets: []
+}
+
 const accountReducer = (state = dummyAccountState, action) => {
     switch (action.type) {
         case type.LOG_IN_SUCCESS:
@@ -347,6 +355,8 @@ const errorSnackBarReducer = (state = errorSnackBarDummyState, action) => {
             return {isShown: true, message: action.payload}
         case type.GET_ALL_SETS_BY_QUERY_FAILURE:
             return {isShown: true, message: action.payload}
+        case type.ADMIN_GET_ALL_SETS_COUNT_FAILURE:
+            return {isShown: true, message: action.payload}
         case type.HIDE_SNACKBAR:
             return {...state, isShown: false}
         case type.LOG_OUT:
@@ -598,6 +608,13 @@ const accountPageStateReducer = (state = defaultAccountPageState, action) => {
             return {...state, base64: action.payload}
         default:
             return state;
+    }
+}
+
+const adminPageReducer = (state = adminDummyState, action) =>{
+    switch (action.type){
+        case type.ADMIN_GET_ALL_SETS_COUNT_SUCCESS:
+            return {...state, setsCount: action.payload}
     }
 }
 export default combineReducers({

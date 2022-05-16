@@ -450,3 +450,22 @@ export const getAllSetsByQueryFailure = (errorMessage) => ({
     type: types.GET_ALL_SETS_BY_QUERY_FAILURE,
     payload: errorMessage
 })
+
+export const getAdminAllSetsCount = () => ({
+    type: types.ADMIN_GET_ALL_SETS_COUNT
+})
+
+export const getAdminAllSetsCountSuccess = (count) => ({
+    type: types.ADMIN_GET_ALL_SETS_COUNT_SUCCESS,
+    payload : count
+})
+
+export const getAdminAllSetsCountFailure = (errorMessage) =>({
+    type: types.ADMIN_GET_ALL_SETS_COUNT_FAILURE,
+    payload: errorMessage
+})
+
+export const reportSet = (setId) => ({
+    type : types.REPORT_SET,
+    payload: setId
+})
